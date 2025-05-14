@@ -1,0 +1,117 @@
+#phone {
+  background: #2c3e50;
+  border-radius: 30px;
+  left: 0;
+  padding: 70px 18px 68px 18px;
+  /* position: absolute;
+  right: 0; */
+  /* width: 240px; */
+  width: 610px;
+  margin: 0 16px;
+  position: relative;
+}
+
+/* #phone:before {
+ background: #1f2b38;
+  border-radius: 20px;
+  content: '';
+  height: 8px;
+  left: 0;
+  margin: -35px auto;
+  position: absolute;
+  right: 0;
+  width: 45px; 
+} */
+
+/* #phone:after {
+  background: #1f2b38;
+  border-radius: 20px;
+  content: "";
+  display: block;
+  height: 42px;
+  left: 0;
+  margin: 12px auto;
+  position: absolute;
+  right: 0;
+  width: 42px;
+} */
+#screen {
+  background: #d6e6e9;
+  -webkit-perspective: 800px;
+  -moz-perspective: 800px;
+  -o-perspective: 800px;
+  perspective: 800px;
+  height: 400px;
+  /* overflow: hidden; */
+  padding: 0;
+  position: relative;
+  width: 240px;
+}
+
+.viewport {
+  -webkit-transition: all .4s;
+  -moz-transition: all .4s;
+  -o-transition: all .4s;
+  transition: all .4s;
+  /* background: #d6e6e9; */
+  /* background: #fff; */
+  position: absolute;
+  width: 100%;
+  padding:10px 6px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y:auto;
+  padding-bottom: 30px;
+  background:rgba(0,0,0,.65);
+  color:#fff;
+}
+.item {
+  /* margin: 16px; */
+  /* width:50%;
+  min-width: 800px; */
+  height:538px;
+  position:relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.itemValue {
+  padding: 8px 6px;
+  font-size:12px;
+  border-bottom: 1px solid #aaa;
+}
+
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: rgba(144, 147, 153, 0.3);
+}
+.btn-prev,.btn-next,.el-icon-more {
+  min-width: 45px!important;
+  height: 45px!important;
+  line-height: 45px!important;
+}
+.el-pager .number {
+  min-width: 45px!important;
+  height: 45px!important;
+  line-height: 45px!important;
+  font-size: 16px!important;
+}
+
+.el-table::before {
+  display: none!important;
+}
+
+.el-table__body-wrapper {
+  height: calc(90vh - 126px)!important;
+}

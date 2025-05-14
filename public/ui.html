@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>抖音UI数据</title>
+    <!-- pc端在手机端等不缩放 -->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- pc端在手机端等比例缩放 -->
+    <!-- <meta name="viewport" content="width=device-width,intial-scale=1,maximum-scale=0,user-scalable=no,shrink-to-fit=no">-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        html body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" style="background:#414141;width: 100vw;height:100vh;overflow-y:auto;padding: 16px;box-sizing:border-box;">
+        <el-select v-model="value" @change="changeSelect" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+        </el-select>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    value: "",
+                    options: [{
+                            value: "1",
+                            label: "安装输入法测试搜索功能"
+                        },
+                        {
+                            value: "2",
+                            label: "精养机不看广告"
+                        },
+                        {
+                            value: "3",
+                            label: "清除当前任务队列信息"
+                        },
+                        {
+                            value: "5",
+                            label: "快速开始抖音任务"
+                        },
+                        {
+                            value: "10",
+                            label: "快速开始抖音火山版任务"
+                        },
+                        {
+                            value: "11",
+                            label: "随机开始抖音或者抖音火山版任务"
+                        },
+                        {
+                            value: "6",
+                            label: "启动快手任务"
+                        },
+                        {
+                            value: "8",
+                            label: "快手精养机后启动快手任务"
+                        },
+                        {
+                            value: "9",
+                            label: "只运行快手极速版任务"
+                        }
+                    ],
+
+                }
+            },
+            methods: {
+                changeSelect() {
+                    window.at.callFun('setValueModelPhone', this.value);
+                }
+            },
+            mounted() {
+                window.at.callFun('setValueModelPhone', this.value);
+            }
+        })
+    </script>
+
+</body>
+
+</html>

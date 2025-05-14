@@ -1,0 +1,26 @@
+<autoUI title="APP自动化">
+  <Tab title="首页">
+
+    <uiWeb full="True" html="/资源/ui.html" id="web" height="731" />
+
+  </Tab>
+  <Tab title="今日数据">
+
+    <uiText name="今日养机次数" multiple="False" bind="20585.uiText" id="yangjiNum" height="60" />
+    <uiText name="今日点赞数量" multiple="False" bind="39284.uiText" id="todayLikeNum" height="60" />
+    <uiText name="今日收藏数量" multiple="False" bind="78777.uiText" id="todayCollect" height="60" />
+    <uiText name="今日关注数量" multiple="False" bind="66350.uiText" id="todayFocus" height="60" />
+    <uiText name="今日送礼物数量" multiple="False" bind="38454.uiText" id="giftNum" height="60" />
+
+  </Tab>
+  <Tab title="远程配置">
+
+    <uiWeb full="True" html="/资源/remote.html" id="remote" height="565" />
+
+  </Tab>
+  <Tab title="手动模式">
+
+    <uiButton name="开启手动模式" bind="manual.js" id="manual" height="300" />
+
+  </Tab>
+</autoUI>

@@ -1,0 +1,10 @@
+<autoUI title="APP自动化">
+  <Tab title="添加广告">
+
+    <uiLine name="注：在广告界面点击确定添加" horizontal="Center" vertical="Center" id="" height="55" />
+    <uiRadioButton name="选择小程序" bind="66028.uiRadio" select="洛雪壁纸,云帆壁纸,,海豚壁纸库,柠檬壁纸库,橙子壁纸库,番茄壁纸库,熊猫壁纸库,西瓜壁纸库,,优创汇,数字大挑战,橘子壁纸库" id="appname" height="60" />
+    <uiSwitch name="是否点击广告了" bind="57741.uiSwitch" id="isClick" height="60" />
+    <uiButton name="确定添加" bind="addAd.js" id="addAd" height="100" />
+
+  </Tab>
+</autoUI>

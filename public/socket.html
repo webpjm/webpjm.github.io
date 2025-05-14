@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebSocket</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script type="text/javascript" src="./websocket.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- {{img}} -->
+            <img style="width:300px;" @click="clickApp" :src="img" alt="">
+
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {img: ''}
+            },
+            methods: {
+                clickApp(event) {
+                    console.log(event,'aaaa')
+                }
+            },
+            mounted() {
+
+                if (window.WebSocket) {
+                    console.log("此浏览器支持WebSocket的！");
+                } else {
+                    console.log("This browser does not support WebSocket.");
+                }
+
+
+                var socket = new ws('ws://140.143.153.128:30001')
+                var str = "JSLite.io";
+
+                socket.onconnecting = function (evn) {
+                    console.log("socket:onconnecting:", evn);
+                    sendMsg("wcj");
+
+                }
+                socket.onopen = function (evn) {
+                    console.log("socket:onopen:", evn);
+                    console.log('发了个消息！"' + str + '"');
+                    sendMsg(str);
+
+                }
+                socket.onclose = function (evn) {
+                    console.log("socket.onclose:", evn);
+                    console.log('WebSocket 被你关闭了！，您老人家再也没有办法建立连接了?');
+
+                }
+                let that = this
+                socket.onmessage = function (evn) {
+                    // console.log("socket:onmessage:", evn);
+                    that.img = evn.data+''
+                    console.log('收到消息！"' + evn.data + '"');
+                    // socket.close()
+
+                }
+
+                function sendMsg(str) {
+                    console.log("socket:sendMsg:", socket);
+                    socket.send(str);
+                }
+
+                let num  = 0;
+                let time = setInterval(() => {
+                    if(num ==5) {
+                        socket.send('通知：手机ID:692411262--@测试发送');
+                        clearInterval(time)
+                    }else{
+                        socket.send('测试发送');
+                        num++
+                    }
+                },1000)
+            },
+        })
+    </script>
+    
+    <script>
+        ///========================================
+
+
+
+
+
+
+
+        // function setup(){
+        //     var wsServer = 'ws://127.0.0.1:3001';
+        //     var ws = new WebSocket(wsServer);
+
+        //     ws.onopen = function (e) {
+        //         console.log("Connected to WebSocket server.",e);
+        //         sendMessage("Conan");
+        //     }
+
+        //     ws.onclose = function (e) {
+        //         console.log("Disconnected",e);
+        //     }
+
+        //     ws.onmessage = function(e) {
+        //         console.log("RECEIVED: " + e.data, e);
+        //         ws.close();
+        //     }
+
+        //     ws.onerror = function (e) {
+        //         console.log('Error occured: ' + e.data,e);
+        //     }
+
+        //     var sendMessage = function(msg){
+        //         ws.send(msg);
+        //         console.log("SEND : "+ msg);
+        //     }
+        // }
+        // setup();
+
+        // function console.log(s, e) {
+        //     var output = document.getElementById("output"),
+        //         p = document.createElement("p");
+
+        //     p.style.wordWrap = "break-word";
+        //     p.style.padding = "10px";
+        //     p.style.background = "#eee";
+        //     p.textContent = "console.log : " + s;
+        //     output.appendChild(p);
+        //     // console.log("console.log : "+s, e);
+        // }
+    </script>
+
+
+</body>
+
+</html>
+
+<!-- 
+<html>
+<body>
+<div id="output"></div>
+<script type="text/javascript"></script>
+<script>
+function checkBrowser(){
+    if (window.WebSocket){
+        console.log("此浏览器支持WebSocket的！");
+    } else {
+        console.log("This browser does not support WebSocket.");
+    }
+}
+function setup(){
+    var wsServer = 'ws://127.0.0.1:3001';
+    var ws = new WebSocket(wsServer);
+
+    ws.onopen = function (e) {
+        console.log("Connected to WebSocket server.",e);
+        sendMessage("Conan");
+    }
+
+    ws.onclose = function (e) {
+        console.log("Disconnected",e);
+    }
+
+    ws.onmessage = function(e) {
+        console.log("RECEIVED: " + e.data, e);
+        ws.close();
+    }
+
+    ws.onerror = function (e) {
+        console.log('Error occured: ' + e.data,e);
+    }
+
+    var sendMessage = function(msg){
+        ws.send(msg);
+        console.log("SEND : "+ msg);
+    }
+}
+
+checkBrowser();
+setup();
+
+function console.log(s,e) {
+    var output = document.getElementById("output"),
+        p = document.createElement("p");
+
+    p.style.wordWrap = "break-word";
+    p.style.padding="10px";
+    p.style.background="#eee";
+    p.textContent = "console.log : "+s;
+    output.appendChild(p);
+    console.log("console.log : "+s, e);
+}
+
+</script>
+</body>
+</html> -->

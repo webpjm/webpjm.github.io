@@ -1,0 +1,15 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="1000"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <TextView android:text="检测到主动介入。注意：在广告界面点击确定转化之后由脚本操作，不要手动操作" android:textSize="12dp"/>
+    <Button android:id="b1" android:color="#FFFFFF" 
+    android:layout_marginTop='16dp' android:layout_width="match_parent" android:layout_height="wrap_content" android:text="确认转化+开始脚本"/>
+    <Button android:id="b2" android:color="#FFFFFF"
+     android:layout_marginTop='16dp' android:layout_width="match_parent" android:layout_height="wrap_content" android:text="确定介入+暂停脚本"/>
+    <Button android:id="b3" android:color="#FFFFFF" 
+    android:layout_marginTop='16dp'android:layout_width="match_parent" android:layout_height="wrap_content" android:text="取消操作+开始脚本"/>
+    <TextView android:id="b4" android:layout_marginTop='16dp' 
+    android:color="#F56C6C" android:text="完成转化后在广告界面点击确定转化" android:textSize="12dp"/>
+</LinearLayout>

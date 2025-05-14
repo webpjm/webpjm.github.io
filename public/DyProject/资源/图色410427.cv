@@ -1,0 +1,15 @@
+{
+  "img": "screen",
+  "width": "900",
+  "height": "1600",
+  "firter": [
+    {
+      "name": "颜色翻转",
+      "arg": ""
+    },
+    {
+      "name": "模板匹配",
+      "arg": "{'template':['iVBORw0KGgoAAAANSUhEUgAAAAgAAAAJCAYAAAAPU20uAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB9SURBVChTjY/NCsMgEIQ9h9UEfYAezA9N8xBehB7ixRf0USe6SVMLCXTgW9iZgWUFssL6xjhYtK1El7H9g70isbwmDoioooFShPk5QJTlN/yWCrlwFX44C+qAIGV97p9CjBHGmMrcKV4IAfxmSgneeza11nDOscdv8rwVsAF4wH1yHFwSIgAAAABJRU5ErkJggg=='],'threshold':0.9,'rect':'0.00000,0.68222,1.00000,1.00000','best':true}"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "img": "screen",
+  "width": "900",
+  "height": "1600",
+  "firter": [
+    {
+      "name": "模板匹配",
+      "arg": "{'template':['iVBORw0KGgoAAAANSUhEUgAAABcAAAAHCAYAAADj/NY7AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADTSURBVChTYxDiZPoPwsJczGAahEU4mcFYmAMoDsRwNUA2SByZD8EsQD4L0AxWMA0zg8HXw+k/DPtDsY+7Ixj7QTFhvjMYe7k6/rcy0v8vzscJdizD//+//v//9xsV/8UiRgz+8/v/h9cv/teU5sMM//ufavgfkPr39//XD2/AQURdw0EYaPieLRshhh87uO8/pfj4of1g+tCuHf/b6qr/y4sIQCJUkAMY+xxskJgG0uBY52SH80E0CAuAUwkwJXDDUgQShuoDqwemHFFgChLjZP4PAKFOqNSBs4rwAAAAAElFTkSuQmCC'],'threshold':0.8,'rect':'0.01976,0.01889,0.34783,0.15111','best':true}"
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>壁纸下载</title>
+	<!-- https://www.jq22.com/yanshi3572 -->
+	<meta name="description" content="Loading Effects for Grid Items with CSS Animations">
+	<meta name="keywords" content="css animation, loading effect, google plus, grid items, masonry">
+	<meta name="author" content="Codrops">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="https://www.jq22.com/demo/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="static/css/default.css">
+	<link rel="stylesheet" type="text/css" href="static/css/component.css">
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 引入组件库 -->
+	<script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+	<!-- import JavaScript -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="static/js/modernizr.custom.js"></script>
+</head>
+
+<body>
+	<div class="container" id="app" style="height:100vh;overflow:hidden;">
+		<header style="height: 80px;padding:10px;width:85vw;margin: 0 auto;">
+			<nav class="codrops-demos"
+				style="height: 100%;overflow-y:hidden;display: flex;flex-wrap: nowrap;align-items: center;padding:16px 10px;">
+				<span style="min-width:80px;cursor: pointer;padding: 4px 6px;"
+					v-if="item.className.indexOf('芙莉莲') == -1" @click="setType(index,item.id)"
+					:clsss="{'current-demo': active == index}" v-for="(item,index) in catList"
+					href="">{{item.className}}</span>
+			</nav>
+		</header>
+
+		<div class="imgWrap" id="imgWrap" @scroll="handleScroll"
+			style="overflow:auto;height:100vh;width:85vw;display: flex;justify-content: center;flex-wrap: wrap;margin: 0 auto;">
+			<el-image class="imgItem" v-for="(item,index) in tableData" :key="index"
+				style="opacity:1;height:650px;width:33%;padding: 16px;box-sizing: border-box;" fit="cover"
+				:src="item.url" :preview-src-list="urlList">
+			</el-image>
+		</div>
+
+		<!-- <ul class="imgWrap grid" :class="effect" id="grid" style="height:100vh;width:85vw;display: flex;justify-content: center;flex-wrap: wrap;margin: 0 auto;">
+			<li style="opacity:1;height:650px;width:33%;padding: 16px;box-sizing: border-box;" class="imgItem" v-for="(item,index) in tableData" :key="index" >
+				<el-image  fit="cover" :src="item.url" :preview-src-list="urlList">
+				</el-image>
+			</li>
+		</ul> -->
+
+
+		<!-- <ul class="grid" style="height:100vh;" :class="effect" id="grid" style="width:100vw;">
+			<li v-for="(item,index) in tableData" :key="index" style="opacity:1;height:622px;">
+				<el-image fit="cover" :src="item.url" :preview-src-list="[item.url]">
+				</el-image>
+			</li>
+		</ul> -->
+	</div>
+	<script src="static/js/masonry.pkgd.min.js"></script>
+	<script src="static/js/imagesloaded.js"></script>
+	<script src="static/js/classie.js"></script>
+	<script src="static/js/AnimOnScroll.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			data: function () {
+				return {
+					tableData: [],
+					pageNumber: 1,
+					pageSize: 10,
+					catList: [],
+					effect: 'effect-1',
+					effectList: ['effect-1', 'effect-2', 'effect-3', 'effect-4', 'effect-5', 'effect-6',
+						'effect-7', 'effect-8'
+					],
+					catType: 606,
+					active: 1,
+					urlList: []
+
+				}
+			},
+			methods: {
+				handleScroll(event) {
+					const {
+						scrollTop,
+						clientHeight,
+						scrollHeight
+					} = event.target;
+					// 当滚动条到达底部时，距离顶部的距离加上客户区的高度等于整个滚动区域的高度
+					if (scrollTop + clientHeight >= scrollHeight) {
+						// 滚动条到达底部的操作
+						console.log('滚动条已经到达底部');
+						this.loadData()
+					}
+				},
+				setType(index, type) {
+					this.active = index
+					this.catType = type
+					this.pageNumber = 1
+					this.tableData = []
+					this.loadData()
+				},
+				shuffle(arr) {
+					let i = arr.length;
+					while (i) {
+						let j = Math.floor(Math.random() * i--);
+						[arr[j], arr[i]] = [arr[i], arr[j]];
+					}
+					return arr;
+				},
+				loadCat() {
+					axios({
+						url: `https://mars-prod.whalean.com/hestiamini-service/api/wallpaper/category/list`,
+						type: 'GET', // 或者 'POST'，取决于你的请求方式
+						params: {
+							pageNo: 1,
+							pageSize: 60
+						},
+						headers: {
+							'userId': -1,
+							'extendedfields': '{"$device_id":"o24xX60pBFr63348dZLXpyW-uOo8","appId":3000}' //自定义请求头信息
+						},
+
+					}).then(res => {
+						console.log(res, 'aaaa')
+						res.data.data.unshift({
+							id: 0,
+							className: '随机'
+						})
+						this.catList.push(...res.data.data)
+
+					}).catch(error => {
+						console.log(error)
+						this.$message.error(error.message)
+						this.dialogVisible = true
+					})
+				},
+				loadData() {
+					let arr = this.catList.map(value => {
+						return value.id
+					})
+
+					let indexNum = this.catType
+					if (this.active == 0) {
+						indexNum = this.shuffle(arr)[0]
+					}
+
+					axios({
+						url: `https://mars-prod.whalean.com/hestiamini-service/api/wp/wallpaper/hot/class/${indexNum}/list/v2`,
+						type: 'GET', // 或者 'POST'，取决于你的请求方式
+						params: {
+							pageNo: this.pageNumber,
+							pageSize: this.pageSize
+						},
+						headers: {
+							'userId': -1,
+							'extendedfields': '{"$device_id":"o24xX60pBFr63348dZLXpyW-uOo8","appId":3000}' //自定义请求头信息
+						},
+
+					}).then(res => {
+						console.log(res, 'aaaa')
+						this.effect = this.shuffle(this.effectList)[0]
+						if (this.pageNumber == 1) {
+							this.tableData = res.data.data.list
+						} else {
+							this.tableData.push(...res.data.data.list)
+						}
+						this.pageNumber++
+
+						this.urlList = this.tableData.map(value => {
+							return value.url
+						})
+						setTimeout(() => {
+							new AnimOnScroll(document.getElementById('grid'), {
+								minDuration: 0.4,
+								maxDuration: 0.7,
+								viewportFactor: 0.2
+							});
+						}, 100)
+
+
+					}).catch(error => {
+						console.log(error)
+						this.$message.error(error.message)
+						this.dialogVisible = true
+					})
+				}
+			},
+			mounted() {
+				// let that = this
+				// document.addEventListener('scroll', function () {
+				// 	var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				// 	var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				// 	var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+
+				// 	if (scrollTop + clientHeight >= scrollHeight) {
+				// 		// 滚动条已经到达底部
+				// 		console.log('滚动条已经到达底部');
+				// 		that.loadData()
+				// 	}
+				// });
+				this.loadCat()
+				this.loadData()
+
+			},
+		})
+	</script>
+
+	<script>
+		setTimeout(() => {
+
+		}, 1500)
+	</script>
+</body>
+
+</html>

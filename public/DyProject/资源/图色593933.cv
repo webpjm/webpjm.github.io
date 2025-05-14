@@ -1,0 +1,19 @@
+{
+  "img": "screen",
+  "width": "900",
+  "height": "1600",
+  "firter": [
+    {
+      "name": "HSV",
+      "arg": "{'H':80,'S':0,'V':0}"
+    },
+    {
+      "name": "二值化",
+      "arg": "{'min':0,'max':241}"
+    },
+    {
+      "name": "模板匹配",
+      "arg": "{'template':['iVBORw0KGgoAAAANSUhEUgAAADcAAAAyCAYAAAD4FkP1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGMSURBVGhD3Y4LDsMgDMV2/0tv04pGCE6Alk+LJUvtw3R7fXlvLI67iOMu4riLOO4ijruI4ylroHsDxbHKq9A3O4uj6wjodzqII9pCj3sdxDGxBN0p6UH9SXH8a0HtGT2obxTHnxbUXtWC2gZxDJ9Ooa6nFtRWmo8EdSMkqKs0HzXUjJSgrsJ0IHQzQ4K6gumg0ecz1VBTML4Q8ny2GmoKxheNPFulhhrH+KKRZ6vUUON4PBAiWqaGGsfjgRDRMjXUOB4PhIiWqaHG8XggRLRMDTWO8UUjz1apocYxvmjk2QoJ6hzjCyHPZ6uhpmA6aPT5LAnqCqYDoZsZEtQVzEcNNSMlqKsQx/DJFOp6S1BXKY7hsznU9pKgrkEcf1pQe0UP6hvEMdGC2hZrobuV4phZgu5YnoW+VRBH05HU/Ib8LxXiWLQnrd+n3hDHJs9A3yEtqAVxvJUe1AtxvJ0e1AdxvKUe1H/F8dZaQJsNj9BDdOmlJ+kRmvzSk7QI5/mFJ6oJex5uJI67iOMGvt4fq9cttP1h4HYAAAAASUVORK5CYII='],'threshold':0.8,'rect':'0,0,1,1','best':true}"
+    }
+  ]
+}
