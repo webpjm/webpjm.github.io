@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer">
+  <title>抖音广告数据</title>
+  <script src="./js/axios.js"></script>
+  <!-- <script src="https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/js/axios.js"></script> -->
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="./js/element.css">
+  <link rel="stylesheet" href="./style.css">
+  <!-- 引入组件库 -->
+  <script src="./js/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="./js/element.js"></script>
+  <script type="text/javascript" src="./websocket.js"></script>
+</head>
+<!--token 725746d242425b8942088f56a3a8d836 -->
+<body>
+  <div id="app">
+  </div>
+  <!-- 引入备份的 adData -->
+  <!-- <script src="./广告数据备份/2025-3-3/2025-3-3.js"></script> -->
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: function () {
+        return {
+         
+        }
+      },
+      mounted() {
+        axios({
+            url: `https://gitee.com/api/v5/repos/pjmgit/douyinAd/contents/index.html`,
+            type: 'GET', // 或者 'POST'，取决于你的请求方式
+            params: {
+              access_token: "725746d242425b8942088f56a3a8d836"
+            }
+          }).then(res => {
+            console.log(res);
+          }).catch(error => {})
+
+      },
+      methods: {
+      }
+    })
+  </script>
+</body>
+
+</html>

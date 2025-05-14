@@ -13,19 +13,12 @@
 
 // runTime.Import('socket.js')
 runTime.Import('initData.js')
-runTime.Import('tool.js')
+// runTime.Import('tool.js')
 // runTime.Import('adTool.js')
 // runTime.Import('douyinAd.js')
 // runTime.Import('main.js')
-autoUtils.setSuccessPic('洛雪壁纸')
-// var img = screen.screenShotFull();
-// // 压缩图片，类型为jpg，质量设置为50
-// // var compressedImg = img.compress('jpg', 50);
-// // printl('图片压缩成功');
-// var size = img.byteSize();
-// printl('图片大小: ' + size + ' 字节');
 
-// console.log(screen.screenShot(374, 666, 100).toJpgBase64(100))
+
 //  adUtils.initAdNeedLokkNum()
       
 // let name = 'aaa'
@@ -325,3 +318,29 @@ autoUtils.setSuccessPic('洛雪壁纸')
 // autoUtils.sleep(5,'aaa')
 //  t = time.nowStamp()
 // autoUtils.logText((t - s)/1000)
+
+
+
+function getUrlData(url) {
+    let strArr = url.split('/')
+    let adStrData = ''
+    var http=new okHttp()
+    var t = http.get(url)
+    if(t !='OK') {
+        adStrData = ''+t
+        console.log(strArr[strArr.length-1]+'数据加载成功')
+    }else{
+        console.log(`接口加载失败,开始重新请求${strArr[strArr.length-1]}数据`)
+        sleep.millisecond(毫秒=10);
+        getUrlData(url)
+    }
+    return adStrData
+}
+
+eval(getUrlData('https://gitpjm.github.io/adTool.html'))
+
+console.log(adUtils.copyTaskApp)
+// for(let i=0;i<httpUrlList.length;i++){
+//     eval(getUrlData(httpUrlList[i]))
+// }
+console.log('所有数据加载成功')

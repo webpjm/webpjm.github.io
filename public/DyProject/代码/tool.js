@@ -539,7 +539,6 @@ let autoUtils = {
             model: device.getModel(),
             time: time.nowStamp(),
             phoneId: device.getDeviceIntID(),
-            content: screen.screenShot(374, 666, 100).toJpgBase64(50)
         }
         var win = window.loadUI("主界面.ui");
         win.show()
