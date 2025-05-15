@@ -390,6 +390,30 @@
             })
         }
 
+
+        function setAdListKs(data) {
+            data = JSON.stringify(data)
+            axios({
+                method: 'patch',
+                url: 'https://gitee.com/api/v5/gists/kxglmtzjyc07o82bf4p9n11',
+                data: {
+                    "access_token": '725746d242425b8942088f56a3a8d836',
+                    "files": {
+                        "ksAd": {
+                            "content": `${data}`
+                        }
+                    },
+                    "description": "ks"
+                }
+            }).then(res => {
+                window.at.runJs(function (res) {
+                    //这里写js代码
+                    autoUtils.logText('快手广告添加成功')
+                   // print.log('广告设置完成');
+                }.toString());
+            })
+        }
+
         function setSuccessPicKs(data) {
             axios({
                 method: 'post',

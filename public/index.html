@@ -90,11 +90,12 @@
     </div>
 
 
-    <el-radio-group size="medium" v-model="activeName">
+    <el-radio-group  size="medium" v-model="activeName">
       <el-radio-button label="first">查看数据</el-radio-button>
       <el-radio-button label="three">实时查看</el-radio-button>
       <el-radio-button label="second">查看图片</el-radio-button>
     </el-radio-group>
+
     <div style="height:1px;background: #E4E7ED;margin: 12px 0;"></div>
     <div>
       <div v-show="activeName == 'first'" label="查看数据" name="first">
@@ -660,7 +661,6 @@
           if (this.tokenData) {
             // window.href = window.location.href + '?token=' + this.tokenData
             window.localStorage.setItem('tokenData', this.tokenData)
-            window.localStorage.setItem('tokenData1', this.tokenData1)
             this.loadData()
           }
         },
@@ -902,6 +902,7 @@
               type: 'GET', // 或者 'POST'，取决于你的请求方式
             }).then(res => {
               // console.log(res, 'aaaa')
+              this.dialogVisible = false
               let data = JSON.parse(res.data.files.douyin.content)
               this.handleTableData(data)
               

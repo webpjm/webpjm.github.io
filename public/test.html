@@ -22,7 +22,7 @@
 <body>
   <div id="app">
     <el-button v-if="tokenData" type="primary" @click="copyDataToCangku">备份dy代码片段数据到仓库</el-button>
-    <el-button v-if="tokenData" type="primary" @click="copyDataToCangku">清除抖音代码片段数据</el-button>
+    <el-button v-if="tokenData" type="primary" @click="setDouYinData">清除抖音代码片段数据</el-button>
     
     <el-dialog title="输入token" :visible.sync="dialogVisible" width="30%" @close="dialogVisible = false">
       <el-input v-model="tokenData" placeholder="请输入内容"></el-input>
@@ -60,15 +60,16 @@ function base64_encode(e){var r=function(e){return encodeURIComponent(e).replace
         }
       },
       mounted() {
-        // this.getData(1)
+        this.getData(1)
         // this.getData(2)
 
         // 获取代码仓库文件数据
         // this.getDouyinData()
         // this.sendBase64Data()
-
+        // this.getDataCodeKs()
+        // this.setKsData()
         // 获取代码片段文件数据
-        this.getDataCode()
+        // this.getDataCode()
         // 清除抖音代码片段数据 后期可能会有几万条抖音广告数据
         // this.clearDouYinData()
       },
@@ -84,7 +85,7 @@ function base64_encode(e){var r=function(e){return encodeURIComponent(e).replace
             this.getDataCode()
           }
         },
-        clearDouYinData() {
+        setDouYinData() {
           axios({
                 method: 'patch',
                 url: 'https://gitee.com/api/v5/gists/cw6jlqnhio24pdru0vk1390',
@@ -101,7 +102,37 @@ function base64_encode(e){var r=function(e){return encodeURIComponent(e).replace
                 console.log("广告清除成功")
             })
         },
-        getDataCode(page) {
+        setKsData() {
+          axios({
+                method: 'patch',
+                url: 'https://gitee.com/api/v5/gists/kxglmtzjyc07o82bf4p9n11',
+                data: {
+                    "access_token": this.tokenData,
+                    "files": {
+                        "ksAd": {
+                            "content": `[]`
+                        }
+                    },
+                    "description": "ks"
+                }
+            }).then(res => {
+                console.log("广告清除成功")
+            })
+        },
+        getDataCodeKs(page) {
+          axios({
+            url: `https://gitee.com/api/v5/gists/kxglmtzjyc07o82bf4p9n11?access_token=${this.tokenData}`,
+            method: 'GET', // 或者 'POST'，取决于你的请求方式
+          }).then((res) => {
+            this.dialogVisible = false
+          }).catch(error => {
+            console.log(error)
+            this.$message.error(error.message)
+            this.dialogVisible = true
+          }) 
+        },
+
+        getDataCode() {
           axios({
             url: `https://gitee.com/api/v5/gists/cw6jlqnhio24pdru0vk1390?access_token=${this.tokenData}`,
             method: 'GET', // 或者 'POST'，取决于你的请求方式
