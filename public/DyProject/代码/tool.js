@@ -7,7 +7,6 @@ try {
         AutoGlobData.miniAppNum = data.miniAppNum
         AutoGlobData.lookRangeNum = data.lookRangeNum
         AutoGlobData.phoneIp = mainPhoneIp
-        AutoGlobData.remoteUiValue = data.remoteUiValue
         AutoGlobData.otherValue = data.otherValue
         AutoGlobData.adMaxNum = data.lookRangeNum[1]
         AutoGlobData.adMiniNum = data.lookRangeNum[0]

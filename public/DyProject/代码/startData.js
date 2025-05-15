@@ -53,6 +53,7 @@ var mainWeb = uiWeb.findByID(控件ID = "web");
 //是否加载远程UI
 if (!isLocal) {
     print.log('开始请求远程接口的数据UI')
+    sleep.millisecond(毫秒=200);
     mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html')
 
 }

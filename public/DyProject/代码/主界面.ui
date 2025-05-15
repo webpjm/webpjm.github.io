@@ -23,7 +23,7 @@
     <uiText name="输入数据源地址" multiple="True" bind="80127.uiText" id="dataSource" height="45" />
     <uiSwitch name="启动默认使用此地址" bind="89313.uiSwitch" id="isDefault" height="45" />
     <uiSwitch name="恢复默认（重置为默认）" bind="77690.uiSwitch" id="isResetDefault" height="45" />
-    <uiButton name="确定" bind="" id="dataSourceBtn" height="55" />
+    <uiButton name="确定" bind="setDataSource.js" id="dataSourceBtn" height="55" />
 
   </Tab>
 </autoUI>

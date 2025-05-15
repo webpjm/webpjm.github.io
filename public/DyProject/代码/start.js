@@ -1,7 +1,8 @@
 
 
-let isLocal = false // 上线的时候一点要把这个变量改为false
+let isLocal = true // 上线的时候一点要把这个变量改为false
 logWindow.show()
+
 if (!isLocal) {
     print.log('开始请求远程接口的数据')
     function getUrlData(url) {
@@ -20,9 +21,17 @@ if (!isLocal) {
     return adStrData
 }
 
-// eval(getUrlData('https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/DyProject/代码/startData.js'))
+let useSetDefault = config.getConfig('/sdcard/config.ini', 'isUseDefault', JSON.stringify(""))
+let defaultUrl = 'https://webpjm.github.io/public/DyProject/代码/startData.js'
+if(JSON.parse(useSetDefault) != '') {
+    let dataSourceText = config.getConfig('/sdcard/config.ini', 'sourceTextValue', JSON.stringify(""))
+    defaultUrl = dataSourceText
+}
+print.log(`接口的地址是${defaultUrl}`)
+eval(getUrlData(defaultUrl))
+logWindow.close()
 
-// logWindow.close()
+
 
 }else{
     print.log('加载本地数据')

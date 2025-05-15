@@ -6,6 +6,9 @@ config.setConfig('/sdcard/config.ini', 'isUseDefault', JSON.stringify(isDefaultS
 config.setConfig('/sdcard/config.ini', 'sourceTextValue', JSON.stringify(sourceTextValue))
 
 if(isResetDefaultValue) {
-    config.setConfig('/sdcard/config.ini', 'isUseDefault', JSON.stringify("true"))
+    config.setConfig('/sdcard/config.ini', 'isUseDefault', JSON.stringify(""))
     config.setConfig('/sdcard/config.ini', 'sourceTextValue', JSON.stringify(""))
 }
+
+logWindow.show()
+print.log('配置成功，重新启动后生效')
