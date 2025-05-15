@@ -12,14 +12,9 @@ let globData = {
     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
     lookRangeNum: [1, 2], // 最少最多观看数量 
     phoneIp: '',  //  ip地址
-    remoteUiValue: [], // 远程自定义的地址
     otherValue: []
 }
-// 设置接收全局对象的回调
-function setValueModelPhone(val) {
-    globData.remoteUiValue = val
-    printl(val, 'remoteUiValue的数值')
-}
+
 // 设置接收远程UI值的回调
 function setPhoneGlobaData(data) {
     globData = data
@@ -48,10 +43,6 @@ if (mainTodayDataInfo != '') {
         uiText.findByID(控件ID = "giftNum").setTitle(`🟢 今日送礼：  ${mainTodayDataInfo.giftNum}`)
     }
 }
-
-//加载远程UI
-var remoteWeb = uiWeb.findByID(控件ID = "remote");
-remoteWeb.loadUrl('https://webpjm.github.io/public/ui.html')
 
 var mainWeb = uiWeb.findByID(控件ID = "web");
 //是否加载远程UI
