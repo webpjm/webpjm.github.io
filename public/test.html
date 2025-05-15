@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer">
+  <title>抖音广告数据</title>
+  <script src="./js/axios.js"></script>
+  <!-- <script src="https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/js/axios.js"></script> -->
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="./js/element.css">
+  <link rel="stylesheet" href="./style.css">
+  <!-- 引入组件库 -->
+  <script src="./js/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="./js/element.js"></script>
+  <script type="text/javascript" src="./websocket.js"></script>
+</head>
+<!-- https://webpjm.github.io/public/ui.html -->
+<!--aed 725746d242425b -->
+<!--8942088f56a3a8d836 -->
+<body>
+  <div id="app">
+    <el-button v-if="tokenData" type="primary" @click="copyDataToCangku">备份dy代码片段数据到仓库</el-button>
+    <el-button v-if="tokenData" type="primary" @click="copyDataToCangku">清除抖音代码片段数据</el-button>
+    
+    <el-dialog title="输入token" :visible.sync="dialogVisible" width="30%" @close="dialogVisible = false">
+      <el-input v-model="tokenData" placeholder="请输入内容"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirm">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
+  <!-- 引入备份的 adData -->
+  <!-- <script src="./广告数据备份/2025-3-3/2025-3-3.js"></script> -->
+
+  <script>
+
+    /**
+ * @param base64编码
+ * @returns base64还原
+ */
+function base64_decode(n){var r=function(n){return decodeURIComponent(n.split("").map(function(n){return"%"+("00"+n.charCodeAt(0).toString(16)).slice(-2)}).join(""))};if("undefined"==typeof window)return new Buffer(n,"base64").toString("utf-8");if(void 0!==window.atob)return r(window.atob(n));var e,t,o,i,d,f,a,c,u="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",h=0,w=0,C="",g=[];if(!n)return n;n+="";do{i=u.indexOf(n.charAt(h++)),d=u.indexOf(n.charAt(h++)),f=u.indexOf(n.charAt(h++)),a=u.indexOf(n.charAt(h++)),c=i<<18|d<<12|f<<6|a,e=c>>16&255,t=c>>8&255,o=255&c,g[w++]=64===f?String.fromCharCode(e):64===a?String.fromCharCode(e,t):String.fromCharCode(e,t,o)}while(h<n.length);return C=g.join(""),r(C.replace(/\0+$/,""))}
+/**
+ * @param 字符串
+ * @returns base64编码
+ */
+function base64_encode(e){var r=function(e){return encodeURIComponent(e).replace(/%([0-9A-F]{2})/g,function(e,r){return String.fromCharCode("0x"+r)})};if("undefined"==typeof window)return new Buffer(e).toString("base64");if(void 0!==window.btoa)return window.btoa(r(e));var n,t,o,i,a,c,d,f,h="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",u=0,w=0,A="",l=[];if(!e)return e;e=r(e);do{n=e.charCodeAt(u++),t=e.charCodeAt(u++),o=e.charCodeAt(u++),f=n<<16|t<<8|o,i=f>>18&63,a=f>>12&63,c=f>>6&63,d=63&f,l[w++]=h.charAt(i)+h.charAt(a)+h.charAt(c)+h.charAt(d)}while(u<e.length);A=l.join("");var C=e.length%3;return(C?A.slice(0,C-3):A)+"===".slice(C||3)}
+
+    new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          dialogVisible:false,
+          tokenData:localStorage.getItem('tokenData'),
+          listData: [],
+          sha:'',
+          douyinData:''
+        }
+      },
+      mounted() {
+        // this.getData(1)
+        // this.getData(2)
+
+        // 获取代码仓库文件数据
+        // this.getDouyinData()
+        // this.sendBase64Data()
+
+        // 获取代码片段文件数据
+        this.getDataCode()
+        // 清除抖音代码片段数据 后期可能会有几万条抖音广告数据
+        // this.clearDouYinData()
+      },
+      methods: {
+        confirm() {
+          if (this.tokenData) {
+            // window.href = window.location.href + '?token=' + this.tokenData
+            window.localStorage.setItem('tokenData', this.tokenData)
+            
+            // this.sendBase64Data()
+
+            // 获取代码片段文件数据
+            this.getDataCode()
+          }
+        },
+        clearDouYinData() {
+          axios({
+                method: 'patch',
+                url: 'https://gitee.com/api/v5/gists/cw6jlqnhio24pdru0vk1390',
+                data: {
+                    "access_token": this.tokenData,
+                    "files": {
+                        "douyin": {
+                            "content": `[]`
+                        }
+                    },
+                    "description": "douyin"
+                }
+            }).then(res => {
+                console.log("广告清除成功")
+            })
+        },
+        getDataCode(page) {
+          axios({
+            url: `https://gitee.com/api/v5/gists/cw6jlqnhio24pdru0vk1390?access_token=${this.tokenData}`,
+            method: 'GET', // 或者 'POST'，取决于你的请求方式
+          }).then((res) => {
+            this.douyinData=res.data.files.douyin.content
+            this.dialogVisible = false
+            this.getDouyinData()
+          }).catch(error => {
+            console.log(error)
+            this.$message.error(error.message)
+            this.dialogVisible = true
+          }) 
+        },
+        getData(page) {
+          axios({
+            url: `https://gitee.com/api/v5/repos/pjmgit/ad-pic/commits`,
+            method: 'GET', // 或者 'POST'，取决于你的请求方式
+            params: {
+              access_token: this.tokenData,
+              page:page,
+              per_page:100,
+            }
+          }).then((res) => {
+            this.listData.push(...res.data)
+            console.log(res.data)
+          }) 
+        },
+        getDouyinData(page) {
+          axios({
+            url: `https://gitee.com/api/v5/repos/pjmgit/douyin/contents/douyin`,
+            params: {
+              access_token: this.tokenData,
+            },
+            method: 'GET', // 或者 'POST'，取决于你的请求方式
+          }).then((res) => {
+            this.sha= res.data.sha
+          }).catch(error => {
+            console.log(error)
+            this.$message.error(error.message)
+            this.dialogVisible = true
+          }) 
+        },
+        copyDataToCangku() {
+            this.sendBase64Data()
+        },
+        sendBase64Data() {
+          axios({
+            url: `https://gitee.com/api/v5/repos/pjmgit/douyin/contents/douyin`,
+            method: 'PUT', // 或者 'POST'，取决于你的请求方式
+            data: {
+              access_token: 'e2c638d03c6a2edd9004cc522a719f00',
+              content: base64_encode(this.douyinData),
+              message: '备份数据',
+              sha:this.sha
+            }
+          }).then((res) => {
+            console.log('备份成功')
+          }) 
+        },
+        sendBase64DataKs() {
+          axios({
+            url: `https://gitee.com/api/v5/repos/pjmgit/douyin/contents/ks`,
+            method: 'PUT', // 或者 'POST'，取决于你的请求方式
+            data: {
+              access_token: 'e2c638d03c6a2edd9004cc522a719f00',
+              content: base64_encode(this.douyinData),
+              message: '备份数据',
+              sha:this.sha
+            }
+          }).then((res) => {
+            console.log('备份成功')
+          }) 
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
