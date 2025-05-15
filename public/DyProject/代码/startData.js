@@ -51,14 +51,14 @@ if (mainTodayDataInfo != '') {
 
 //加载远程UI
 var remoteWeb = uiWeb.findByID(控件ID = "remote");
-remoteWeb.loadUrl('https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/ui.html')
+remoteWeb.loadUrl('https://webpjm.github.io/public/ui.html')
 
 var mainWeb = uiWeb.findByID(控件ID = "web");
 //是否加载远程UI
 
 if (!isLocal) {
-    print.log('开始请求远程接口的数据UI')
-    mainWeb.loadUrl('https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/DyProject/资源/ui.html')
+    print.log('开始请求远程接口的数据UI https://webpjm.github.io/public')
+    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html')
 
 }
 

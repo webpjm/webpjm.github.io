@@ -4,6 +4,7 @@ let AutoGlobData = {
     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
     lookRangeNum: [1, 2], // 最少最多观看数量 
     phoneIp: '', //  ip地址
+    remoteUiValue: '', // 远程UI的设置值
     appList: [ // 所有要运行的小程序 固定的，用于初始化数据
         {
             appName: '洛雪壁纸',

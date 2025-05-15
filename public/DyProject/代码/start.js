@@ -2,7 +2,6 @@
 
 let isLocal = false // 上线的时候一点要把这个变量改为false
 logWindow.show()
-
 if (!isLocal) {
     print.log('开始请求远程接口的数据')
     function getUrlData(url) {
@@ -21,17 +20,9 @@ if (!isLocal) {
     return adStrData
 }
 
-let useSetDefault = config.getConfig('/sdcard/config.ini', 'isUseDefault', JSON.stringify(""))
-let defaultUrl = 'https://webpjm.github.io/public/DyProject/代码/startData.js'
-if(JSON.parse(useSetDefault) != '') {
-    let dataSourceText = config.getConfig('/sdcard/config.ini', 'sourceTextValue', JSON.stringify(""))
-    defaultUrl = dataSourceText
-}
-print.log(`接口的地址是${defaultUrl}`)
-eval(getUrlData(defaultUrl))
+eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/startData.js'))
+
 logWindow.close()
-
-
 
 }else{
     print.log('加载本地数据')
