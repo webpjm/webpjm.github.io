@@ -20,9 +20,9 @@ if (!isLocal) {
     return adStrData
 }
 
-eval(getUrlData('https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/DyProject/代码/startData.js'))
+// eval(getUrlData('https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/DyProject/代码/startData.js'))
 
-logWindow.close()
+// logWindow.close()
 
 }else{
     print.log('加载本地数据')
