@@ -1,6 +1,6 @@
 
 
-let isLocal = true // 上线的时候一点要把这个变量改为false
+let isLocal = false // 上线的时候一点要把这个变量改为false
 logWindow.show()
 
 if (!isLocal) {

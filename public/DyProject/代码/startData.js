@@ -12,20 +12,15 @@ let globData = {
     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
     lookRangeNum: [1, 2], // 最少最多观看数量 
     phoneIp: '',  //  ip地址
-    remoteUiValue: [], // 远程自定义的地址
     otherValue: []
-}
-// 设置接收全局对象的回调
-function setValueModelPhone(val) {
-    globData.remoteUiValue = val
-    printl(val, 'remoteUiValue的数值')
 }
 // 设置接收远程UI值的回调
 function setPhoneGlobaData(data) {
     globData = data
     printl(data, 'UI设置的值')
 }
-
+setPhoneGlobaData(globData)
+print.log(`setPhoneGlobaData`)
 // 设置今日数据的UI
 function getTodayTime(currentTime) {
     // if (autoUtils.getTodayTime(modedata.time) == autoUtils.getTodayTime(time.nowStamp())) {}
