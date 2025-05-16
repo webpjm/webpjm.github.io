@@ -48,7 +48,7 @@ var mainWeb = uiWeb.findByID(控件ID = "web");
 
 if (!isLocal) {
     print.log('开始请求远程接口的数据UI https://webpjm.github.io/public')
-    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html')
+    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
 }
 
 function getUrlData(url) {
@@ -76,3 +76,5 @@ sleep.millisecond(毫秒 = 500);
 mainWeb.runWebJs(`setPhoneData(${mainPhoneData},${mainIp})`)
 sleep.millisecond(毫秒 = 1500);
 mainWeb.runWebJs(`setPhoneData(${mainPhoneData},${mainIp})`)
+
+logWindow.close()
