@@ -29,10 +29,10 @@ let autoUtils = {
         let date = new Date() // 时间戳为秒：10位数
         let hour = Number(date.getHours())
         if (hour >= 1 && hour <= 6) {
-            // this.logText('当前2点到6点之间-时间条件不通过')
-            // this.qiutApp()
-            // //暂停脚本，如果有快手任务或者其他任务的则注释此处
-            // debug.setAllPause()
+            this.logText('当前2点到6点之间-时间条件不通过')
+            this.qiutApp()
+            //暂停脚本，如果有快手任务或者其他任务的则注释此处
+            debug.setAllPause()
         }
         //中午停止运行为抖音火山版晚上腾时间
         else if(hour>=13 && hour<18 && AutoGlobData.runApp == 6) {

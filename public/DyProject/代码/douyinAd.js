@@ -53,13 +53,16 @@ let douyinAd = {
         { type: 5, text: '在搜索页的视频养机' },
         { type: 5, text: '在搜索页的视频养机' },
         { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
+        { type: 5, text: '在搜索页的视频养机' },
+        { type: 6, text: '在搜索页的直播养机' },
         { type: 5, text: '在搜索页的视频养机' },
         { type: 5, text: '在搜索页的视频养机' },
-        { type: 5, text: '在搜索页的视频养机' },
+        { type: 7, text: '在搜索页的综合样机养机' },
         { type: 1, text: '在推荐页养机' },
         // { type: 4, text: '在小程序列表页养机' },
         // { type: 8, text: '在我的喜欢中穿插右滑查看主页中的视频养机' },
-        { type: 6, text: '在搜索页的直播养机' },
+        
         
     ],
     // 养机模式的值
@@ -1050,7 +1053,7 @@ let douyinAd = {
         // autoUtils.logText(allNum + '滑动次数上限')
         let huadongNum = rand.randNumber(3, 6)
         if(type == 'video') {
-            huadongNum = rand.randNumber(3, 6)
+            huadongNum = rand.randNumber(5, 10)
         }
          autoUtils.logText(huadongNum + '需要滑动的次数')
         // 如果时间小于随机时间，则循坏滑动视频或直播
@@ -2144,7 +2147,7 @@ let douyinAd = {
 
         this.randomTime('广告等待')
 
-        this.getDownLoadAdFlag(name)
+        // this.getDownLoadAdFlag(name)
 
         //如果没有主动介入的操作
         if (!this.isLookAdByEmailMessage) {
@@ -2235,7 +2238,7 @@ let douyinAd = {
             fui.close()
             debug.setGoOn()
         })
-        let time = rand.randNumber(30 * 60, 35 * 60)
+        let time = rand.randNumber(15 * 60, 25 * 60)
         for (let i = 0; i < time; i++) {
             autoUtils.sleep(1, '等待点击开始手动')
             fui.runOnUiThread(function fun() {
@@ -2327,12 +2330,7 @@ let douyinAd = {
 
                 autoUtils.logText('准备等待手动操作')
                 this.showFloatUi(name)
-                // let isPageSame = this.isSamePage(rand.randNumber(30 * 60, 35 * 60), '等待主动介入30-35分钟')
-                // if (isPageSame) {
-                //     autoUtils.logText('没有主动介入，继续执行')
-                // } else {
-
-                // }
+                
 
             } else {
                 autoUtils.logText('下载的随机条件不满足')
@@ -2518,6 +2516,23 @@ let douyinAd = {
                             //         }
                             //      }
                             // }
+
+                            let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
+                            let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
+                            if (downloadtotal < needdownload) {
+                                if (autoUtils.getText("下载")) {
+                                    autoUtils.logText('可以点击下载了')
+                                    autoUtils.sleep(3, '开始发送邮件')
+                                    // 钉钉设置了只有发送包括通知两个字才能发送成功
+                                    let str = `广告下载转化通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                                    ws.send(str)
+
+                                    autoUtils.clickGetText('下载')
+                                    autoUtils.logText('等待下载完成')
+                                    autoUtils.sleep(rand.randNumber(30,60))
+                                }
+                            }
+
                             if(autoUtils.getText("下载")){
                                 let str = `广告下载通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
                                 ws.send(str)

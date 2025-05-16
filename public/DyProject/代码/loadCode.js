@@ -14,7 +14,7 @@ function getUrlData(url) {
     return adStrData
 }
 
-eval(getUrlData('https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/DyProject/代码/loadAdUrlList.js'))
+eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/loadAdUrlList.js'))
 
 for(let i=0;i<httpUrlList.length;i++){
     eval(getUrlData(httpUrlList[i]))
