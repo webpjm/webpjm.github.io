@@ -517,10 +517,26 @@ let autoUtils = {
         return arr1.concat(arr2)
     },
     setApiData(data) {
+        var win = window.loadUI("主界面.ui");
+        win.show()
+        this.sleep(3, '等待关闭设置接口弹窗')
+        win.close()
+        this.sleep(5, '开始设置广告值')
         data = JSON.stringify(data)
         var web = uiWeb.findByID(控件ID = "web");
         this.sleep(5, '开始设置小程序列表值')
         web.runWebJs(`setAdList(${data})`)
+    },
+    setApiDataKs(data) {
+        var win = window.loadUI("主界面.ui");
+        win.show()
+        this.sleep(3, '等待关闭设置接口弹窗')
+        win.close()
+        this.sleep(5, '开始设置广告值')
+        data = JSON.stringify(data)
+        var web = uiWeb.findByID(控件ID = "web");
+        this.sleep(5, '开始设置快手小程序列表值')
+        web.runWebJs(`setAdListKs(${data})`)
     },
     setApiNumData(data) {
         data = JSON.stringify(data)
@@ -548,6 +564,24 @@ let autoUtils = {
         var web = uiWeb.findByID(控件ID = "web");
         data = JSON.stringify(data)
         web.runWebJs(`setSuccessPic(${data})`)
+        this.sleep(3, '开始设置图片后')
+    },
+    setSuccessPicKs(name) {
+        let data = {
+            name: this.getPinYin(name),
+            model: device.getModel(),
+            time: time.nowStamp(),
+            phoneId: device.getDeviceIntID(),
+            content: screen.screenShot(374, 666, 100).toJpgBase64(50)
+        }
+        var win = window.loadUI("主界面.ui");
+        win.show()
+        this.sleep(3, '等待关闭设置接口弹窗')
+        win.close()
+        this.sleep(5, '开始设置图片')
+        var web = uiWeb.findByID(控件ID = "web");
+        data = JSON.stringify(data)
+        web.runWebJs(`setSuccessPicKs(${data})`)
         this.sleep(3, '开始设置图片后')
     },
     getPinYin(name) {

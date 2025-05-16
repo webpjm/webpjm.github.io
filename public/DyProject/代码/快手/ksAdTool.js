@@ -5,10 +5,11 @@
    qq群: 743723025
 */ 
 let ksAdUtils = {
+    appPhoneName: '快手',
     adMiniNum:6,
     adMaxiNum:10,
     adListApiData: [],
-    copyTaskApp: JSON.parse(JSON.stringify(ksAdUtils.taskApp)),
+    copyTaskApp: [],
     todayTaskAllList: [],
     phoneId: device.getDeviceIntID(),
     adListApiData: [], // 接口获取的小程序列表
@@ -27,45 +28,41 @@ let ksAdUtils = {
             main: '大明网络'
         },
         {
-            appName: '海豚壁纸库',
+            appName: '熊猫君看图',
             main: '大明网络'
         },
         {
-            appName: '云帆壁纸库',
+            appName: '柠檬精品壁纸 ',
             main: '大明网络'
         },
         {
-            appName: '柠檬壁纸库',
+            appName: ' 优图选 ',
             main: '大明网络'
         },
         {
-            appName: '橙子壁纸库',
+            appName: '番茄优选',
             main: '大明网络'
         },
         {
-            appName: '番茄壁纸库',
+            appName: '小西瓜图库',
             main: '大明网络'
         },
         {
-            appName: '熊猫壁纸库',
+            appName: '云帆启航',
             main: '大明网络'
         },
         {
-            appName: '西瓜壁纸库',
+            appName: '优橙壁纸',
             main: '大明网络'
         },
         {
-            appName: '优创汇',
+            appName: '海豚优图',
             main: '大明网络'
         },
         {
-            appName: '数字大挑战',
+            appName: '优创汇大全',
             main: '大明网络'
-        },
-        { 
-            appName: '橘子壁纸库', 
-            main: '大明网络' 
-        },
+        }
     ],
     taskApp: [ //  运行的小程序 会变化
         {
@@ -73,47 +70,44 @@ let ksAdUtils = {
             main: '大明网络'
         },
         {
-            appName: '海豚壁纸库',
+            appName: '熊猫君看图',
             main: '大明网络'
         },
         {
-            appName: '云帆壁纸库',
+            appName: '柠檬精品壁纸 ',
             main: '大明网络'
         },
         {
-            appName: '柠檬壁纸库',
+            appName: ' 优图选 ',
             main: '大明网络'
         },
         {
-            appName: '橙子壁纸库',
+            appName: '番茄优选',
             main: '大明网络'
         },
         {
-            appName: '番茄壁纸库',
+            appName: '小西瓜图库',
             main: '大明网络'
         },
         {
-            appName: '熊猫壁纸库',
+            appName: '云帆启航',
             main: '大明网络'
         },
         {
-            appName: '数字大挑战',
+            appName: '优橙壁纸',
             main: '大明网络'
         },
         {
-            appName: '西瓜壁纸库',
+            appName: '海豚优图',
             main: '大明网络'
         },
         {
-            appName: '优创汇',
+            appName: '优创汇大全',
             main: '大明网络'
-        },
-        { appName: '橘子壁纸库', 
-            main: '大明网络' 
-        },
+        }
     ],
-    
     init() {
+        this.copyTaskApp = JSON.parse(JSON.stringify(this.appList))
         // 养机是养机 看广告是看广告  如果算出广告等待时间过长(等待时长在30分钟内的可以接受大于30分钟则跳过) 也不能取时间最近的  这样就有规律可寻了 可能会被检测  则 把这个广告放在队列的最后  先执行下一个
         // 获取要看的小程序列表  随机 setSuccessAppAd
         // 如果等待时间在30分钟内 hid.home() 然后在前台等 也可以在抖音刷几个视频在退出  一切随机  判断当前的观看模式  只看广澳模式 就退出再前台等
@@ -169,12 +163,12 @@ let ksAdUtils = {
             //接口有值
             let arr = []
             for (let i = 0; i < list.length; i++) {
-                arr.push({ appName: list[i].appName, model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
+                arr.push({ appName: list[i].appName,runApp: ksAdUtils.appPhoneName, model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
             }
             // let newList = apiList.concat(arr)
             // newList = autoUtils.uniqueAdArr(newList)
              let newList = autoUtils.differenceAndMerge(apiList,arr)
-            autoUtils.setApiData(newList)
+            autoUtils.setApiDataKs(newList)
         } else {
             //接口没值
             let arr = []
@@ -182,7 +176,7 @@ let ksAdUtils = {
             for (let i = 0; i < list.length; i++) {
                 arr.push({ appName: list[i].appName,model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
             }
-            autoUtils.setApiData(arr)
+            autoUtils.setApiDataKs(arr)
         }
     },
     // 初始化随机广告次数
@@ -451,7 +445,7 @@ let ksAdUtils = {
                 apiList[i] = detail
             }
         }
-        autoUtils.setApiData(apiList)
+        autoUtils.setApiDataKs(apiList)
     },
     getAdDetail(appName) {
         let detail = {}
