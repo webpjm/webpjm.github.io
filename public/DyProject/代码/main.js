@@ -159,22 +159,22 @@ let autoTask = {
     resetRunAppAndAdNum() {
         this.isResetAppAndNum = true
         // 重值今日观看广告的次数
-        config.setConfig('/sdcard/config.ini', 'todayTaskListStatus', JSON.stringify([]))
+        config.setConfig(AutoGlobData.configUrl, 'todayTaskListStatus', JSON.stringify([]))
         // 重值当前的任务队列
-        config.setConfig('/sdcard/config.ini', 'taskAppRunList', JSON.stringify({}))
+        config.setConfig(AutoGlobData.configUrl, 'taskAppRunList', JSON.stringify({}))
 
         autoUtils.logText('今日观看广告的次数和任务队列已经重置')
     },
     //重置缓存的搜索条件
     resetCurrentSearchStr() {
         // 重值搜索的外层的搜索队列 
-        config.setConfig('/sdcard/config.ini', 'newSearchArrList', JSON.stringify(""))
+        config.setConfig(AutoGlobData.configUrl, 'newSearchArrList', JSON.stringify(""))
         // 重值当前具体项的搜索数组
-        config.setConfig('/sdcard/config.ini', 'currentTextStr', JSON.stringify(""))
+        config.setConfig(AutoGlobData.configUrl, 'currentTextStr', JSON.stringify(""))
         // 重值当前养机的缓存
-        config.setConfig('/sdcard/config.ini', 'newYangjiModelTypeList', JSON.stringify(""))
+        config.setConfig(AutoGlobData.configUrl, 'newYangjiModelTypeList', JSON.stringify(""))
          // 重值当前观看模式的缓存
-        config.setConfig('/sdcard/config.ini', 'modeListData', JSON.stringify(""))
+        config.setConfig(AutoGlobData.configUrl, 'modeListData', JSON.stringify(""))
         
         autoUtils.logText('搜索的缓存已重置')
     },
@@ -221,7 +221,7 @@ let autoTask = {
                     timestart = time.nowStamp();
                     timeObj = autoUtils.getRandomClosecreen()
                     // 重置当前的任务队列
-                    config.setConfig('/sdcard/config.ini', 'taskAppRunList', JSON.stringify([]))
+                    config.setConfig(AutoGlobData.configUrl, 'taskAppRunList', JSON.stringify([]))
                     autoUtils.logText("息屏结束，重新开始任务")
                     this.taskAppRun(taskAppList[i], taskAppList)
                 } else {
@@ -232,7 +232,7 @@ let autoTask = {
         }
         // 如果任务列表为空，重置当前的任务队列
         if (taskAppList.length == 0) {
-            config.setConfig('/sdcard/config.ini', 'taskAppRunList', JSON.stringify([]))
+            config.setConfig(AutoGlobData.configUrl, 'taskAppRunList', JSON.stringify([]))
         }
 
         // 判断今日任务是否完成
@@ -246,7 +246,7 @@ let autoTask = {
             autoUtils.logText('今日所有任务已经完成')
             autoUtils.qiutApp()
 
-            // let listdata = config.getConfig('/sdcard/config.ini', 'todayTaskListStatus', JSON.stringify({}))
+            // let listdata = config.getConfig(AutoGlobData.configUrl, 'todayTaskListStatus', JSON.stringify({}))
             // let listObj = JSON.parse(listdata)
             // if (listObj.time && (autoUtils.getTodayTime(listObj.time) == autoUtils.getTodayTime(time.nowStamp()))) {
             //     autoUtils.logText('今日所有任务已经完成')

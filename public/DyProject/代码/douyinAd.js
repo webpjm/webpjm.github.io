@@ -107,7 +107,7 @@ let douyinAd = {
         }
         return flag
     },
-    configPath: '/sdcard/config.ini',
+    configPath: AutoGlobData.configUrlDy,
     getConfig(key) {
         let data = config.getConfig(this.configPath, key, '')
         if (data != '') { data = JSON.parse(data) }
@@ -151,7 +151,7 @@ let douyinAd = {
     setModeList(data) {
         this.lookModelValue = data[0].type
         data.shift()
-        config.setConfig('/sdcard/config.ini', 'modeListData', JSON.stringify(data))
+        config.setConfig(this.configPath, 'modeListData', JSON.stringify(data))
     },
     // 直播间数据
     zhiboInfo: {

@@ -4,18 +4,18 @@
    官方地址: www.aiwork24.com
    qq群: 743723025
 */ 
-let ksAdUtils = {
+let adUtilsKs = {
     appPhoneName: '快手',
-    adMiniNum:6,
-    adMaxiNum:10,
+    adMiniNum:3,
+    adMaxNum:3,
     adListApiData: [],
     copyTaskApp: [],
     todayTaskAllList: [],
     phoneId: device.getDeviceIntID(),
     adListApiData: [], // 接口获取的小程序列表
-    adBiaoZhun1: 2 * 60 * 60 * 1000, // 同手机同小程序观看时间要大于2小时+一个随机数（小于10分钟的）
-    adBiaoZhun2: 45 * 60 * 1000, // 同手机不同小程序观看时间要大于40分钟+一个随机数（小于10分钟的）
-    adBiaoZhun3: 10 * 60 * 1000, // 不同手机同小程序观看时间要大于10分钟+一个随机数（小于5分钟的）
+    adBiaoZhun1: 5 * 60 * 1000, // 同手机同小程序观看时间要大于2小时+一个随机数（小于10分钟的）
+    adBiaoZhun2: 2 * 60 * 1000, // 同手机不同小程序观看时间要大于40分钟+一个随机数（小于10分钟的）
+    adBiaoZhun3: 5 * 60 * 1000, // 不同手机同小程序观看时间要大于10分钟+一个随机数（小于5分钟的）
     adBiaoZhun4: 5 * 60 * 1000, // 不同手机不同小程序观看时间要大于5分钟+一个随机数（小于1分钟的）
     todayTaskAllList: [], // 随机今天广告观看次数数组
     yangjiNum: 0,
@@ -174,7 +174,7 @@ let ksAdUtils = {
             let arr = []
             // { name: '洛雪壁纸', phoneId: '', lastLookTime: 1235689789, main: '大明网络', todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, todayLookNumToal: 0, lookAdTotal: 0 }
             for (let i = 0; i < list.length; i++) {
-                arr.push({ appName: list[i].appName,model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
+                arr.push({ appName: list[i].appName,runApp: ksAdUtils.appPhoneName,model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
             }
             autoUtils.setApiDataKs(arr)
         }
@@ -183,7 +183,7 @@ let ksAdUtils = {
     initAdNeedLokkNum() {
         autoUtils.logText('获取每个小程序当天需要观看的广告数据')
         let taskArr = []
-        let listdata = config.getConfig('/sdcard/config.ini', 'todayTaskListStatus', JSON.stringify({}))
+        let listdata = config.getConfig(AutoGlobData.configUrlKs, 'todayTaskListStatus', JSON.stringify({}))
         let listObj = JSON.parse(listdata)
         if (listObj.time && (autoUtils.getTodayTime(listObj.time) == autoUtils.getTodayTime(time.nowStamp()))) {
             autoUtils.logText('执行initAdNeedLokkNum方法今日已设置过随机的广告观看次数，缓存取出---------'+JSON.stringify(listObj.data),listObj.time)
@@ -194,7 +194,7 @@ let ksAdUtils = {
             for (let i = 0; i < applist.length; i++) {
                 // 少看点看效果
                 if (i == 0 || i == 1) {
-                    applist[i].todayTaskNum = 1
+                    applist[i].todayTaskNum = 2
                 } else {
                     applist[i].todayTaskNum = autoUtils.getRandomInt(ksAdUtils.adMiniNum, ksAdUtils.adMaxNum, 'round')
                 }
@@ -207,7 +207,7 @@ let ksAdUtils = {
                 data: applist
             }
             taskArr = applist
-            config.setConfig('/sdcard/config.ini', 'todayTaskListStatus', JSON.stringify(obj))
+            config.setConfig(AutoGlobData.configUrlKs, 'todayTaskListStatus', JSON.stringify(obj))
         }
 
         let conArr = []
@@ -225,11 +225,11 @@ let ksAdUtils = {
             time: time.nowStamp(),
             data: task
         }
-        config.setConfig('/sdcard/config.ini', 'taskAppRunList', JSON.stringify(obj))
+        config.setConfig(AutoGlobData.configUrlKs, 'taskAppRunList', JSON.stringify(obj))
     },
     // 获取运行的小程序列表缓存数据 没有的话重制
     setTaskRunApp() {
-        let taskApp = config.getConfig('/sdcard/config.ini', 'taskAppRunList', JSON.stringify({}))
+        let taskApp = config.getConfig(AutoGlobData.configUrlKs, 'taskAppRunList', JSON.stringify({}))
         autoUtils.logText("setTaskRunApp 缓存的数据", JSON.stringify(taskApp))
         let taskAppObj = JSON.parse(taskApp)
         let runApp = ksAdUtils.taskApp
@@ -247,7 +247,7 @@ let ksAdUtils = {
                 time: time.nowStamp(),
                 data: runApp
             }
-            config.setConfig('/sdcard/config.ini', 'taskAppRunList', JSON.stringify(obj))
+            config.setConfig(AutoGlobData.configUrlKs, 'taskAppRunList', JSON.stringify(obj))
 
         }
         // autoUtils.logText("setTaskRunApp 最终数据", JSON.stringify(runApp))

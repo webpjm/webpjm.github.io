@@ -1,9 +1,12 @@
-let AutoGlobData = {
+var AutoGlobData = {
     runApp: "1", //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4 精养机不看广告 5 其他任务(微信、APP、快手...)
     runModel: '1', //  运行模式 1 养机+看广告 2 精养机+不看广告 3 看广告+不养机 
     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
     lookRangeNum: [1, 2], // 最少最多观看数量 
     phoneIp: '', //  ip地址
+    configUrl: '/sdcard/config.ini', // 默认抖音存储空间
+    configUrlDy: '/sdcard/config.ini', // 默认抖音存储空间
+    configUrlKs: '/sdcard/configKs.ini', // 默认抖音存储空间
     appList: [ // 所有要运行的小程序 固定的，用于初始化数据
         {
             appName: '洛雪壁纸',
