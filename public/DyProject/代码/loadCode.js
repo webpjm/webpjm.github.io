@@ -13,8 +13,8 @@ function getUrlData(url) {
     }
     return adStrData
 }
-
-eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/loadAdUrlList.js'))
+print.log(`开始请求${configRootUrl}DyProject/代码/loadAdUrlList.js`)
+eval(getUrlData(`${configRootUrl}DyProject/代码/loadAdUrlList.js`))
 
 for(let i=0;i<httpUrlList.length;i++){
     eval(getUrlData(httpUrlList[i]))

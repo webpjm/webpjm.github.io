@@ -18,4 +18,14 @@
     <uiButton name="开启手动模式" bind="manual.js" id="manual" height="300" />
 
   </Tab>
+  <Tab title="数据源">
+
+    <uiText name="输入数据源地址" multiple="True" bind="80127.uiText" id="dataSource" height="45" />
+    <uiSwitch name="启动默认使用此地址" bind="89313.uiSwitch" id="isDefault" height="45" />
+    <uiSwitch name="重置为默认地址" bind="77690.uiSwitch" id="isResetDefault" height="45" />
+    <uiButton name="确定" bind="setDataSource.js" id="dataSourceBtn" height="55" />
+    <uiButton name="默认地址：https://webpjm.github.io" bind="" id="showDefaultDataSourceUrl" height="200" />
+    <uiWeb full="False" html="/资源/remote.html" id="remote" height="0" />
+
+  </Tab>
 </autoUI>
