@@ -2,8 +2,6 @@
 var win = window.loadUI("主界面.ui");
 win.show();
 logWindow.show();
-//用来控制主界面是否加载远程UI
-let isLocal = false
 // 定义全局对象接收UI参数
 let globData = {
     runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
@@ -49,6 +47,8 @@ var mainWeb = uiWeb.findByID(控件ID = "web");
 if (!isLocal) {
     print.log('开始请求远程接口的数据UI https://webpjm.github.io/public')
     mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+}else{
+    print.log('开始请求本地UI')
 }
 
 function getUrlData(url) {

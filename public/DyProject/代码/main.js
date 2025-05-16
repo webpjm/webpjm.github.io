@@ -172,7 +172,7 @@ let autoTask = {
          // 重值当前观看模式的缓存
         config.setConfig('/sdcard/config.ini', 'modeListData', JSON.stringify(""))
         
-        autoUtils.logText('缓存已重置')
+        autoUtils.logText('搜索的缓存已重置')
     },
     taskAppList1:[],
     //设置运行小程序的数量

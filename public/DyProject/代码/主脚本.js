@@ -1,6 +1,4 @@
 
-
-let isLocal = false // 上线的时候一点要把这个变量改为false
 var win = window.loadUI("主界面.ui");
 win.close();
 logWindow.close()
