@@ -7,7 +7,7 @@
 let adUtilsKs = {
     appPhoneName: '快手',
     adMiniNum:3,
-    adMaxNum:3,
+    adMaxNum:4,
     adListApiData: [],
     copyTaskApp: [],
     todayTaskAllList: [],
@@ -196,7 +196,7 @@ let adUtilsKs = {
                 if (i == 0 || i == 1) {
                     applist[i].todayTaskNum = 2
                 } else {
-                    applist[i].todayTaskNum = autoUtils.getRandomInt(ksAdUtils.adMiniNum, ksAdUtils.adMaxNum, 'round')
+                    applist[i].todayTaskNum = autoUtils.getRandomInt(AutoGlobData.adMiniNum, AutoGlobData.adMaxNum, 'round')
                 }
                 // applist[i].todayTaskNum = autoUtils.getRandomInt(ksAdUtils.adMiniNum, ksAdUtils.adMaxNum, 'round')
                 applist[i].todayTasktatus = 'doing'

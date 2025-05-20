@@ -98,7 +98,7 @@
             <div style="position:relative;top: 10px;padding-bottom:30px;">
                 <div class="itemwrap">
                     <div class="title"><i class="el-icon-setting"></i> 运行APP设置</div>
-                    <el-select @change='changeRun' style="width:100%;" v-model="globData.runApp" placeholder="运行设置">
+                    <el-select @change='changeRunApp' style="width:100%;" v-model="globData.runApp" placeholder="运行设置">
                         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
@@ -106,7 +106,7 @@
                 <div class="itemwrap">
                     <div class="title"><i class="el-icon-mobile-phone"></i>养机设置</div>
                     <el-select style="width:100%;" v-model="globData.runModel" @change="changeRun" placeholder="小程序设置">
-                        <el-option v-for="item in runOptions" :key="item.value" :label="item.label" :value="item.value">
+                        <el-option v-for="item in (globData.runApp == 5 || globData.runApp == 6) ?runOptionsKs: runOptions" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </div>
@@ -196,6 +196,20 @@
                             label: "抖音养机后+去火山只看广告"
                         }
                     ],
+                    runOptionsKs: [
+                        {
+                            value: "1",
+                            label: "边养机边看广告"
+                        },
+                        {
+                            value: "2",
+                            label: "精养机+不看广告"
+                        },
+                        {
+                            value: "3",
+                            label: "全程只看广告不养机"
+                        }
+                    ],
                     options: [
                         {
                             value: "1",
@@ -220,6 +234,10 @@
                         {
                             value: "5",
                             label: "快手任务"
+                        },
+                        {
+                            value: "6",
+                            label: "快手极速版任务"
                         },
                         // {
                         //     value: "6",
@@ -288,6 +306,14 @@
                 }
             },
             methods: {
+                changeRunApp(){
+                    if(this.globData.runApp == 5 || this.globData.runApp == 6){
+                        this.globData.lookRangeNum= [3, 4]
+                    }else{
+                        this.globData.lookRangeNum= [1, 1]
+                    }
+                	window.at.callFun('setPhoneGlobaData', JSON.stringify(this.globData))
+                },
                 changeRun(){
                 	window.at.callFun('setPhoneGlobaData', JSON.stringify(this.globData))
                 },

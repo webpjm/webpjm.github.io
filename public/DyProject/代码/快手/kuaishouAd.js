@@ -31,15 +31,14 @@ let kaishouAd = {
     },
     // 小程序观看广告的模式
     lookModelList: [
-        { type: 3, text: '小程序页停留几分钟+返回抖音养鸡' },
-        { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看广告' },
-        { type: 1, text: '返回手机主页等待后看广告' },
-        { type: 3, text: '小程序页停留几分钟+返回抖音养鸡' },
-        { type: 5, text: '只是停留不看广告' },
-        // { type: 2, text: '小程序首页停留几分钟+返回手机主页等待+看广告' },
-        { type: 3, text: '小程序页停留几分钟+返回抖音养鸡' },
-        { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看广告' },
-        { type: 6, text: '不等待直接看广告' },
+        { type: 1, text: '小程序页停留几分钟+看1广告' },
+        { type: 2, text: '小程序页停留几分钟+看2广告' },
+        { type: 3, text: '小程序页停留几分钟+看3广告' },
+        { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看2广告' },
+        { type: 2, text: '小程序页停留几分钟+看2广告' },
+        { type: 1, text: '小程序页停留几分钟+看1广告' },
+        { type: 3, text: '小程序页停留几分钟+看3广告' },
+        { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看2广告' },
         
     ],
     // 养机模式的值 用于养机缓存变化的值 自定义一个乱中有序
@@ -1904,26 +1903,49 @@ let kaishouAd = {
         // autoUtils.logText(JSON.stringify(AutoGlobData.phoneLookTotal))
     },
     lookModel(task) {
+        
+        // { type: 1, text: '小程序页停留几分钟+看1广告' },
+        // { type: 2, text: '小程序页停留几分钟+看2广告' },
+        // { type: 3, text: '小程序页停留几分钟+看3广告' },
+        // { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看2广告' },
+        // { type: 2, text: '小程序页停留几分钟+看2广告' },
+        // { type: 1, text: '小程序页停留几分钟+看1广告' },
+        // { type: 3, text: '小程序页停留几分钟+看3广告' },
+        // { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看2广告' }
+
         this.getCurrentAppRunDetail(task.appName)
         
         this.setLookModelValueData()
         let lookModelValue = this.lookModelValue
-        // task.time 等待观看广告的时间 等于0就是可以看了 不等于就是需要等待的时间 
-        let startTime = autoUtils.getCurrentTime()
         // 根据类型判断选择哪种等待方式  
         let text = ''
         let taskDetail = AutoGlobData.taskdetail
 
-        if(AutoGlobData.runModel == 5){
+        if(AutoGlobData.runModel == 3){
             this.backHomeWaitAd(task)
-            this.swipeIndexAppListForAd(taskDetail, 2)
-            this.lookAd(taskDetail.appName)
+
+            if(lookModelValue == 1) {
+                this.swipeIndexAppListForAd(taskDetail, 2)
+                this.lookAd(taskDetail.appName)
+            }
+            if(lookModelValue == 2) {
+                for(let i = 0; i < 2; i++) {
+                    this.swipeIndexAppListForAd(taskDetail, 2)
+                    this.lookAd(taskDetail.appName) 
+                }
+            }
+            if(lookModelValue == 3) {
+                for(let i = 0; i < 3; i++) {
+                    this.swipeIndexAppListForAd(taskDetail, 2)
+                    this.lookAd(taskDetail.appName) 
+                }
+            }
+
+            
+
             if(rand.randNumber(1,10) > 6){
                 autoUtils.logText('随机到了养机')
                 this.yangji('quick')
-            }else{
-                autoUtils.logText('随机到了返回主页')
-                autoUtils.autoHome()
             }
             return;
         }
@@ -1938,18 +1960,14 @@ let kaishouAd = {
             this.lookModel2()
         } else if (lookModelValue == 3) {
             this.lookModel3()
-        } else if (lookModelValue == 4) {
+        }else if (lookModelValue == 4) {
             this.lookModel4()
-        } else if (lookModelValue == 5) {
-            this.lookModel5()
-        }else if (lookModelValue == 6) {
-            autoUtils.logText('不等待看广告')
         }
         autoUtils.sleep(10, '等待后观看广告')
         
-        if (lookModelValue != 5) {
-            this.lookAd(taskDetail.appName)
-        }
+        // if (lookModelValue != 5) {
+        //     this.lookAd(taskDetail.appName)
+        // }
 
     },
     detailWaitTime() {
@@ -2031,35 +2049,42 @@ let kaishouAd = {
     // { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看广告' },
     // { type: 5, text: '只是停留不看广告' }
     lookModel1() {
-        this.yangji('quick')
-        this.yangji('quick')
+        // this.yangji('quick')
+        // this.yangji('quick')
         let task = AutoGlobData.taskdetail
         this.backHomeWaitAd(task)
         this.swipeIndexAppListForAd(task, 4)
-
+        this.lookAd(task.appName)
         //小程序内部看广告的逻辑
         // this.lookAd(task.appName)
     },
     lookModel2() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 4)
-        this.yangji('quick')
-        this.yangji('quick')
-        this.backHomeWaitAd(task)
-        this.swipeIndexAppListForAd(task, 1)
+        // this.swipeIndexAppListForAd(task, 4)
+        // // this.yangji('quick')
+        // // this.yangji('quick')
+        for(let i = 0; i < 2; i++) {
+            this.swipeIndexAppListForAd(task, 4)
+            this.lookAd(task.appName)
+        }
+        
     },
     lookModel3() {
         let task = AutoGlobData.taskdetail
-        this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 2)
-        this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 1)
+        for(let i = 0; i < 3; i++) {
+            this.swipeIndexAppListForAd(task, 4)
+            this.lookAd(task.appName)
+        }
     },
     lookModel4() {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
         this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 3)
+        let num = rand.randNumber(1, 2)
+        for(let i = 0; i < num; i++) {
+            this.swipeIndexAppListForAd(task, 3)
+            this.lookAd(task.appName)
+        }
         
     },
     lookModel5() {

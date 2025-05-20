@@ -1,5 +1,5 @@
 
-let autoTask = {
+let autoTaskKs = {
     runAppList: {
         "1": '抖音',
         "2": '抖音火山版',
@@ -9,69 +9,26 @@ let autoTask = {
         "6": '快手极速版',
     },
     init() {
-        // 参数说明
-        // ----------------------------
-        // runApp: 运行APP选项
-        //   1-抖音  2-抖音火山版 
-        //   3-抖音+火山版连续运行
-        //   4-抖音极速版  5~7-其他任务
-        // runModel: 运行模式
-        //   1-养机+广告  2-精养机无广告
-        //   3-只看广告  4-精养机+广告
-        // miniAppNum: 小程序观看数量策略
-        //   1-固定  2-随机6个 
-        //   3-随机8个  4-随机全部
+        AutoGlobData.taskApp = adUtilsKsKs.taskApp
+        AutoGlobData.appList = adUtilsKsKs.appList
 
-        autoUtils.sleep(3,'等待开始任务')
-        // 处理非抖音系任务(5/6/7)
-        if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
-            ksAdUtils.appPhoneName = this.runAppList[AutoGlobData.runApp]
-            kuaishouAd.init()
-            // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
-            return;
-        }
-        // 处理抖音系任务 
-        else {
-
-            this.initApp()
-
-            // // 特殊处理同时运行抖音和火山版的情况
-            // if(AutoGlobData.runApp == 3) {
-            //     AutoGlobData.runApp = 2 // 先设置为抖音火山版
-            //     this.setAppRunNum(6)
-            //     AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp]
-            //     autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
-            //     this.setRunModel() 
-            //     // 切换为火山版并调整广告参数
-            //     AutoGlobData.runApp = 1
-            //     //因为抖音的任务完成了所以火山版本的不能多看（就目前的发现的机制来说）
-            //     // 两个APP的数据标签可以互通，怕刷多了影响ECPM,后期测试如果没影响再放开数量限制
-            //     AutoGlobData.taskApp = this.taskAppList1
-            //     AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp]
-            //     autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
-            //     AutoGlobData.adMaxNum = 1  // 最大广告次数
-            //     AutoGlobData.adMiniNum = 1 // 最小广告次数
-            //     this.resetRunAppAndAdNum() // 重置任务队列
-            //     this.setRunModel() 
-            // }else{
-            //      // 直接运行单个APP模式
-            //     this.initApp()
-            // }
-        }
     },
-    //初始化 总逻辑是this.setRunModel先执行养机逻辑 在执行douyinAd.lookModel看小程序广告的逻辑
+    //初始化 总逻辑是this.setRunModel先执行养机逻辑 在执行kaishouAd.lookModel看小程序广告的逻辑
     initApp(name) {
         autoUtils.logText('最新版本：修改了进入小程序详情方法')
         // 设置当前运行的APP名称（从预定义列表获取）
-        AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp] || '抖音'
+        AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp] || '快手'
+
         // 快速任务模式处理（通过socket调用）
-        if (name && name == 'fast') {
-            autoUtils.logText('快速开始任务--不预启动')
-        } else {
-            autoUtils.logText('开始登录' + AutoGlobData.appPhoneName + '先预启动')
-            this.startyuzhuang() // 启动预装APP流程
-        }
-        this.waitByNum()          // 根据设备启动次数等待间隔
+
+        // if (name && name == 'fast') {
+        //     autoUtils.logText('快速开始任务--不预启动')
+        // } else {
+        //     autoUtils.logText('开始登录' + AutoGlobData.appPhoneName + '先预启动')
+        //     this.startyuzhuang() // 启动预装APP流程
+        // }
+
+        // this.waitByNum()          // 根据设备启动次数等待间隔
         this.setRunAppList()      // 配置要运行的小程序列表
         autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
         this.setRunModel()        // 设置养机/广告模式
@@ -79,8 +36,8 @@ let autoTask = {
     //设置养机模式
     setRunModel() {
         // 获取今日养机数据
-        douyinAd.getTodayDataInfo()
-        let yangjiNum = douyinAd.todayDataInfo.yangjiNum
+        kaishouAd.getTodayDataInfo()
+        let yangjiNum = kaishouAd.todayDataInfo.yangjiNum
         autoUtils.logText(yangjiNum, 'yangjiNum')
         // 模式3: 只看广告不养机
         if (AutoGlobData.runModel == 3) {
@@ -91,7 +48,7 @@ let autoTask = {
         else if (AutoGlobData.runModel == 1) {
             if (yangjiNum == 0) {
                 autoUtils.logText('养机次数小于1,先养机')
-                douyinAd.yangji()
+                kaishouAd.yangji()
             } else {
                 autoUtils.logText('养机次数大于1不再养机，开始运行小程序任务')
             }
@@ -99,87 +56,30 @@ let autoTask = {
         }
         // 模式2: 精养机无广告
         else if (AutoGlobData.runModel == 2) {
-            douyinAd.jingyangji()
+            kaishouAd.jingyangji()
         }
-        // 模式4: 精养机+广告组合 精养机就是看直播的时间更长5-10分钟一个 其他不变
-        else if (AutoGlobData.runModel == 4) {
-            douyinAd.jingyangji()
-            //切换成只看广告不养机
-            AutoGlobData.runModel = 5
-            this.startRunAppList()
-        }
-        // 模式5: 全程只看广告不养机
-        else if (AutoGlobData.runModel == 5) {
-            // douyinAd.jingyangji()
-            this.startRunAppList()
-        }
-        // 模式6: 在抖音养机后去火山版只看广告不养机
-        else if (AutoGlobData.runModel == 6) {
-            // douyinAd.jingyangji()
-            for (let i = 0; i < 6; i++) {
-                douyinAd.yangji('quick')
-            }
-            // 切换到模式5: 全程只看广告不养机
-            AutoGlobData.runModel == 5
-            AutoGlobData.appPhoneName = '抖音火山版'
-            autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
+        // 模式3: 全程只看广告不养机
+        else if (AutoGlobData.runModel == 3) {
+            // kaishouAd.jingyangji()
             this.startRunAppList()
         }
         autoUtils.logText('运行模式方法执行完成，今日任务已完成')
     },
     //设置运行APP
     setRunAppList() {
-        let phoneId = device.getDeviceIntID()
-        // 固定模式：根据设备ID获取预配置的小程序列表
-        if (AutoGlobData.miniAppNum == 1) {
-            // 优先使用当前设备的配置，若无则使用默认设备"531011851"的配置
-            AutoGlobData.taskApp = AutoGlobData.phoneListRunAppObj[phoneId] || AutoGlobData.phoneListRunAppObj["531011851"]
-             // 打乱小程序顺序（避免每次运行顺序相同）
-            AutoGlobData.taskApp = autoUtils.shuffleObj(AutoGlobData.taskApp)
+        // 数量配置映射表：
+        // 2 → 5个  3 → 8个  4 → 全部小程序
+        let appNumObj = {
+            '2': 5,
+            '3': 8,
+            '4': AutoGlobData.appList.length
         }
-        // 随机模式：根据配置生成随机数量的小程序列表
-        else {
-            // 数量配置映射表：
-            // 2 → 5个  3 → 8个  4 → 全部小程序
-            let appNumObj = {
-                '2': 5,
-                '3': 8,
-                '4': AutoGlobData.appList.length
-            }
-             // 根据配置选择数量，默认取全部
-            this.setAppRunNum(appNumObj[AutoGlobData.miniAppNum] || 8)
-            // this.setAppRunNum(AutoGlobData.appList.length)
-        }
+            // 根据配置选择数量，默认取全部
+        this.setAppRunNum(appNumObj[AutoGlobData.miniAppNum] || 8)
 
         autoUtils.logText('运行的小程序是' + JSON.stringify(AutoGlobData.taskApp))
 
     },
-
-    isResetAppAndNum:false,
-    //重置今日广告的顺序和观看次数（切换APP时用）
-    resetRunAppAndAdNum() {
-        this.isResetAppAndNum = true
-        // 重值今日观看广告的次数
-        config.setConfig(AutoGlobData.configUrl, 'todayTaskListStatus', JSON.stringify([]))
-        // 重值当前的任务队列
-        config.setConfig(AutoGlobData.configUrl, 'taskAppRunList', JSON.stringify({}))
-
-        autoUtils.logText('今日观看广告的次数和任务队列已经重置')
-    },
-    //重置缓存的搜索条件
-    resetCurrentSearchStr() {
-        // 重值搜索的外层的搜索队列 
-        config.setConfig(AutoGlobData.configUrl, 'newSearchArrList', JSON.stringify(""))
-        // 重值当前具体项的搜索数组
-        config.setConfig(AutoGlobData.configUrl, 'currentTextStr', JSON.stringify(""))
-        // 重值当前养机的缓存
-        config.setConfig(AutoGlobData.configUrl, 'newYangjiModelTypeList', JSON.stringify(""))
-         // 重值当前观看模式的缓存
-        config.setConfig(AutoGlobData.configUrl, 'modeListData', JSON.stringify(""))
-        
-        autoUtils.logText('搜索的缓存已重置')
-    },
-    taskAppList1:[],
     //设置运行小程序的数量
     setAppRunNum(num) {
         let applist = autoUtils.shuffleObj(AutoGlobData.appList)
@@ -193,8 +93,6 @@ let autoTask = {
             }
         }
         AutoGlobData.taskApp = newList
-        //火山版的任务队列
-        this.taskAppList1 = newList1
     },
     /**
      * 开始运行小程序任务列表
@@ -204,9 +102,9 @@ let autoTask = {
      */
     startRunAppList() {
         // 初始化广告工具
-        adUtils.init()
+        adUtilsKs.init()
         // 获取按时间排序的任务列表
-        let taskAppList = adUtils.getRunAppListByTime()
+        let taskAppList = adUtilsKs.getRunAppListByTime()
         autoUtils.logText("当前运行的小程序任务列表 结果 顺序是=================" + JSON.stringify(taskAppList))
         //   判断是否样机 今天养过机 就可以执行看广告逻辑  随机养机顺序
         if (taskAppList.length > 0) {
@@ -237,7 +135,7 @@ let autoTask = {
         }
 
         // 判断今日任务是否完成
-        if (!adUtils.getTaskStatus()) {
+        if (!adUtilsKs.getTaskStatus()) {
             autoUtils.logText('今日任务未完成继续任务')
             autoUtils.sleep(5)
             // 重新开始运行小程序任务列表
@@ -246,44 +144,22 @@ let autoTask = {
             
             autoUtils.logText('今日所有任务已经完成')
             autoUtils.qiutApp()
-
-            // let listdata = config.getConfig(AutoGlobData.configUrl, 'todayTaskListStatus', JSON.stringify({}))
-            // let listObj = JSON.parse(listdata)
-            // if (listObj.time && (autoUtils.getTodayTime(listObj.time) == autoUtils.getTodayTime(time.nowStamp()))) {
-            //     autoUtils.logText('今日所有任务已经完成')
-            //     autoUtils.qiutApp()
-            // }else{
-            //     //新的一天
-            //     this.startRunAppList()
-            // }
-
-            
-            // AutoGlobData.appPhoneName = '抖音' 
-            // autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登
-            // douyinAd.jingyangji()
         }
 
     },
     taskAppRun(task, taskAppList) {
-        // 切换APP 运行模式是抖音+抖音火山 选择最后5个小程序到抖音火上版观看
-        if(AutoGlobData.runApp == 3 && taskAppList.length <= 5){
-            // 切换为抖音火山
-            AutoGlobData.runApp = 2
-            AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp] 
-            autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
-        }
         // 此处逻辑非常多了  可以设置多种模式看广告 可以自动息屏亮屏 
         //保证拿到的数据都是最新的
-        adUtils.loadAdList()
+        adUtilsKs.loadAdList()
         //保证拿到的数据都是最新的
-        let taskdetail = adUtils.getAdDetail(task.appName)
-        let time = adUtils.getAppAdTime(task.appName)
+        let taskdetail = adUtilsKs.getAdDetail(task.appName)
+        let time = adUtilsKs.getAppAdTime(task.appName)
         taskdetail.time = time
         AutoGlobData.taskdetail = taskdetail
         autoUtils.logText('当前运行的任务是' + taskdetail.appName)
-        AutoGlobData.phoneLookTotal = adUtils.getAllLookTotal()
-        douyinAd.lookModel(taskdetail)
-        adUtils.taskDeleteApp(taskAppList)
+        AutoGlobData.phoneLookTotal = adUtilsKs.getAllLookTotal()
+        kaishouAd.lookModel(taskdetail)
+        adUtilsKs.taskDeleteApp(taskAppList)
 
         // 一天养鸡一次 包括小程序  养鸡和广告时间间隔开 比如养鸡后息屏 半小时到1个半小时左右 期间续不定时激活屏幕 
         // 其他时候 就是判断看广告的模式了 模式可以有非常多种  一个一个看小程序 连着看两  看视频再看小程序 等等 可以非常多  
@@ -312,7 +188,7 @@ let autoTask = {
     },
     //根据启动时间等待
     waitByNum() {
-        adUtils.loadAdList()
+        adUtilsKs.loadAdList()
         let list = autoUtils.shuffle(AutoGlobData.waitNumList.list)
         if (list.length > 0) {
             let waitFlag = true
@@ -377,7 +253,7 @@ let autoTask = {
         if (AutoGlobData.otherValue.indexOf('2')>-1) {
             input.setAiWork()
             autoUtils.sleep(10, '开始测试搜索功能')
-            douyinAd.yangjimodel6()
+            kaishouAd.yangjimodel6()
         }
 
         if (AutoGlobData.otherValue.indexOf('1')>-1) {
@@ -402,50 +278,4 @@ let autoTask = {
             autoTask.init() // 调用主初始化流程
         }
     }
-}
-
-// 主线程任务
-var mainThread = new thread();
-mainThread.runJsCode(() => {
-    autoTask.startTask() // 抖音任务
-}, "主任务线程");
-
-// socket线程任务
-var line = new thread();
-line.runJsCode(function fun() {
-    if (autoUtils.useSocket) {
-        startSocket()
-    }
-}, "监控线程")
-// 设置socket任务类型
-function setTaskRunBySocket(type) {
-    // 只养机
-    if (type == 1) {
-        autoUtils.logText('只养机不看广告')
-        autoUtils.loginApp(AutoGlobData.appPhoneName)
-        douyinAd.jingyangji()
-    }
-    // 快速任务
-    else if (type == 2) {
-        autoTask.initApp('fast')
-    }
-    else if (type == 3) {
-        autoUtils.autoHome()
-        autoUtils.sleep(3, '主线程任务已停止')
-    } else {
-        // 重启任务
-        startTask()
-    }
-}
-var restartThread = new thread();
-// 远程设置socket任务
-function restartAppTask(type) {
-    restartThread.runJsCode(() => {
-        mainThread.stop()
-        mainThread = new thread();
-        mainThread.runJsCode(() => {
-            setTaskRunBySocket(type)
-        }, "主任务线程");
-
-    }, "socket重启线程");
 }

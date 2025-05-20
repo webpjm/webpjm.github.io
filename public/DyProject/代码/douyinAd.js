@@ -1037,6 +1037,7 @@ let douyinAd = {
         // this.yangjimodel7()
         this.yangjiSpeed = 'quick'
         autoUtils.autoHome()
+        autoUtils.logText(10, '精养机完成了')
     },
     currentSwipNum: 0,
     duibiaoVideoOrZhiBoNum: 0,
@@ -1145,7 +1146,7 @@ let douyinAd = {
     },
     firstYangJiMethod() {
         // 首次养机打两个标签 搜索两次
-        let num = rand.randNumber(2, 4)
+        let num = rand.randNumber(3, 6)
         autoUtils.logText('首次养机滑动的次数--'+num)
         for (let i = 0; i < num; i++) {
             this.handelVideo()
@@ -1941,6 +1942,7 @@ let douyinAd = {
         if (lookModelValue != 5) {
             this.lookAd(taskDetail.appName)
         }
+        autoUtils.logText(10, '观看完成了')
 
     },
     detailWaitTime() {
