@@ -1,0 +1,15 @@
+{
+  "img": "screen",
+  "width": "900",
+  "height": "1600",
+  "firter": [
+    {
+      "name": "二值化",
+      "arg": "{'min':0,'max':182}"
+    },
+    {
+      "name": "模板匹配",
+      "arg": "{'template':['iVBORw0KGgoAAAANSUhEUgAAAIwAAAAlCAYAAACQ0wEYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANOSURBVHhe7Y9bbtxAEMRy/0sn7mQLqS2x5yFt/BEMAQJWsSXbP774eTxuiOPx2Inj8diJ4/HYiePx2Inj8diJ4/HYieO2zsr+HQpqTxXU/nNxvKXo9iLbv9Kh/kSHevkJPv1d+t4NcbylGLWC+qd1qD8xWbm5w6e/272fv2Mijrd0Rp2au8vsG9Tv2kG3nQ71FQW10un2Vfz9L98efvudPP399H7pUL+jM9pmOtRXFNRKp9sJuvH3v3x7+O13Q39DKqiVn4C+K5073RXUVhXUSmenSQHtMrxO/0CdTOjmiYJa+Qnou9KhXjrUS4f6qoJa6ew0KaBdhtfp/j/kUH+ioEY61KVDvXT8Oe/U/Oe7+DfJHUbvj1oB/TK8Tud/dOpQf6KgRjrUpbPThW+pQz11qLs7jN4ftQL6ZXidrv2TrkO9dKh3CmqkQ106Xe92Qb10qKcOdVdQK51R321fXscdundz91ZQHymokQ516VAf6ex0Z2UnBbXS2e0i95fXcYfu3dy9FdRHCmqkQ1061J/oPNlJQa10qJeCtsJ38zruMHp3ZV9VUCMd6tKh/kTnyU4KaqVDvRSzLbyOglrprDTHb3cU1EiHunSol7vQe933VnZyB3pfiu4ZvI6CWumMej4XfrejoEYKaq5DXe5A73TfWtnJHeh9SdCd+T442aQz6w7driqopQ5116G+qqCteLKTglrpUJcE3Znvg5NNOrMu6G5HZ7SNdlJQW9X5FzspqJUOddehHr4PTjbpUC8d6uWopTPo1rdOQS2lO2elOX47a6mgJgU116Eevg9ONunMekE3pRi1GaP3spGCmuuMtlTks6DbwndSUCs7Vu7yJnwfHNqS7l3Hb1zR7UTeug711KGedtAt2UG3I5/QfYeeG/8+OLQl3buE3+b9TutM6CZ1qJME3aUr0HvuXWbfWtnNvw9OtxfeZt1Z2e+Y0A3pUB/pUHeT3S4TupHOTsteRL8eWRxKzG5yy/tdE7ohE7qZmcx6kTcyoZsdnZU9Tazd+2MTupEj6H5FYvUuofd2FPns+H1nQjerOqNtpGP7/odKhzqZ0M2qCd3IDrr9hA71mXffc53c/fmGOB6PnTgej504Ho+dOB6PnTgej+CPn78A48PX+NojklYAAAAASUVORK5CYII='],'threshold':0.8,'rect':'0,0,1,1','best':true}"
+    }
+  ]
+}

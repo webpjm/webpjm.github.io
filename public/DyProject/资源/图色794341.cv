@@ -1,0 +1,15 @@
+{
+  "img": "screen",
+  "width": "900",
+  "height": "1600",
+  "firter": [
+    {
+      "name": "二值化",
+      "arg": "{'min':2,'max':177}"
+    },
+    {
+      "name": "模板匹配",
+      "arg": "{'template':['iVBORw0KGgoAAAANSUhEUgAAAC4AAAAiCAYAAAAge+tMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACISURBVFhH1c6xDcQADMPA7L90/qsAkjmAKOAKs/Lz3yuF0QCjAUYDjAYYDTB+lla/xXEsrX6L41ha/RaHCUYDjAYYDTAaYDTAaIDxs7T6LY5jafVbHMfS6rc4TDAaYDTAaIDRAKMBRgOMn6XVb3EcS6vf4jiWVr/FcSytfovDBKMBRgOM4573BznYLGESVvwvAAAAAElFTkSuQmCC'],'threshold':0.8,'rect':'0,0,1,1','best':true}"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 
 // 调用 OCR 功能识别中文，并将结果输出
 // runTime.Import('initData.js')
-// runTime.Import('tool.js')
+runTime.Import('tool.js')
 // sleep.time('22:10:10');
 // let date1 = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate() + ' 18:00:00'
 // console.log(date1,new Date("2025-4-21 18:00:00"))
@@ -12,12 +12,12 @@
 
 
 // runTime.Import('socket.js')
-runTime.Import('initData.js')
-runTime.Import('tool.js')
+// runTime.Import('initData.js')
+// runTime.Import('tool.js')
 // runTime.Import('adTool.js')
 // runTime.Import('douyinAd.js')
 // runTime.Import('main.js')
-autoUtils.setSuccessPic('洛雪壁纸')
+// autoUtils.setSuccessPic('洛雪壁纸')
 // var img = screen.screenShotFull();
 // // 压缩图片，类型为jpg，质量设置为50
 // // var compressedImg = img.compress('jpg', 50);
@@ -325,3 +325,28 @@ autoUtils.setSuccessPic('洛雪壁纸')
 // autoUtils.sleep(5,'aaa')
 //  t = time.nowStamp()
 // autoUtils.logText((t - s)/1000)
+
+
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+
+// autoUtils.logText('当前钻石余额', this.zhiboInfo.zuanShiNum)
+//找图返回目标数组
+//找图返回目标数组
+// var detects=opencv.findImagesEx('图色794341.cv');
+// if(detects!=null){
+//    printl(detects);
+//    detects[0].click();
+// }
+
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+var detects=opencv.findImagesEx('图色850803.cv');
+if(detects!=null){
+   printl(detects);
+   detects[0].click();
+}
