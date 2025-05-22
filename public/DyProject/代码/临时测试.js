@@ -357,8 +357,4 @@ runTime.Import('tool.js')
 //找图返回目标数组
 //找图返回目标数组
 //找图返回目标数组
-var detects=opencv.findImagesEx('图色742549.cv');
-if(detects!=null){
-   printl(detects);
-   detects[0].click();
-}
+console.log(autoUtils.getText('精选') && !autoUtils.getText('发现') && !autoUtils.getText('关注'))
