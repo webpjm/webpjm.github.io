@@ -7,7 +7,7 @@ let httpUrlList = [
     `${configRootUrl}DyProject/代码/adTool.js`,
     `${configRootUrl}DyProject/代码/douyinAd.js`,
     `${configRootUrl}DyProject/代码/快手/ksAdTool.js`,
-    `${configRootUrl}DyProject/代码/kuaishouAd.js`,
-    `${configRootUrl}DyProject/代码/ksInit.js`,
+    `${configRootUrl}DyProject/代码/快手/kuaishouAd.js`,
+    `${configRootUrl}DyProject/代码/快手/ksInit.js`,
     `${configRootUrl}DyProject/代码/main.js`,
  ]
