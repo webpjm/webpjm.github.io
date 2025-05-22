@@ -13,6 +13,9 @@ if (!isLocal) {
     runTime.Import('socket.js')
     runTime.Import('douyinAd.js')
     runTime.Import('adTool.js')
+    runTime.Import('快手/ksAdTool.js')
+    runTime.Import('快手/kuaishouAd.js')
+    runTime.Import('快手/ksInit.js')
     runTime.Import('main.js')
 }
 

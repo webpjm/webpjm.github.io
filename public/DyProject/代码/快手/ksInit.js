@@ -1,3 +1,7 @@
+// runTime.Import('initData.js')
+// runTime.Import('initData.js')
+// runTime.Import('tool.js')
+// runTime.Import('socket.js')
 
 let autoTaskKs = {
     runAppList: {
@@ -8,27 +12,25 @@ let autoTaskKs = {
         "5": '快手',
         "6": '快手极速版',
     },
-    init() {
-        AutoGlobData.taskApp = adUtilsKsKs.taskApp
-        AutoGlobData.appList = adUtilsKsKs.appList
-
-    },
     //初始化 总逻辑是this.setRunModel先执行养机逻辑 在执行kaishouAd.lookModel看小程序广告的逻辑
     initApp(name) {
-        autoUtils.logText('最新版本：修改了进入小程序详情方法')
+         AutoGlobData.taskApp = adUtilsKsKs.taskApp
+         AutoGlobData.appList = adUtilsKsKs.appList
+
+        autoUtils.logText('最新版本：快手1.0')
         // 设置当前运行的APP名称（从预定义列表获取）
         AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp] || '快手'
 
         // 快速任务模式处理（通过socket调用）
 
-        // if (name && name == 'fast') {
-        //     autoUtils.logText('快速开始任务--不预启动')
-        // } else {
-        //     autoUtils.logText('开始登录' + AutoGlobData.appPhoneName + '先预启动')
-        //     this.startyuzhuang() // 启动预装APP流程
-        // }
+        if (name && name == 'fast') {
+            autoUtils.logText('快速开始任务--不预启动')
+        } else {
+            autoUtils.logText('开始登录' + AutoGlobData.appPhoneName + '先预启动')
+            this.startyuzhuang() // 启动预装APP流程
+        }
 
-        // this.waitByNum()          // 根据设备启动次数等待间隔
+        this.setTimeWaitByNum(rand.randDoubleNumber(3,500))          // 根据设备启动次数等待间隔
         this.setRunAppList()      // 配置要运行的小程序列表
         autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
         this.setRunModel()        // 设置养机/广告模式
@@ -57,6 +59,7 @@ let autoTaskKs = {
         // 模式2: 精养机无广告
         else if (AutoGlobData.runModel == 2) {
             kaishouAd.jingyangji()
+            autoTask.logText('精养机任务完成')
         }
         // 模式3: 全程只看广告不养机
         else if (AutoGlobData.runModel == 3) {
@@ -186,55 +189,14 @@ let autoTaskKs = {
             }
         }
     },
-    //根据启动时间等待
-    waitByNum() {
-        adUtilsKs.loadAdList()
-        let list = autoUtils.shuffle(AutoGlobData.waitNumList.list)
-        if (list.length > 0) {
-            let waitFlag = true
-            let haveId = false
-            let timeMax = list.sort((a, b) => b.time - a.time)[0].time
-
-            for (let i = 0; i < list.length; i++) {
-                if (list[i].id == device.getDeviceIntID()) {
-                    haveId = true
-                    if (autoUtils.getTodayTime(list[i].time) == autoUtils.getTodayTime(time.nowStamp())) {
-                        autoUtils.logText('今日已启动过，不用等待')
-                        waitFlag = false
-                    }
-                    // 更新时间
-                    list[i] = { id: device.getDeviceIntID(), model: device.getBrand(), time: time.nowStamp() }
-                }
-            }
-            let maxTime = time.nowStamp() - timeMax
-            let intervalTime = autoUtils.shuffle(AutoGlobData.intervalTimeArr)[0]
-
-            // autoUtils.logText((maxTime)/1000,intervalTime,'间隔的时间秒')
-
-            if (!waitFlag || maxTime > intervalTime * 1000 * 60 * 10) {
-                autoUtils.logText('满足了条件,不用等待')
-            } else {
-                autoUtils.logText('需要等待后开始任务')
-                this.setTimeWaitByNum((intervalTime * 1000 * 60 * 10) - maxTime)
-            }
-
-            if (!haveId) {
-                list.push({ id: device.getDeviceIntID(), model: device.getBrand(), time: time.nowStamp() })
-            }
-            AutoGlobData.waitNumList.list = list
-        } else {
-            let arr = [{ id: device.getDeviceIntID(), model: device.getBrand(), time: time.nowStamp() }]
-            AutoGlobData.waitNumList.list = arr
-        }
-
-        autoUtils.setApiNumData(AutoGlobData.waitNumList)
-        autoUtils.logText('等待完成,开始任务')
-    },
+    
     setTimeWaitByNum(time) {
         autoUtils.logText('开始等待' + time + '秒')
         autoUtils.sleep(5, '等待启动中')
-        autoUtils.autoHome()
-        autoUtils.sleep(time / 1000, '等待启动中')
+        // autoUtils.autoHome()
+        logWindow.show()
+        autoUtils.sleep(time, '等待启动中')
+        logWindow.close()
     },
     // 特殊配置任务
     setOtherValue() {
@@ -275,7 +237,7 @@ let autoTaskKs = {
         } else {
             // 正常启动任务流程
             autoUtils.logText('开始任务')
-            autoTask.init() // 调用主初始化流程
+            autoTask.initApp() // 调用主初始化流程
         }
     }
 }

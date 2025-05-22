@@ -53,7 +53,7 @@ function startSocket(num) {
                     let y = str[2].split(',')[1]
                     autoUtils.logText('开始点击' + x, y)
                     hid.clickPercent(x, y)
-                    sleep.millisecond(毫秒 = 2000);
+                    sleep.millisecond(毫秒 = 100);
                     sendMsg()
 
                     // runTime.setInterval(sendMsg,1000)
@@ -67,17 +67,17 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '重启任务') {
-                    autoUtils.sleep(10, '开始启用新线程重启任务')
+                    autoUtils.sleep(2, '开始启用新线程重启任务')
                     restartAppTask()
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '养机') {
-                    autoUtils.sleep(10, '开始启用新线程养机')
+                    autoUtils.sleep(2, '开始启用新线程养机')
                     restartAppTask(1)
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '清除搜索缓存') {
-                    autoUtils.sleep(3, '开始清除搜索缓存')
+                    autoUtils.sleep(1, '开始清除搜索缓存')
                     // 重值搜索的外层的搜索队列 
                     config.setConfig('/sdcard/config.ini', 'newSearchArrList', JSON.stringify(""))
                     // 重值当前具体项的搜索数组
@@ -91,12 +91,12 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '返回主页') {
-                    autoUtils.sleep(2, '返回主页')
+                    autoUtils.sleep(1, '返回主页')
                     autoUtils.autoHome()
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '屏幕上滑') {
-                    autoUtils.sleep(3, '开始上滑屏幕')
+                    // autoUtils.sleep(3, '开始上滑屏幕')
                     let x = rand.randNumber(200,screen.getScreenWidth()-200)
                     let y = rand.randNumber(500,800)
                     let y1 = rand.randNumber(screen.getScreenHeight() - 500,screen.getScreenHeight() - 300)
@@ -120,12 +120,13 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '屏幕左滑') {
-                     autoUtils.sleep(3, '左滑动')
+                    //  autoUtils.sleep(3, '左滑动')
+                    autoUtils.logText('左滑动')
                      hid.swipM(50,screen.getScreenHeight()/2,screen.getScreenWidth()-100,screen.getScreenHeight()/2)
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '屏幕右滑') {
-                     autoUtils.sleep(3, '右滑动')
+                     autoUtils.logText('屏幕右滑')
                      hid.swipM(screen.getScreenWidth()-100,screen.getScreenHeight()/2,50,screen.getScreenHeight()/2)
                 }
 
@@ -135,12 +136,14 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '返回主页') {
-                    autoUtils.sleep(2, '返回主页')
+                    // autoUtils.sleep(2, '返回主页')
+                    autoUtils.logText('返回主页')
                     autoUtils.autoHome()
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '返回') {
-                    autoUtils.sleep(2, '返回')
+                    // autoUtils.sleep(2, '返回')
+                    autoUtils.logText('回')
                     autoUtils.autoBack()
                 }
 
@@ -154,7 +157,7 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '切换成火山版') {
-                    autoUtils.sleep(2, '切换成火山版')
+                    autoUtils.sleep(1, '切换成火山版')
                     // 切换为抖音火山
                     AutoGlobData.runApp = 2
                     AutoGlobData.appPhoneName = '抖音火山版'
@@ -163,7 +166,7 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '切换成抖音') {
-                    autoUtils.sleep(2, '切换成火山版')
+                    autoUtils.sleep(1, '切换成抖音')
                     // 切换为抖音火山
                     AutoGlobData.runApp = 1
                     AutoGlobData.appPhoneName = '抖音'
@@ -172,12 +175,12 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '快速任务') {
-                    autoUtils.sleep(5, '开始启用新线程快速任务')
+                    autoUtils.sleep(1, '开始启用新线程快速任务')
                     restartAppTask(2)
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '停止任务') {
-                    autoUtils.sleep(5, '开始启用新线程停止任务')
+                    autoUtils.sleep(1, '开始启用新线程停止任务')
                     restartAppTask(3)
                 }
 
@@ -215,4 +218,4 @@ function startSocket(num) {
     // ws.connet("ws://128.204.223.95:30001/");  
     
 }
-// startSocket()
+startSocket()

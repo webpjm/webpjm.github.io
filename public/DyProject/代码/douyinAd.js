@@ -2521,6 +2521,7 @@ let douyinAd = {
 
                             let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
                             let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
+                            let isDownLoad = false
                             if (downloadtotal < needdownload) {
                                 if (autoUtils.getText("下载")) {
                                     autoUtils.logText('可以点击下载了')
@@ -2530,6 +2531,7 @@ let douyinAd = {
                                     ws.send(str)
 
                                     autoUtils.clickGetText('下载')
+                                    isDownLoad = true
                                     autoUtils.logText('等待下载完成')
                                     autoUtils.sleep(rand.randNumber(30,60))
                                 }
@@ -2561,7 +2563,7 @@ let douyinAd = {
 
 
                             autoUtils.sleep(5, '开始修改广告值')
-                            adUtils.setSuccessAppAd(name, AutoGlobData.isClick, false)
+                            adUtils.setSuccessAppAd(name, AutoGlobData.isClick, isDownLoad)
 
 
                             autoUtils.sleep(5, '返回后等待5S')

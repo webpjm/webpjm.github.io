@@ -25,8 +25,7 @@ let autoTask = {
         autoUtils.sleep(3,'等待开始任务')
         // 处理非抖音系任务(5/6/7)
         if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
-            ksAdUtils.appPhoneName = this.runAppList[AutoGlobData.runApp]
-            kuaishouAd.init()
+            autoTaskKs.startTask()
             // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
             return;
         }

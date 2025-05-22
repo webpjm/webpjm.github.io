@@ -2,6 +2,8 @@
 // 调用 OCR 功能识别中文，并将结果输出
 // runTime.Import('initData.js')
 runTime.Import('tool.js')
+
+autoUtils.clickGetText('视频')
 // sleep.time('22:10:10');
 // let date1 = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate() + ' 18:00:00'
 // console.log(date1,new Date("2025-4-21 18:00:00"))

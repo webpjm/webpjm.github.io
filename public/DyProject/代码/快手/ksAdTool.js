@@ -1,13 +1,4 @@
-/*
-   欢迎使用AiWork安卓自动化IDE
-   帮助文档: http://help.autoapp.net.cn
-   官方地址: www.aiwork24.com
-   qq群: 743723025
-*/ 
 let adUtilsKs = {
-    appPhoneName: '快手',
-    adMiniNum:3,
-    adMaxNum:4,
     adListApiData: [],
     copyTaskApp: [],
     todayTaskAllList: [],
@@ -114,13 +105,13 @@ let adUtilsKs = {
         // 先查列表的第一个小程序  就一个一个处理吧 效率低 可能是安全的 
         // 先挑出来符合条件的前几个（30分钟内的） 再随机  之后等时间到再看 下一个的时候依旧如此策略
 
-        // 加载远程数据 放在 ksAdUtils.adListApiData
+        // 加载远程数据 放在 adUtilsKs.adListApiData
         this.loadAdList()
         
         // 初始化广告数据  没有的新增 有重复的话删除基础数据 
         this.initAdAppList()
         
-        // 初始化需要观看的次数 放在 ksAdUtils.todayTaskAllList
+        // 初始化需要观看的次数 放在 adUtilsKs.todayTaskAllList
         this.initAdNeedLokkNum()
 
         // 获取小程序剩余的观看时间
@@ -149,21 +140,21 @@ let adUtilsKs = {
 
         let numlist =  JSON.parse(adList.files.ksAdNum.content)
 
-        ksAdUtils.adListApiData = adListData
-        ksAdUtils.waitNumList = numlist
+        adUtilsKs.adListApiData = adListData
+        adUtilsKs.waitNumList = numlist
         autoUtils.sleep(3, '请求接口广告列表数据后')
     },
     // 初始化广告数据
     initAdAppList() {
-        let list = ksAdUtils.appList
-        let apiList = ksAdUtils.adListApiData
+        let list = adUtilsKs.appList
+        let apiList = adUtilsKs.adListApiData
         autoUtils.logText('执行initAdAppList-----初始化小程序API广告列表的数据')
         if (apiList.length > 0) {
             autoUtils.logText('接口有广告列表值')
             //接口有值
             let arr = []
             for (let i = 0; i < list.length; i++) {
-                arr.push({ appName: list[i].appName,runApp: ksAdUtils.appPhoneName, model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
+                arr.push({ appName: list[i].appName,runApp: AutoGlobData.appPhoneName, model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
             }
             // let newList = apiList.concat(arr)
             // newList = autoUtils.uniqueAdArr(newList)
@@ -174,7 +165,7 @@ let adUtilsKs = {
             let arr = []
             // { name: '洛雪壁纸', phoneId: '', lastLookTime: 1235689789, main: '大明网络', todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, todayLookNumToal: 0, lookAdTotal: 0 }
             for (let i = 0; i < list.length; i++) {
-                arr.push({ appName: list[i].appName,runApp: ksAdUtils.appPhoneName,model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
+                arr.push({ appName: list[i].appName,runApp: AutoGlobData.appPhoneName,model:device.getModel(), phoneId: device.getDeviceIntID(), lastLookTime: 0, main: list[i].main, todayClickNum: 0, clickNumTotal: 0, todayLookNum: 0, lookAdTotal: 0,successAdList: [],todayDownLoad:0,downLoadTotal: 0,downLoad:false,isClick:false,customObj:{} })
             }
             autoUtils.setApiDataKs(arr)
         }
@@ -190,7 +181,7 @@ let adUtilsKs = {
             taskArr = listObj.data
         } else {
             // 初始化今天的数据
-            let applist = autoUtils.shuffle(ksAdUtils.taskApp)
+            let applist = autoUtils.shuffle(adUtilsKs.taskApp)
             for (let i = 0; i < applist.length; i++) {
                 // 少看点看效果
                 if (i == 0 || i == 1) {
@@ -198,7 +189,7 @@ let adUtilsKs = {
                 } else {
                     applist[i].todayTaskNum = autoUtils.getRandomInt(AutoGlobData.adMiniNum, AutoGlobData.adMaxNum, 'round')
                 }
-                // applist[i].todayTaskNum = autoUtils.getRandomInt(ksAdUtils.adMiniNum, ksAdUtils.adMaxNum, 'round')
+                // applist[i].todayTaskNum = autoUtils.getRandomInt(adUtilsKs.adMiniNum, adUtilsKs.adMaxNum, 'round')
                 applist[i].todayTasktatus = 'doing'
             }
 
@@ -216,7 +207,7 @@ let adUtilsKs = {
         }
         autoUtils.logText('每个小程序需要观看的次数汇总------------'+JSON.stringify(conArr))
 
-        ksAdUtils.todayTaskAllList = taskArr
+        adUtilsKs.todayTaskAllList = taskArr
         return taskArr
     },
     taskDeleteApp(task) {
@@ -232,7 +223,7 @@ let adUtilsKs = {
         let taskApp = config.getConfig(AutoGlobData.configUrlKs, 'taskAppRunList', JSON.stringify({}))
         autoUtils.logText("setTaskRunApp 缓存的数据", JSON.stringify(taskApp))
         let taskAppObj = JSON.parse(taskApp)
-        let runApp = ksAdUtils.taskApp
+        let runApp = adUtilsKs.taskApp
         if (taskAppObj.time) {
             // 如果是今天
             if (autoUtils.getTodayTime(taskAppObj.time) == autoUtils.getTodayTime(time.nowStamp())) {
@@ -254,8 +245,8 @@ let adUtilsKs = {
         return runApp
     },
     getTaskStatus() {
-        let taskAllListAppStatus = ksAdUtils.todayTaskAllList
-        let runArr = ksAdUtils.taskApp
+        let taskAllListAppStatus = adUtilsKs.todayTaskAllList
+        let runArr = adUtilsKs.taskApp
         for (let i = 0; i < runArr.length; i++) {
             runArr[i].todayTasktatus = 'doing'
             for (let j = 0; j < taskAllListAppStatus.length; j++) {
@@ -323,7 +314,7 @@ let adUtilsKs = {
         // autoUtils.logText('当前运行的任务列表是-----------',runArr)
 
         // 缓存的广告需要观看次数数据
-        let taskAllListAppStatus = ksAdUtils.todayTaskAllList
+        let taskAllListAppStatus = adUtilsKs.todayTaskAllList
         autoUtils.logText(JSON.stringify(taskAllListAppStatus)+"----taskAllListAppStatus")
         for (let i = 0; i < runArr.length; i++) {
             runArr[i].todayTasktatus = 'doing'
@@ -348,7 +339,7 @@ let adUtilsKs = {
         return waitRunArr
     },
     getAppAdTime(name) {
-        let adListData = ksAdUtils.adListApiData
+        let adListData = adUtilsKs.adListApiData
         let nowTime = time.nowStamp();
         let appTime = 0 // 当前手机当前小程序
         let phoneTimeList = [0] // 当前手机不同小程序
@@ -357,7 +348,7 @@ let adUtilsKs = {
 
         for (let i = 0; i < adListData.length; i++) {
             let currentTime = adListData[i].lastLookTime
-            if (ksAdUtils.phoneId == adListData[i].phoneId) {
+            if (adUtilsKs.phoneId == adListData[i].phoneId) {
                 // autoUtils.logText("相同手机")
                 if (name == adListData[i].appName) {
                     // 当前手机 当前小程序 上一次观看时间
@@ -382,12 +373,12 @@ let adUtilsKs = {
         let maxTime4 = otherPhoneOtherAppList.sort((a, b) => b - a)[0]
 
         //括号里是当前时间距离上一次广告的时间  用标准时间-括号时间就是 剩余多长时间可以观看  数值越大 等待时间越长
-        let ksAdUtilsBiaozhun1Value = ksAdUtils.adBiaoZhun1 - (nowTime - appTime)
-        let ksAdUtilsBiaozhun2Value = ksAdUtils.adBiaoZhun2 - (nowTime - maxTime2)
-        let ksAdUtilsBiaozhun3Value = ksAdUtils.adBiaoZhun3 - (nowTime - maxTime3)
-        let ksAdUtilsBiaozhun4Value = ksAdUtils.adBiaoZhun4 - (nowTime - maxTime4)
+        let adUtilsKsBiaozhun1Value = adUtilsKs.adBiaoZhun1 - (nowTime - appTime)
+        let adUtilsKsBiaozhun2Value = adUtilsKs.adBiaoZhun2 - (nowTime - maxTime2)
+        let adUtilsKsBiaozhun3Value = adUtilsKs.adBiaoZhun3 - (nowTime - maxTime3)
+        let adUtilsKsBiaozhun4Value = adUtilsKs.adBiaoZhun4 - (nowTime - maxTime4)
 
-        let maxAdTime = [ksAdUtilsBiaozhun1Value, ksAdUtilsBiaozhun2Value, ksAdUtilsBiaozhun3Value, ksAdUtilsBiaozhun4Value]
+        let maxAdTime = [adUtilsKsBiaozhun1Value, adUtilsKsBiaozhun2Value, adUtilsKsBiaozhun3Value, adUtilsKsBiaozhun4Value]
 
         let leftTime = maxAdTime.sort((a, b) => b - a)[0]
 
@@ -426,7 +417,7 @@ let adUtilsKs = {
         detail.lastLookTime = time.nowStamp();
         detail.downLoad = download
         detail.isClick = isClick
-        detail.ip = ksAdUtils.phoneIp
+        detail.ip = adUtilsKs.phoneIp
         // autoUtils.logText(detail,'更新的广告数据')
         this.upDateAdTime(detail)
 
@@ -434,7 +425,7 @@ let adUtilsKs = {
     },
     upDateAdTime(detail) {
         this.loadAdList()
-        let apiList = ksAdUtils.adListApiData
+        let apiList = adUtilsKs.adListApiData
         for (let i = 0; i < apiList.length; i++) {
             if (apiList[i].appName == detail.appName && apiList[i].phoneId == detail.phoneId) {
                 autoUtils.logText('修改' + apiList[i].appName + '的值')
@@ -449,10 +440,10 @@ let adUtilsKs = {
     },
     getAdDetail(appName) {
         let detail = {}
-        let apiList = ksAdUtils.adListApiData
+        let apiList = adUtilsKs.adListApiData
         for (let i = 0; i < apiList.length; i++) {
 
-            if (apiList[i].appName.indexOf(appName)>-1 && apiList[i].phoneId == ksAdUtils.phoneId) {
+            if (apiList[i].appName.indexOf(appName)>-1 && apiList[i].phoneId == adUtilsKs.phoneId) {
                 // autoUtils.logText('获取' + apiList[i].appName + '的值')
                 detail = apiList[i]
             }
@@ -470,10 +461,10 @@ let adUtilsKs = {
     getAdDetailByPhoneId() {
         let detail = {todayLookNum: 0,allLookNum:0,lastLookTime:0,lastLookTimeStr:''}
         let arr = []
-        let apiList = ksAdUtils.adListApiData
+        let apiList = adUtilsKs.adListApiData
         for (let i = 0; i < apiList.length; i++) {
 
-            if (apiList[i].phoneId == ksAdUtils.phoneId) {
+            if (apiList[i].phoneId == adUtilsKs.phoneId) {
                 arr.push(apiList[i])
             }
         }
@@ -498,10 +489,10 @@ let adUtilsKs = {
     getAllLookTotal() {
         let total = 0
         let downLoad = 0
-        let apiList = ksAdUtils.adListApiData
+        let apiList = adUtilsKs.adListApiData
         for (let i = 0; i < apiList.length; i++) {
 
-            if (apiList[i].phoneId == ksAdUtils.phoneId) {
+            if (apiList[i].phoneId == adUtilsKs.phoneId) {
                 // autoUtils.logText('获取' + apiList[i].appName + '的值'+apiList[i].lookAdTotal)
                 total += apiList[i].lookAdTotal
                 downLoad += apiList[i].downLoadTotal

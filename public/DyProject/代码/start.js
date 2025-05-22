@@ -1,6 +1,6 @@
 
 
-var isLocal = false // 上线的时候一点要把这个变量改为false
+var isLocal = true // 上线的时候一点要把这个变量改为false
 logWindow.show()
 
 var defaultUrl = 'https://webpjm.github.io/public/DyProject/代码/startData.js'

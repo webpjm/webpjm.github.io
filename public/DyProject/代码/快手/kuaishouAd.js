@@ -1,15 +1,15 @@
-
-let globData = {
-    runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
-    runModel: '1', //  运行模式 1 养机+看广告 2 精养机+不看广告 3 看广告+不养机 
-    miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
-    lookRangeNum: [3, 4], // 最少最多观看数量 
-    phoneIp: '',  //  ip地址
-    otherValue: []
-}
-runTime.Import('initData.js')
-runTime.Import('tool.js')
+// let globData = {
+//     runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
+//     runModel: '1', //  运行模式 1 养机+看广告 2 精养机+不看广告 3 看广告+不养机 
+//     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
+//     lookRangeNum: [3, 4], // 最少最多观看数量 
+//     phoneIp: '',  //  ip地址
+//     otherValue: []
+// }
+// runTime.Import('initData.js')
+// runTime.Import('tool.js')
 // runTime.Import('socket.js')
+// runTime.Import('快手/ksAdTool.js')
 
 let kaishouAd = {
     // 点击的字符串对象
@@ -33,14 +33,16 @@ let kaishouAd = {
     },
     // 小程序观看广告的模式
     lookModelList: [
-        { type: 1, text: '小程序页停留几分钟+看1广告' },
-        { type: 2, text: '小程序页停留几分钟+看2广告' },
-        { type: 3, text: '小程序页停留几分钟+看3广告' },
-        { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看2广告' },
-        { type: 2, text: '小程序页停留几分钟+看2广告' },
-        { type: 1, text: '小程序页停留几分钟+看1广告' },
-        { type: 3, text: '小程序页停留几分钟+看3广告' },
-        { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看2广告' },
+        { type: 1, text: '看1个广告' },
+        { type: 1, text: '看1个广告' },
+        { type: 1, text: '看1个广告' },
+        { type: 2, text: '养机+看1个广告' },
+        { type: 1, text: '看1个广告' },
+        { type: 1, text: '看1个广告' },
+        { type: 1, text: '看1个广告' },
+        { type: 2, text: '养机+看1广告' },
+        { type: 1, text: '看1个广告' },
+        { type: 1, text: '看1个广告' },
 
     ],
     // 养机模式的值 用于养机缓存变化的值 自定义一个乱中有序
@@ -61,18 +63,23 @@ let kaishouAd = {
         // { type: 6, text: '在搜索页的直播养机' },
         // { type: 9, text: '在我的收藏中穿插右滑查看主页中的养机' },
         { type: 5, text: '在搜索页的视频养机' },
-        { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 5, text: '在搜索页的视频养机' },
         { type: 1, text: '在推荐页养机' },
         { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
+        { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 6, text: '在搜索页的直播养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 7, text: '在搜索页的综合样机养机' },
         { type: 1, text: '在推荐页养机' },
         // { type: 4, text: '在小程序列表页养机' },
         // { type: 8, text: '在我的喜欢中穿插右滑查看主页中的视频养机' },
-
 
     ],
     // 养机模式的值
@@ -492,7 +499,7 @@ let kaishouAd = {
     },
     //是否在首页我的页面
     isIndexPageMy() {
-        return autoUtils.getText('精选') && autoUtils.getText('关注') && autoUtils.getText('粉丝')
+        return autoUtils.getText('精选') && autoUtils.getText('关注') && autoUtils.getText('粉丝')&& autoUtils.getText('我')
     },
     // 是否在小程序列表页的入口
     isMiniAppListPage() {
@@ -813,7 +820,7 @@ let kaishouAd = {
         }
     },
     isIndexPage() {
-        return autoUtils.getText('精选') && autoUtils.getText('我') && autoUtils.getText('粉丝') && autoUtils.getText('粉丝')
+        return autoUtils.getText('精选') && !autoUtils.getText('发现') && !autoUtils.getText('关注') 
     },
     //返回首页 开始养机
     backToHome(num) {
@@ -946,9 +953,9 @@ let kaishouAd = {
         // let timeEnd = time.nowStamp()
         // let allNum = rand.randNumber(15, 20)
         // autoUtils.logText(allNum + '滑动次数上限')
-        let huadongNum = rand.randNumber(3, 6)
+        let huadongNum = rand.randNumber(2, 4)
         if (type == 'video') {
-            huadongNum = rand.randNumber(5, 10)
+            huadongNum = rand.randNumber(3, 6)
         }
         autoUtils.logText(huadongNum + '需要滑动的次数')
         // 如果时间小于随机时间，则循坏滑动视频或直播
@@ -1605,8 +1612,13 @@ let kaishouAd = {
         }
     },
     commonSearchVideo() {
-        if (this.getCvByText("搜索后的视频")) {
-            this.clickCv('搜索后的视频')
+        if (this.getCvByText("搜索后的视频") || autoUtils.getText('视频')) {
+            if(this.getCvByText("搜索后的视频")) {
+                this.clickCv('搜索后的视频')
+            }
+            else {
+                autoUtils.clickGetText('视频')
+            }
             autoUtils.sleep(5, '等待')
             hid.clickPercent(rand.randNumber(17.4, 39.2) / 100, rand.randNumber(35.5, 45.9) / 100)
             autoUtils.sleep(10, '等待后寻找视频标志')
@@ -1646,8 +1658,13 @@ let kaishouAd = {
             return;
         }
         this.goSearchPage()
-        if (this.getCvByText("搜索后的直播")) {
-            this.clickCv('搜索后的直播')
+        if (this.getCvByText("搜索后的直播") || autoUtils.getText('直播')) {
+            if(this.getCvByText("搜索后的直播")) {
+                this.clickCv('搜索后的直播')
+            }
+            else {
+                autoUtils.clickGetText('直播')
+            }
             autoUtils.sleep(10, '等待10秒后点击第一个')
             hid.clickPercent(rand.randNumber(35.7, 75.3) / 100, rand.randNumber(36.13, 42.38) / 100)
             autoUtils.sleep(10, '等待10秒寻找直播')
@@ -1684,8 +1701,9 @@ let kaishouAd = {
             if (this.isIndexPageMy()) {
                 autoUtils.logText('找到我的页面了')
             } else {
-                autoUtils.logText('点击我的页面了')
+                autoUtils.logText('点击我')
                 autoUtils.clickGetTextAll('我')
+                autoUtils.logText('进入我的页面')
             }
         } else {
             num++
@@ -1798,24 +1816,8 @@ let kaishouAd = {
         if (AutoGlobData.runModel == 3) {
             this.backHomeWaitAd(task)
 
-            if (lookModelValue == 1) {
-                this.swipeIndexAppListForAd(taskDetail, 2)
-                this.lookAd(taskDetail.appName)
-            }
-            if (lookModelValue == 2) {
-                for (let i = 0; i < 2; i++) {
-                    this.swipeIndexAppListForAd(taskDetail, 2)
-                    this.lookAd(taskDetail.appName)
-                }
-            }
-            if (lookModelValue == 3) {
-                for (let i = 0; i < 3; i++) {
-                    this.swipeIndexAppListForAd(taskDetail, 2)
-                    this.lookAd(taskDetail.appName)
-                }
-            }
-
-
+            this.swipeIndexAppListForAd(taskDetail, 2)
+            this.lookAd(taskDetail.appName)
 
             if (rand.randNumber(1, 10) > 6) {
                 autoUtils.logText('随机到了养机')
@@ -1832,10 +1834,6 @@ let kaishouAd = {
             this.lookModel1()
         } else if (lookModelValue == 2) {
             this.lookModel2()
-        } else if (lookModelValue == 3) {
-            this.lookModel3()
-        } else if (lookModelValue == 4) {
-            this.lookModel4()
         }
         autoUtils.sleep(10, '等待后观看广告')
 
@@ -1926,7 +1924,7 @@ let kaishouAd = {
         // this.yangji('quick')
         // this.yangji('quick')
         let task = AutoGlobData.taskdetail
-        this.backHomeWaitAd(task)
+        // this.backHomeWaitAd(task)
         this.swipeIndexAppListForAd(task, 4)
         this.lookAd(task.appName)
         //小程序内部看广告的逻辑
@@ -1936,11 +1934,9 @@ let kaishouAd = {
         let task = AutoGlobData.taskdetail
         // this.swipeIndexAppListForAd(task, 4)
         // // this.yangji('quick')
-        // // this.yangji('quick')
-        for (let i = 0; i < 2; i++) {
-            this.swipeIndexAppListForAd(task, 4)
-            this.lookAd(task.appName)
-        }
+        this.yangji('quick')
+        this.swipeIndexAppListForAd(task, 4)
+        this.lookAd(task.appName)
 
     },
     lookModel3() {
@@ -2446,7 +2442,7 @@ let kaishouAd = {
                                     this.handleAdDetail()
                                 }
                             }
-                            else if(rand.randNumber(1, 10) >5) {
+                            else if(rand.randNumber(1, 10) >3) {
                                 autoUtils.logText('随机到了主动点击')
                                 this.goDetailAd()
                                 autoUtils.sleep(5, '开始检测广告是否播放完成或者跳转了详情页')
@@ -2463,8 +2459,9 @@ let kaishouAd = {
                                  }
                             }
 
-                            let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 30)
+                            let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
                             let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
+                            let isDownLoad = false
                             if (downloadtotal < needdownload) {
                                 if (autoUtils.getText("下载")) {
                                     autoUtils.logText('可以点击下载了')
@@ -2474,11 +2471,12 @@ let kaishouAd = {
                                     ws.send(str)
 
                                     autoUtils.clickGetText('下载')
+                                    isDownLoad = true
                                     autoUtils.logText('等待下载完成')
                                     autoUtils.sleep(rand.randNumber(30, 60))
 
-                                    let str = `快手广告下载通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                                    ws.send(str)
+                                    // let str = `快手广告下载通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                                    // ws.send(str)
                                 }
                             }
 
@@ -2504,7 +2502,7 @@ let kaishouAd = {
 
 
                             autoUtils.sleep(5, '开始修改广告值')
-                            adUtilsKs.setSuccessAppAd(name, AutoGlobData.isClick, false)
+                            adUtilsKs.setSuccessAppAd(name, AutoGlobData.isClick, isDownLoad)
 
 
                             autoUtils.sleep(5, '返回后等待5S')
@@ -2602,5 +2600,7 @@ let kaishouAd = {
         autoUtils.autoBack()
     },
 }
+// kaishouAd.backToHome()
+// kaishouAd.clickPopMiniApp()
 // kaishouAd.getZhiBoData()
-
+// kaishouAd.lookAd('洛雪壁纸')

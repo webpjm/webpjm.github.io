@@ -898,12 +898,12 @@
           if (token) {
             this.tokenData = token
             axios({
-              url: `https://gitee.com/api/v5/gists/cw6jlqnhio24pdru0vk1390?access_token=${token}`,
+              url: `https://gitee.com/api/v5/gists/kxglmtzjyc07o82bf4p9n11?access_token=${token}`,
               type: 'GET', // 或者 'POST'，取决于你的请求方式
             }).then(res => {
               // console.log(res, 'aaaa')
               this.dialogVisible = false
-              let data = JSON.parse(res.data.files.douyin.content)
+              let data = JSON.parse(res.data.files.ksAd.content)
               this.handleTableData(data)
               
               // this.activeName = 'first'
@@ -946,7 +946,7 @@
           this.loadingData = true
           let token = this.GetQueryString('token') ? this.GetQueryString('token') : localStorage.getItem('tokenData')
           axios({
-            url: `https://gitee.com/api/v5/repos/pjmgit/ad-pic/contents/picList`,
+            url: `https://gitee.com/api/v5/repos/pjmgit/ks-pic/contents/picList`,
             type: 'GET', // 或者 'POST'，取决于你的请求方式
             params: {
               access_token: token
