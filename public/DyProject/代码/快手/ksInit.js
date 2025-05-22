@@ -1,8 +1,3 @@
-// runTime.Import('initData.js')
-// runTime.Import('initData.js')
-// runTime.Import('tool.js')
-// runTime.Import('socket.js')
-
 let autoTaskKs = {
     runAppList: {
         "1": '抖音',
@@ -14,8 +9,8 @@ let autoTaskKs = {
     },
     //初始化 总逻辑是this.setRunModel先执行养机逻辑 在执行kaishouAd.lookModel看小程序广告的逻辑
     initApp(name) {
-         AutoGlobData.taskApp = adUtilsKsKs.taskApp
-         AutoGlobData.appList = adUtilsKsKs.appList
+         AutoGlobData.taskApp = adUtilsKs.taskApp
+         AutoGlobData.appList = adUtilsKs.appList
 
         autoUtils.logText('最新版本：快手1.0')
         // 设置当前运行的APP名称（从预定义列表获取）
@@ -78,7 +73,7 @@ let autoTaskKs = {
             '4': AutoGlobData.appList.length
         }
             // 根据配置选择数量，默认取全部
-        this.setAppRunNum(appNumObj[AutoGlobData.miniAppNum] || 8)
+        this.setAppRunNum(appNumObj[AutoGlobData.miniAppNum] || AutoGlobData.appList.length)
 
         autoUtils.logText('运行的小程序是' + JSON.stringify(AutoGlobData.taskApp))
 
@@ -88,7 +83,7 @@ let autoTaskKs = {
         let applist = autoUtils.shuffleObj(AutoGlobData.appList)
         let newList = []
         let newList1 = []
-        for (var i = 0; i < applist.length; i++) {
+        for (var i = 0; i < applist.length-1; i++) {
             if (i < num) {
                 newList.push(applist[i])
             }else{

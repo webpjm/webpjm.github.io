@@ -1,16 +1,3 @@
-// let globData = {
-//     runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
-//     runModel: '1', //  运行模式 1 养机+看广告 2 精养机+不看广告 3 看广告+不养机 
-//     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
-//     lookRangeNum: [3, 4], // 最少最多观看数量 
-//     phoneIp: '',  //  ip地址
-//     otherValue: []
-// }
-// runTime.Import('initData.js')
-// runTime.Import('tool.js')
-// runTime.Import('socket.js')
-// runTime.Import('快手/ksAdTool.js')
-
 let kaishouAd = {
     // 点击的字符串对象
     clickTextStrObj: {
@@ -33,6 +20,38 @@ let kaishouAd = {
         '寻找柠檬壁纸图标':'图色183483.cv',
         '寻找橘子壁纸图标': '图色315859.cv',
         '寻找橙子壁纸图标': '图色781467.cv',
+        '寻找洛雪壁纸图标': '图色495375.cv',
+        '寻找云帆壁纸图标': '图色659762.cv',
+        '寻找熊猫壁纸图标': '图色926604.cv',
+        '寻找番茄壁纸图标': '图色727567.cv',
+        '寻找西瓜壁纸图标': '图色142765.cv',
+        '寻找优创汇壁纸图标': '图色161717.cv',
+        '寻找海豚壁纸图标': '图色450874.cv',
+    },
+    hanldeCvTextByAppName(appName) {
+        let str = '寻找洛雪壁纸图标'
+        if(appName.indexOf('洛雪')>-1) {
+            str = '寻找洛雪壁纸图标'
+        }else if(appName.indexOf('熊猫')>-1) {
+            str = '寻找熊猫壁纸图标'
+        }else if(appName.indexOf('柠檬')>-1) {
+            str = '寻找柠檬壁纸图标'
+        }else if(appName.indexOf('优图选')>-1) {
+            str = '寻找橘子壁纸图标'
+        }else if(appName.indexOf('番茄')>-1) {
+            str = '寻找番茄壁纸图标'
+        }else if(appName.indexOf('西瓜')>-1) {
+            str = '寻找西瓜壁纸图标'
+        }else if(appName.indexOf('云帆')>-1) {
+            str = '寻找云帆壁纸图标'
+        }else if(appName.indexOf('优橙')>-1) {
+            str = '寻找橙子壁纸图标'
+        }else if(appName.indexOf('海豚')>-1) {
+            str = '寻找海豚壁纸图标'
+        }else if(appName.indexOf('优创')>-1) {
+            str = '寻找优创汇壁纸图标'
+        }
+        return str
     },
     // 小程序观看广告的模式
     lookModelList: [
@@ -649,76 +668,26 @@ let kaishouAd = {
             return;
         }
 
+        let cvName = this.hanldeCvTextByAppName(name)
 
-        let newName = name
-        if (!autoUtils.getText(name)) {
-            if (name.indexOf('柠檬') > -1) {
-                newName = '精品壁纸'
-            }
-            autoUtils.logText('没有找到' + name + '使用' + newName + '去寻找')
-        }
-        if (autoUtils.getText(newName)) {
-            autoUtils.logText('找到了开始点击' + newName)
-            autoUtils.clickGetText(newName)
+        autoUtils.logText(cvName)
 
+        
+        if(this.getCvByText(cvName)) {
+            this.clickCv(cvName)
             autoUtils.sleep(rand.randNumber(15, 25), '检验是否在小程序页面')
-
             if (this.isAppDetailPage(name)) {
                 autoUtils.logText('小程序进入成功了')
             } else {
-                autoUtils.logText(name + '小程序进入失败了')
+                autoUtils.logText(name + '小程序进入失败了，返回重新寻找')
 
-                autoUtils.sleep(6, '尝试移动点击寻找')
+                autoUtils.autoBack()
+                this.fromIndexMyToAppList(1, name)
+                this.findMiniAppNameAndClick(name, 1)
 
-                autoUtils.clickGetText(name, true)
-
-                autoUtils.sleep(6, '检测是否点击成功')
-
-                if (this.isAppDetailPage(name)) {
-                    autoUtils.logText('移动寻找成功')
-                } else {
-                    autoUtils.logText(name + '移动寻找失败')
-                    autoUtils.autoBack()
-                    this.fromIndexMyToAppList(1, name)
-                    this.findMiniAppNameAndClick(name, 1)
-
-                }
             }
-
-        } else {
-    
-            if(name.indexOf('橘子')>-1) {
-                autoUtils.logText('使用图片寻找橘子壁纸')
-
-                if(this.getCvByText('寻找橘子壁纸图标')) {
-                    this.clickCv('寻找橘子壁纸图标')
-                }
-            }
-
-            if(name.indexOf('柠檬')>-1) {
-                autoUtils.logText('使用图片寻找柠檬壁纸')
-
-                if(this.getCvByText('寻找柠檬壁纸图标')) {
-                    this.clickCv('寻找柠檬壁纸图标')
-                }
-            }
-            if(name.indexOf('橙子')>-1) {
-                autoUtils.logText('使用图片寻找橙子壁纸')
-
-                if(this.getCvByText('寻找橙子壁纸图标')) {
-                    this.clickCv('寻找橙子壁纸图标')
-                }
-            }
-
-            autoUtils.sleep(6, '检测是否点击成功')
+        }else {
             
-
-
-            if (this.isAppDetailPage(name)) {
-                autoUtils.logText('小程序进入成功了')
-                return;
-            }
-
             // autoUtils.sleep(5, '开始下滑寻找' + name)
             // hid.swipAI(this.getSwipeX(), screen.getScreenHeight() - 300, this.getSwipeX(), screen.getScreenHeight() - 850)
             autoUtils.sleep(2, '等待寻找' + name)
@@ -2627,7 +2596,3 @@ let kaishouAd = {
         autoUtils.autoBack()
     },
 }
-// kaishouAd.backToHome()
-// kaishouAd.clickPopMiniApp()
-// kaishouAd.getZhiBoData()
-// kaishouAd.lookAd('洛雪壁纸')

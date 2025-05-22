@@ -22,6 +22,41 @@ let douyinAd = {
         '寻找柠檬壁纸图标':'图色183483.cv',
         '寻找橘子壁纸图标': '图色315859.cv',
         '寻找橙子壁纸图标': '图色781467.cv',
+        '寻找洛雪壁纸图标': '图色495375.cv',
+        '寻找云帆壁纸图标': '图色659762.cv',
+        '寻找熊猫壁纸图标': '图色926604.cv',
+        '寻找番茄壁纸图标': '图色727567.cv',
+        '寻找西瓜壁纸图标': '图色142765.cv',
+        '寻找优创汇壁纸图标': '图色161717.cv',
+        '寻找海豚壁纸图标': '图色450874.cv',
+        '寻找数字大挑战图标': '图色742549.cv'
+    },
+    hanldeCvTextByAppName(appName) {
+        let str = '寻找洛雪壁纸图标'
+        if(appName.indexOf('洛雪')>-1) {
+            str = '寻找洛雪壁纸图标'
+        }else if(appName.indexOf('熊猫')>-1) {
+            str = '寻找熊猫壁纸图标'
+        }else if(appName.indexOf('柠檬')>-1) {
+            str = '寻找柠檬壁纸图标'
+        }else if(appName.indexOf('橘子')>-1) {
+            str = '寻找橘子壁纸图标'
+        }else if(appName.indexOf('番茄')>-1) {
+            str = '寻找番茄壁纸图标'
+        }else if(appName.indexOf('西瓜')>-1) {
+            str = '寻找西瓜壁纸图标'
+        }else if(appName.indexOf('云帆')>-1) {
+            str = '寻找云帆壁纸图标'
+        }else if(appName.indexOf('橙子')>-1) {
+            str = '寻找橙子壁纸图标'
+        }else if(appName.indexOf('海豚')>-1) {
+            str = '寻找海豚壁纸图标'
+        }else if(appName.indexOf('优创')>-1) {
+            str = '寻找优创汇壁纸图标'
+        }else if(appName.indexOf('数字')>-1) {
+            str = '寻找数字大挑战图标'
+        }
+        return str
     },
     // 小程序观看广告的模式
     lookModelList: [
@@ -738,12 +773,26 @@ let douyinAd = {
         
 
         let newName = name
-        if(!autoUtils.getText(name)) {
-            if(name.indexOf('柠檬')>-1) {
-                newName = '柠'
+        // if(!autoUtils.getText(name)) {
+        //     if(name.indexOf('柠檬')>-1) {
+        //         newName = '柠'
+        //     }
+        //     autoUtils.logText('没有找到'+name+'使用'+newName+'去寻找')
+        // }
+
+        let cvName = this.hanldeCvTextByAppName(name)
+
+        autoUtils.logText(cvName)
+
+        if(this.getCvByText(cvName)) {
+            this.clickCv(cvName)
+            autoUtils.sleep(rand.randNumber(15, 25), '检验是否在小程序页面')
+            if (this.isAppDetailPage(name)) {
+                autoUtils.logText('小程序进入成功了')
+                return;
             }
-            autoUtils.logText('没有找到'+name+'使用'+newName+'去寻找')
         }
+
         if (autoUtils.getText(newName)) {
             autoUtils.logText('找到了开始点击'+newName)
             autoUtils.clickGetText(newName)
@@ -773,36 +822,6 @@ let douyinAd = {
             }
 
         } else {
-            if(name.indexOf('柠檬')>-1) {
-                autoUtils.logText('使用图片寻找柠檬壁纸')
-
-                if(this.getCvByText('寻找柠檬壁纸图标')) {
-                    this.clickCv('寻找柠檬壁纸图标')
-                }
-            }
-
-            if(name.indexOf('橘子')>-1) {
-                autoUtils.logText('使用图片寻找橘子壁纸')
-
-                if(this.getCvByText('寻找橘子壁纸图标')) {
-                    this.clickCv('寻找橘子壁纸图标')
-                }
-            }
-
-            if(name.indexOf('橙子')>-1) {
-                autoUtils.logText('使用图片寻找橙子壁纸')
-
-                if(this.getCvByText('寻找橙子壁纸图标')) {
-                    this.clickCv('寻找橙子壁纸图标')
-                }
-            }
-
-            autoUtils.sleep(6, '检测是否点击成功')
-            
-            if (this.isAppDetailPage(name)) {
-                autoUtils.logText('小程序进入成功了')
-                return;
-            }
 
             autoUtils.sleep(5, '开始下滑寻找'+name)
             hid.swipAI(this.getSwipeX(), screen.getScreenHeight() - 300, this.getSwipeX(), screen.getScreenHeight() - 850)
@@ -2201,7 +2220,7 @@ let douyinAd = {
     android:layout_marginTop='16dp'android:layout_width="match_parent" android:layout_height="wrap_content" android:text="取消操作"/>
     <TextView android:id="b4" android:layout_marginTop='16dp' 
     android:color="#F56C6C" android:text="完成转化后在广告界面点击确定转化" android:textSize="13dp"/>
-</LinearLayout>`) // 里面放入layout.xml里的代码是另一种写法
+    </LinearLayout>`) // 里面放入layout.xml里的代码是另一种写法
         fui.setWidth(660)
         fui.setHeight(660)
         fui.setPosition(screen.getScreenWidth() / 2 - 330, screen.getScreenHeight() / 2 - 600)
@@ -2672,74 +2691,3 @@ let douyinAd = {
         autoUtils.autoBack()
     },
 }
-// adUtils.init()
-// douyinAd.getCurrentAppRunDetail('洛雪壁纸')
-
-// douyinAd.lookModel({ appName: '洛雪壁纸' })
-// douyinAd.todayDataInfo.todayLikeNum = 2
-// douyinAd.setConfig('todayDataInfo', douyinAd.todayDataInfo)
-// douyinAd.initVideoLikeNum()
-// douyinAd.handelVideo()
-
-// douyinAd.handleVideoDetail()
-
-
-// douyinAd.handleZhiboDetail()
-// douyinAd.startMoveVideoByTime(60)
-// autoUtils.logText(douyinAd.currentSwipNum,douyinAd.duibiaoVideoOrZhiBoNum, 'duibiaoVideoOrZhiBoNum')
-
-// douyinAd.setSearchStrText()
-//         douyinAd.setTodaySearTextStr()
-//         autoUtils.logText(douyinAd.searTextStr)
-// autoUtils.logText(douyinAd.goAppListYangji())
-// douyinAd.conputedWaitTime()
-// autoUtils.logText(douyinAd.startHuaDong())
-// douyinAd.findMiniAppNameAndClick('洛雪壁纸',1)
-// douyinAd.clickCv('我的页面的小程序图标')
-// autoUtils.logText(JSON.stringify(AutoGlobData.searchArr))
-// douyinAd.setSearchStrText()
-// douyinAd.performForwardSwipe()
-// douyinAd.goAppListPage()
-// douyinAd.todayDataInfo.yangjiNum = 2
-// douyinAd.setYangjiModelType()
-// autoUtils.logText(douyinAd.yangjiModelType)
-// autoUtils.logText(screen.getScreenWidth()-817)
-// auto.clickPoint(817,848)
-// autoUtils.clickGetTextAll('推荐')
-// douyinAd.performLeftSwipe()
-// douyinAd.goIndexPageByType('首页的关注')
-// douyinAd.getCurrentVideoWeight()
-// douyinAd.videoIsEnd()
-// douyinAd.initVideoLikeNum()
-// douyinAd.swipeScreenVideo()
-
-
-// autoUtils.logText(autoUtils.getText('进入直播间'))
-// sleep.millisecond(毫秒=3000);
-// function weightedRandom(items) {
-//     let totalWeight = 0;
-//     for (let item of items) {
-//         totalWeight += item.weight;
-//     }
-//     let rand = Math.random() * totalWeight;
-//     let cumulativeWeight = 0;
-//     for (let item of items) {
-//         cumulativeWeight += item.weight;
-//         if (rand < cumulativeWeight) {
-//             return item.value;
-//         }
-//     }
-// }
-
-// // 示例：使得数字1和2出现的概率更大，3和4较小
-// let items = [
-//     { value: 1, weight: 15 }, // 增加权重使得1更可能被选中
-//     { value: 2, weight: 15 }, // 增加权重使得2更可能被选中
-//     { value: 3, weight: 15 }, // 减少权重使得3不太可能被选中
-//     { value: 4, weight: 15 }  // 减少权重使得4不太可能被选中
-// ];
-
-// autoUtils.logText(weightedRandom(items));
-
-// douyinAd.clickCv('搜索后的视频')
-// autoUtils.logText(autoUtils.getText('首页'))

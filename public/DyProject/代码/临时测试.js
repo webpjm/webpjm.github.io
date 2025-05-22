@@ -350,8 +350,15 @@ runTime.Import('tool.js')
 //找图返回目标数组
 //找图返回目标数组
 //找图返回目标数组
-// var detects=opencv.findImagesEx('图色781467.cv');
-// if(detects!=null){
-//    printl(detects);
-//    detects[0].hidClick();
-// }
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+var detects=opencv.findImagesEx('图色742549.cv');
+if(detects!=null){
+   printl(detects);
+   detects[0].click();
+}

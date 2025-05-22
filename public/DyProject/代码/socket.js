@@ -41,7 +41,7 @@ function startSocket(num) {
                     sendMsg()
                 }
 
-                if (phoneId == device.getDeviceIntID() && message == '请求截图1') {
+                if (phoneId == device.getDeviceIntID() && message == '自动截图') {
                     // autoUtils.logText(msg,'收到消息了')
                     socketPic = false
                     interval = setInterval(sendMsg,1000);
@@ -218,4 +218,4 @@ function startSocket(num) {
     // ws.connet("ws://128.204.223.95:30001/");  
     
 }
-startSocket()
+// startSocket()
