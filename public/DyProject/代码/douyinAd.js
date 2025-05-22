@@ -18,7 +18,10 @@ let douyinAd = {
         '首页左上角更多图标': '图色947103.cv',
         '广告界面的广告图标': '图色226207.cv',
         '广告的领取成功': '图色494529.cv',
-        '广告的可领奖励': '图色148106.cv'
+        '广告的可领奖励': '图色148106.cv',
+        '寻找柠檬壁纸图标':'图色183483.cv',
+        '寻找橘子壁纸图标': '图色315859.cv',
+        '寻找橙子壁纸图标': '图色781467.cv',
     },
     // 小程序观看广告的模式
     lookModelList: [
@@ -772,17 +775,25 @@ let douyinAd = {
         } else {
             if(name.indexOf('柠檬')>-1) {
                 autoUtils.logText('使用图片寻找柠檬壁纸')
-                var detects = auto.findImages([autoUtils.imgObj['柠檬']], 0.8, 5000, 2, [0,0,1,1]);
-                if(detects!=null){
-                    detects[0].hidClick();
+
+                if(this.getCvByText('寻找柠檬壁纸图标')) {
+                    this.clickCv('寻找柠檬壁纸图标')
                 }
             }
 
             if(name.indexOf('橘子')>-1) {
                 autoUtils.logText('使用图片寻找橘子壁纸')
-                var detects = auto.findImages([autoUtils.imgObj['橘子']], 0.8, 5000, 2, [0,0,1,1]);
-                if(detects!=null){
-                    detects[0].hidClick();
+
+                if(this.getCvByText('寻找橘子壁纸图标')) {
+                    this.clickCv('寻找橘子壁纸图标')
+                }
+            }
+
+            if(name.indexOf('橙子')>-1) {
+                autoUtils.logText('使用图片寻找橙子壁纸')
+
+                if(this.getCvByText('寻找橙子壁纸图标')) {
+                    this.clickCv('寻找橙子壁纸图标')
                 }
             }
 

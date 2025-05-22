@@ -3,7 +3,7 @@
 // runTime.Import('initData.js')
 runTime.Import('tool.js')
 
-autoUtils.clickGetText('视频')
+// autoUtils.clickGetText('视频')
 // sleep.time('22:10:10');
 // let date1 = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate() + ' 18:00:00'
 // console.log(date1,new Date("2025-4-21 18:00:00"))
@@ -347,8 +347,11 @@ autoUtils.clickGetText('视频')
 //找图返回目标数组
 //找图返回目标数组
 //找图返回目标数组
-var detects=opencv.findImagesEx('图色850803.cv');
-if(detects!=null){
-   printl(detects);
-   detects[0].click();
-}
+//找图返回目标数组
+//找图返回目标数组
+//找图返回目标数组
+// var detects=opencv.findImagesEx('图色781467.cv');
+// if(detects!=null){
+//    printl(detects);
+//    detects[0].hidClick();
+// }

@@ -30,6 +30,9 @@ let kaishouAd = {
         '广告的领取成功': '图色467363.cv',
         '广告的可领奖励': '图色833503.cv',
         '我的页面的三条杠': '图色794341.cv',
+        '寻找柠檬壁纸图标':'图色183483.cv',
+        '寻找橘子壁纸图标': '图色315859.cv',
+        '寻找橙子壁纸图标': '图色781467.cv',
     },
     // 小程序观看广告的模式
     lookModelList: [
@@ -683,9 +686,33 @@ let kaishouAd = {
             }
 
         } else {
-           
+    
+            if(name.indexOf('橘子')>-1) {
+                autoUtils.logText('使用图片寻找橘子壁纸')
+
+                if(this.getCvByText('寻找橘子壁纸图标')) {
+                    this.clickCv('寻找橘子壁纸图标')
+                }
+            }
+
+            if(name.indexOf('柠檬')>-1) {
+                autoUtils.logText('使用图片寻找柠檬壁纸')
+
+                if(this.getCvByText('寻找柠檬壁纸图标')) {
+                    this.clickCv('寻找柠檬壁纸图标')
+                }
+            }
+            if(name.indexOf('橙子')>-1) {
+                autoUtils.logText('使用图片寻找橙子壁纸')
+
+                if(this.getCvByText('寻找橙子壁纸图标')) {
+                    this.clickCv('寻找橙子壁纸图标')
+                }
+            }
 
             autoUtils.sleep(6, '检测是否点击成功')
+            
+
 
             if (this.isAppDetailPage(name)) {
                 autoUtils.logText('小程序进入成功了')
