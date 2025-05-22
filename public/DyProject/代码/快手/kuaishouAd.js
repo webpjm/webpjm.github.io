@@ -521,7 +521,7 @@ let kaishouAd = {
     },
     //是否在首页我的页面
     isIndexPageMy() {
-        return autoUtils.getText('精选') && autoUtils.getText('关注') && autoUtils.getText('粉丝')&& autoUtils.getText('我')
+        return autoUtils.getText('精选') && !autoUtils.getText('发现') && !autoUtils.getText('关注')
     },
     // 是否在小程序列表页的入口
     isMiniAppListPage() {
