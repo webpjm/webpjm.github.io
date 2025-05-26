@@ -817,7 +817,7 @@ let kaishouAd = {
     },
     isIndexPage() {
         autoUtils.logText('找精选和@')
-        return autoUtils.getText('精选') && autoUtils.getText('@')
+        return autoUtils.getText('精选') && !autoUtils.getText('发现') && !autoUtils.getText('关注')
     },
     //返回首页 开始养机
     backToHome(num) {
