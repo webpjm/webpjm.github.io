@@ -54,7 +54,7 @@ let autoTaskKs = {
         // 模式2: 精养机无广告
         else if (AutoGlobData.runModel == 2) {
             kaishouAd.jingyangji()
-            autoTask.logText('精养机任务完成')
+            autoTaskKs.logText('精养机任务完成')
         }
         // 模式3: 全程只看广告不养机
         else if (AutoGlobData.runModel == 3) {
@@ -198,13 +198,13 @@ let autoTaskKs = {
         if (AutoGlobData.otherValue.indexOf('3')>-1) {
             // 切换APP时清除当前任务队列，重置今日广告的次数（适用于比如今天抖音的任务完成了，只想在火山版看几个广告）
             this.resetRunAppAndAdNum()
-            // autoTask.initApp('fast')
+            // autoTaskKs.initApp('fast')
         }
         if (AutoGlobData.otherValue.indexOf('4')>-1) {
             // 重置当前的搜索，使其搜索字符串为initData里的搜索数组第一项的第一个字符串
             this.resetCurrentSearchStr()
             // 快速开始任务
-            // autoTask.initApp('fast')
+            // autoTaskKs.initApp('fast')
         }
         
         if (AutoGlobData.otherValue.indexOf('2')>-1) {
@@ -216,9 +216,9 @@ let autoTaskKs = {
         if (AutoGlobData.otherValue.indexOf('1')>-1) {
             // 快速看模式
             autoUtils.logText('快速看模式')
-            autoTask.initApp('fast')
+            autoTaskKs.initApp('fast')
         }else{
-            autoTask.initApp()
+            autoTaskKs.initApp()
         }
         
         
@@ -232,7 +232,7 @@ let autoTaskKs = {
         } else {
             // 正常启动任务流程
             autoUtils.logText('开始任务')
-            autoTask.initApp() // 调用主初始化流程
+            autoTaskKs.initApp() // 调用主初始化流程
         }
     }
 }
