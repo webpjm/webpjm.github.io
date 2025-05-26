@@ -109,7 +109,7 @@ let douyinAd = {
     yangjiSpeed: 'slow', // slow normal quick
     // 小程序观看广告的模式的值
     lookModelValue: 1,
-
+    todayTimeInterval: {},
     // 存在缓存里的数据汇总
     // todayDataInfo 今日观看详情
     // videoLikeNum  喜欢关注等的次数
@@ -2372,23 +2372,38 @@ let douyinAd = {
     isAppDetail() {
         return autoUtils.getText("收藏") || autoUtils.getText("下载") || autoUtils.getText("下載") || autoUtils.getText("随机一张") || autoUtils.getText("查看全部") || autoUtils.getText("保存") || autoUtils.getText("立即") || autoUtils.getText("观看")
     },
+    // 获取今天的数据 点击喜欢、样机等数据
+    getTodayTimeInterval() {
+        let todayTimeInterval = this.getConfig('todayTimeInterval')
+        if (todayTimeInterval == '' || !this.isSameDay(todayTimeInterval.time)) {
+            this.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
+            this.todayTimeInterval = AutoGlobData.todayTimeInterval
+        } else {
+            autoUtils.logText('今日启动过了,取缓存的timeInterval值')
+            this.todayTimeInterval = todayTimeInterval
+        }
+    },
     clickAdDownloadBtn(name, num) {
         num = num ? num : 1
         adUtils.loadAdList()
 
+        this.getTodayTimeInterval()
+        let timeAddNum = this.todayTimeInterval.dataArr[0]
+
+        autoUtils.logText("当前时间间隔，默认取第一个"+JSON.stringify(this.todayTimeInterval.dataArr))
+        this.todayTimeInterval.dataArr.shift()
+        if(this.todayTimeInterval.dataArr.length>0) {
+            this.setConfig('todayTimeInterval', this.todayTimeInterval)
+        }else{
+            this.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
+        }
+        
         let time = adUtils.getAppAdTime(name)
 
         if (time > 0) {
             autoUtils.logText('时间条件未满足，继续等待')
-            time = time + rand.randNumber(-15*60, 35*60)
-            if (time < 0) {
-                time = rand.randNumber(5, 35 * 60) 
-            }
-            if(this.lookModelValue == 6) {
-                autoUtils.logText('不等待直接看广告')
-            }else{
-                autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
-            }
+            time = time + timeAddNum
+            autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
             
         }
 
