@@ -20,7 +20,7 @@ let kaishouAd = {
         '寻找柠檬壁纸图标':'图色183483.cv',
         '寻找橘子壁纸图标': '图色315859.cv',
         '寻找橙子壁纸图标': '图色781467.cv',
-        '寻找洛雪壁纸图标': '图色495375.cv',
+        '寻找洛雪壁纸图标': '图色983745.cv',
         '寻找云帆壁纸图标': '图色659762.cv',
         '寻找熊猫壁纸图标': '图色926604.cv',
         '寻找番茄壁纸图标': '图色727567.cv',
@@ -536,6 +536,8 @@ let kaishouAd = {
         }else{
             hid.clickPercent(0.9028,0.0742)
         }
+
+        autoUtils.sleep(5, '开始寻找小程序按钮')
 
         if (autoUtils.getText('小程序')) {
             autoUtils.clickGetText('小程序')
@@ -1084,6 +1086,7 @@ let kaishouAd = {
                 flag = true
                 break;
             } else {
+                hid.clickPercent(0.5,0.5)
                 autoUtils.sleep(3, '开始检测视频标识')
             }
         }
@@ -2481,6 +2484,8 @@ let kaishouAd = {
                                     // ws.send(str)
                                 }
                             }
+
+                            autoUtils.sleep(60, '继续等待后保存图片')
 
                             
                             // 保存图片

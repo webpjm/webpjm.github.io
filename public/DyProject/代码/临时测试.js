@@ -357,4 +357,4 @@ runTime.Import('tool.js')
 //找图返回目标数组
 //找图返回目标数组
 //找图返回目标数组
-console.log(autoUtils.getText('精选') && !autoUtils.getText('发现') && !autoUtils.getText('关注'))
+//找图返回目标数组
