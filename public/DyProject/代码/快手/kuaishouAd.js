@@ -840,6 +840,11 @@ let kaishouAd = {
             autoUtils.clickGetText('取消')
             autoUtils.sleep(3, '取消')
         }
+        if (autoUtils.getText('退出')) {
+            autoUtils.sleep(2, '等待退出')
+            autoUtils.clickGetText('退出')
+            autoUtils.sleep(3, '退出')
+        }
         if (num < 9) {
             autoUtils.sleep(3, '等待检测是否在首页最新版')
             if (this.isIndexPage()) {
