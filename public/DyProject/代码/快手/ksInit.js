@@ -83,7 +83,7 @@ let autoTaskKs = {
         let applist = autoUtils.shuffleObj(AutoGlobData.appList)
         let newList = []
         let newList1 = []
-        for (var i = 0; i < applist.length-1; i++) {
+        for (var i = 0; i < applist.length; i++) {
             if (i < num) {
                 newList.push(applist[i])
             }else{
