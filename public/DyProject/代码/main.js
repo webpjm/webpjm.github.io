@@ -22,41 +22,41 @@ let autoTask = {
         //   1-固定  2-随机6个 
         //   3-随机8个  4-随机全部
 
-        autoUtils.sleep(3,'等待开始任务')
-        // 处理非抖音系任务(5/6/7)
-        if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
-            autoTaskKs.startTask()
-            // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
-            return;
-        }
-        // 处理抖音系任务 
-        else {
+        // autoUtils.sleep(3,'等待开始任务')
+        // // 处理非抖音系任务(5/6/7)
+        // if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
+        //     autoTaskKs.startTask()
+        //     // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
+        //     return;
+        // }
+        // // 处理抖音系任务 
+        // else {
 
-            this.initApp()
+        //     this.initApp()
 
-            // // 特殊处理同时运行抖音和火山版的情况
-            // if(AutoGlobData.runApp == 3) {
-            //     AutoGlobData.runApp = 2 // 先设置为抖音火山版
-            //     this.setAppRunNum(6)
-            //     AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp]
-            //     autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
-            //     this.setRunModel() 
-            //     // 切换为火山版并调整广告参数
-            //     AutoGlobData.runApp = 1
-            //     //因为抖音的任务完成了所以火山版本的不能多看（就目前的发现的机制来说）
-            //     // 两个APP的数据标签可以互通，怕刷多了影响ECPM,后期测试如果没影响再放开数量限制
-            //     AutoGlobData.taskApp = this.taskAppList1
-            //     AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp]
-            //     autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
-            //     AutoGlobData.adMaxNum = 1  // 最大广告次数
-            //     AutoGlobData.adMiniNum = 1 // 最小广告次数
-            //     this.resetRunAppAndAdNum() // 重置任务队列
-            //     this.setRunModel() 
-            // }else{
-            //      // 直接运行单个APP模式
-            //     this.initApp()
-            // }
-        }
+        //     // // 特殊处理同时运行抖音和火山版的情况
+        //     // if(AutoGlobData.runApp == 3) {
+        //     //     AutoGlobData.runApp = 2 // 先设置为抖音火山版
+        //     //     this.setAppRunNum(6)
+        //     //     AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp]
+        //     //     autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
+        //     //     this.setRunModel() 
+        //     //     // 切换为火山版并调整广告参数
+        //     //     AutoGlobData.runApp = 1
+        //     //     //因为抖音的任务完成了所以火山版本的不能多看（就目前的发现的机制来说）
+        //     //     // 两个APP的数据标签可以互通，怕刷多了影响ECPM,后期测试如果没影响再放开数量限制
+        //     //     AutoGlobData.taskApp = this.taskAppList1
+        //     //     AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp]
+        //     //     autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
+        //     //     AutoGlobData.adMaxNum = 1  // 最大广告次数
+        //     //     AutoGlobData.adMiniNum = 1 // 最小广告次数
+        //     //     this.resetRunAppAndAdNum() // 重置任务队列
+        //     //     this.setRunModel() 
+        //     // }else{
+        //     //      // 直接运行单个APP模式
+        //     //     this.initApp()
+        //     // }
+        // }
     },
     //初始化 总逻辑是this.setRunModel先执行养机逻辑 在执行douyinAd.lookModel看小程序广告的逻辑
     initApp(name) {
@@ -70,13 +70,6 @@ let autoTask = {
             autoUtils.logText('开始登录' + AutoGlobData.appPhoneName + '先预启动')
             this.startyuzhuang() // 启动预装APP流程
         }
-
-        if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
-            autoTaskKs.startTask()
-            // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
-            return;
-        }
-        
         this.waitByNum()          // 根据设备启动次数等待间隔
         this.setRunAppList()      // 配置要运行的小程序列表
         autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
@@ -397,15 +390,21 @@ let autoTask = {
         
     },
     startTask() {
-        autoUtils.logText(AutoGlobData.otherValue,'有其他设置的值')
          // 判断是否存在特殊配置参数
+        if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
+            autoTaskKs.startTask()
+            // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
+            return;
+        }
+
+        autoUtils.logText(AutoGlobData.otherValue,'有其他设置的值')
         if (AutoGlobData.otherValue&&AutoGlobData.otherValue.length>0) {
              // 执行特殊配置任务（快速模式/测试模式/重置模式等）
             this.setOtherValue()
         } else {
             // 正常启动任务流程
             autoUtils.logText('开始任务')
-            autoTask.init() // 调用主初始化流程
+            autoTask.initApp() // 调用主初始化流程
         }
     }
 }
