@@ -18,6 +18,7 @@ if (!isLocal) {
     print.log('开始请求远程接口的数据')
     function getUrlData(url,num) {
     num++
+    url = url+"?time="+time.nowStamp()
     if(num == 10) {
         print.log(`停止加载，检查数据源配置是否正确`)
         sleep.millisecond(毫秒=3000);

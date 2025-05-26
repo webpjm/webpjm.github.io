@@ -70,6 +70,13 @@ let autoTask = {
             autoUtils.logText('开始登录' + AutoGlobData.appPhoneName + '先预启动')
             this.startyuzhuang() // 启动预装APP流程
         }
+
+        if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
+            autoTaskKs.startTask()
+            // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
+            return;
+        }
+        
         this.waitByNum()          // 根据设备启动次数等待间隔
         this.setRunAppList()      // 配置要运行的小程序列表
         autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
