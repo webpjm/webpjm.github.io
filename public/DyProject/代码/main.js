@@ -392,7 +392,7 @@ let autoTask = {
     startTask() {
          // 判断是否存在特殊配置参数
         if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
-            autoUtils.log('开始快手任务')
+            autoUtils.logText('开始快手任务')
             autoTaskKs.startTask()
             // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
             return;
