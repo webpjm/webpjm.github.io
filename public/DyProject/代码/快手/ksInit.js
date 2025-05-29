@@ -56,10 +56,12 @@ let autoTaskKs = {
             kaishouAd.jingyangji()
             autoTaskKs.logText('精养机任务完成')
         }
-        // 模式3: 全程只看广告不养机
-        else if (AutoGlobData.runModel == 3) {
-            // kaishouAd.jingyangji()
-            this.startRunAppList()
+        // 模式5: 全程只看广告不养机
+        else if (AutoGlobData.runModel == 8) {
+            kaishouAd.onlyIndexPageYangji()
+            autoUtils.qiutApp()
+            autoTaskKs.logText('养机任务完成')
+            // this.startRunAppList()
         }
         autoUtils.logText('运行模式方法执行完成，今日任务已完成')
     },

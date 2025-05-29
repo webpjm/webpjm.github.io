@@ -1584,6 +1584,11 @@ let kaishouAd = {
         }
         autoUtils.logText(this.currentSwipNum, this.duibiaoVideoOrZhiBoNum, 'duibiaoVideoOrZhiBoNum')
     },
+    onlyIndexPageYangji () {
+        for(var i=0;i<10;i++) {
+            this.yangjimodel1()
+        }
+    },
     //首页的推荐页养机
     yangjimodel1() {
         this.goIndexPageByType('首页的推荐')

@@ -112,6 +112,13 @@ let autoTask = {
             // douyinAd.jingyangji()
             this.startRunAppList()
         }
+        // 模式5: 全程只看广告不养机
+        else if (AutoGlobData.runModel == 8) {
+            douyinAd.onlyIndexPageYangji()
+            autoUtils.qiutApp()
+            autoTaskKs.logText('养机任务完成')
+            // this.startRunAppList()
+        }
         // 模式6: 在抖音养机后去火山版只看广告不养机
         else if (AutoGlobData.runModel == 6) {
             // douyinAd.jingyangji()

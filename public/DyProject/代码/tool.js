@@ -461,7 +461,8 @@ let autoUtils = {
         hid.swipM(screen.getScreenWidth() / 2, screen.getScreenHeight() / 2, screen.getScreenWidth() / 2, 100)
         autoUtils.sleep(5, '开始上滑')
         autoUtils.autoHome()
-        autoUtils.sleep(30, '开始重新登录')
+        autoUtils.sleep(30, '等待后进行下一步')
+        autoUtils.logText('APP退出成功')
     },
     isIndexPage() {
         return autoUtils.getText('首页') && autoUtils.getText('我') && autoUtils.getText('推荐') && !autoUtils.getText('作品')

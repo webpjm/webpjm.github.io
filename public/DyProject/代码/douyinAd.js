@@ -1133,6 +1133,11 @@ let douyinAd = {
         8: '在我的喜欢中养机',
         9: '在我的收藏中养机',
     },
+    onlyIndexPageYangji () {
+        for(var i=0;i<10;i++) {
+            this.yangjimodel1()
+        }
+    },
     yangji(model) {
         if (model == 'quick') {
             this.yangjiSpeed = 'quick'
