@@ -25,7 +25,7 @@ let autoTaskKs = {
             this.startyuzhuang() // 启动预装APP流程
         }
 
-        this.setTimeWaitByNum(rand.randDoubleNumber(3,500))          // 根据设备启动次数等待间隔
+        // this.setTimeWaitByNum(rand.randDoubleNumber(3,500))          // 根据设备启动次数等待间隔
         this.setRunAppList()      // 配置要运行的小程序列表
         autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
         this.setRunModel()        // 设置养机/广告模式
