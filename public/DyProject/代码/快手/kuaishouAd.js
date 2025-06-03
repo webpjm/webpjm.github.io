@@ -539,6 +539,9 @@ let kaishouAd = {
 
         autoUtils.sleep(5, '开始寻找小程序按钮')
 
+        let x = screen.getScreenWidth() - screen.getScreenWidth() / 3
+        hid.swipEx(x, screen.getScreenHeight() / 2 + 200, x, screen.getScreenHeight() / 2 - 200, 0, rand.randNumber(500, 1500), 0)
+
         if (autoUtils.getText('小程序')) {
             autoUtils.clickGetText('小程序')
         } else {

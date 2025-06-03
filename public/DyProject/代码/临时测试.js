@@ -1,11 +1,12 @@
 
 // 调用 OCR 功能识别中文，并将结果输出
-runTime.Import('initData.js')
-runTime.Import('douyinAd.js')
-runTime.Import('tool.js')
+// runTime.Import('initData.js')
+// runTime.Import('douyinAd.js')
+// runTime.Import('tool.js')
 
 // douyinAd.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
-douyinAd.testAAA()
+// douyinAd.testAAA()
+
 
 // autoUtils.clickGetText('视频')
 // sleep.time('22:10:10');
