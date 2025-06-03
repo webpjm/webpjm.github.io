@@ -169,8 +169,8 @@ let kaishouAd = {
     },
     // 设置模式
     setLookModelValueData() {
-        let modelList = JSON.parse(JSON.stringify(this.lookModelList))
-        let localModelListData = this.getConfig('modeListData')
+        let modelList = JSON.parse(JSON.stringify(autoUtils.shuffleObj(this.lookModelList)))
+        let localModelListData = config.getConfig('/sdcard/configKs.ini', 'modeListData', '[]')
         if (localModelListData == '') {
             //第一次运行 随机模式
             autoUtils.logText('首次设置观看广告模式')
@@ -1839,9 +1839,7 @@ let kaishouAd = {
             return;
         }
 
-        this.lookModelList.map(value => { 
-            if (value.type == lookModelValue) { text = value.text } 
-        })
+        this.lookModelList.map(value => { if (value.type == lookModelValue) { text = value.text } })
         autoUtils.logText("观看的类型是-----" + text)
         autoUtils.logText(taskDetail.time / (1000 * 60) + taskDetail.appName + '需要等待的时间分钟')
 
