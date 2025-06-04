@@ -2531,6 +2531,11 @@ let kaishouAd = {
                                 autoUtils.sleep(5, '点击同意后等待5S')
                             }
 
+                            if (autoUtils.getText("允许")) {
+                                autoUtils.clickGetText("允许")
+                                autoUtils.sleep(5, '点击允许后等待5S')
+                            }
+
                             for (let i = 0; i < 5; i++) {
                                 if (autoUtils.getText("收藏") || autoUtils.getText("下载") || autoUtils.getText("下載") || autoUtils.getText("随机一张") || autoUtils.getText("查看全部") || autoUtils.getText("保存") || autoUtils.getText("立即") || autoUtils.getText("观看")) {
                                     this.randomTime('开始等待返回')
