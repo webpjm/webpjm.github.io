@@ -637,19 +637,23 @@ let kaishouAd = {
     isAppDetailPage(name) {
 
         let flag = false
-        if (!autoUtils.getText('最近使用')) {
-            if (!autoUtils.getText(name)) {
-                name = name.slice(0, 2)
-            }
-            if (autoUtils.getText(name) && autoUtils.getText('反馈')) {
-                flag = true
-            } else {
-                //找不到橘子或者柠檬时候 有反馈就行了
-                if (name.indexOf('柠檬') > -1 && autoUtils.getText('反馈')) {
-                    flag = true
-                }
-            }
+        // if (!autoUtils.getText('最近使用')) {
+        //     if (!autoUtils.getText(name)) {
+        //         name = name.slice(0, 2)
+        //     }
+        //     if (autoUtils.getText(name) && autoUtils.getText('反馈')) {
+        //         flag = true
+        //     } else {
+        //         //找不到橘子或者柠檬时候 有反馈就行了
+        //         if (name.indexOf('柠檬') > -1 && autoUtils.getText('反馈')) {
+        //             flag = true
+        //         }
+        //     }
 
+        // }
+
+        if (autoUtils.getText('反馈') || autoUtils.getText(name)) {
+            flag = true
         }
 
         return flag
