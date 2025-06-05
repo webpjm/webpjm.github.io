@@ -23,9 +23,9 @@ try {
 let autoUtils = {
     useSocket: true,
     loginApp(name,notAll) {
-        this.sleep(5, '登录开始--先返回主页')
+        this.sleep(3, '登录开始--先返回主页')
         this.autoHome()
-        this.sleep(5, '开始登录' + name)
+        this.sleep(3, '开始登录' + name)
         this.findApp(name, 1,notAll)
     },
     // 根据时间判断是否停止
@@ -193,11 +193,11 @@ let autoUtils = {
         
         if (!flag&&num < 8) {
             if (num>0&&num <= 3) {
-                this.sleep(3, '开始左滑动寻找APP')
+                this.sleep(2, '开始左滑动寻找APP')
                 hid.swipM(screen.getScreenWidth() - 50, screen.getScreenHeight() / 2, 100, screen.getScreenHeight() / 2)
                 this.findApp(name, num,notAll)
             }else if (num>3&&num < 6) {
-                this.sleep(3, '开始右滑动寻找APP')
+                this.sleep(2, '开始右滑动寻找APP')
                 hid.swipM(100, screen.getScreenHeight() / 2, screen.getScreenWidth() - 50, screen.getScreenHeight() / 2)
                 this.findApp(name, num,notAll)
             } 

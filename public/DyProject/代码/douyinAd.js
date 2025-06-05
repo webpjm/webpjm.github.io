@@ -89,13 +89,18 @@ let douyinAd = {
         // { type: 6, text: '在搜索页的直播养机' },
         // { type: 9, text: '在我的收藏中穿插右滑查看主页中的养机' },
         { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 5, text: '在搜索页的视频养机' },
         { type: 5, text: '在搜索页的视频养机' },
         { type: 1, text: '在推荐页养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 6, text: '在搜索页的直播养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 5, text: '在搜索页的视频养机' },
         { type: 5, text: '在搜索页的视频养机' },
+        { type: 1, text: '在推荐页养机' },
         { type: 7, text: '在搜索页的综合样机养机' },
         { type: 1, text: '在推荐页养机' },
         // { type: 4, text: '在小程序列表页养机' },
@@ -786,7 +791,7 @@ let douyinAd = {
 
         if(this.getCvByText(cvName)) {
             this.clickCv(cvName)
-            autoUtils.sleep(rand.randNumber(15, 25), '检验是否在小程序页面')
+            autoUtils.sleep(rand.randNumber(10, 15), '检验是否在小程序页面')
             if (this.isAppDetailPage(name)) {
                 autoUtils.logText('小程序进入成功了')
                 return;
@@ -2063,14 +2068,14 @@ let douyinAd = {
         this.yangji('quick')
         let task = AutoGlobData.taskdetail
         this.backHomeWaitAd(task)
-        this.swipeIndexAppListForAd(task, 4)
+        this.swipeIndexAppListForAd(task, 1)
 
         //小程序内部看广告的逻辑
         // this.lookAd(task.appName)
     },
     lookModel2() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 4)
+        this.swipeIndexAppListForAd(task, 1)
         this.yangji('quick')
         this.yangji('quick')
         this.backHomeWaitAd(task)
@@ -2079,7 +2084,7 @@ let douyinAd = {
     lookModel3() {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 2)
+        this.swipeIndexAppListForAd(task, 1)
         this.yangji('quick')
         this.swipeIndexAppListForAd(task, 1)
     },
@@ -2087,12 +2092,12 @@ let douyinAd = {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
         this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 3)
+        this.swipeIndexAppListForAd(task, 2)
         
     },
     lookModel5() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 4)
+        this.swipeIndexAppListForAd(task, 2)
         // this.yangji('quick')
         // this.yangji('quick')
         // this.swipeIndexAppListForAd(task, 4)
@@ -2403,11 +2408,11 @@ let douyinAd = {
             this.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
         }
         
-        let time = adUtils.getAppAdTime(name)
+        let time = adUtils.getAppAdTime(name,timeAddNum* 60 * 1000)
 
         if (time > 0) {
             autoUtils.logText('时间条件未满足，继续等待')
-            time = time + timeAddNum
+            // time = time + timeAddNum
             autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
             
         }

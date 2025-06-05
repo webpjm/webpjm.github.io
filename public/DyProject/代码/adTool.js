@@ -248,7 +248,7 @@ let adUtils = {
 
         return waitRunArr
     },
-    getAppAdTime(name) {
+    getAppAdTime(name,addTime) {
         let adListData = AutoGlobData.adListApiData
         let nowTime = time.nowStamp();
         let appTime = 0 // 当前手机当前小程序
@@ -281,7 +281,11 @@ let adUtils = {
         let maxTime2 = phoneTimeList.sort((a, b) => b - a)[0]
         let maxTime3 = otherPhoneTimeList.sort((a, b) => b - a)[0]
         let maxTime4 = otherPhoneOtherAppList.sort((a, b) => b - a)[0]
-
+        
+        if(addTime) {
+            autoUtils.logText('重新计算等待时间，增加的时间是'+addTime/1000+'秒')
+            AutoGlobData.adBiaoZhun2 = AutoGlobData.adBiaoZhun2 + addTime
+        }
         //括号里是当前时间距离上一次广告的时间  用标准时间-括号时间就是 剩余多长时间可以观看  数值越大 等待时间越长
         let AutoGlobDataBiaozhun1Value = AutoGlobData.adBiaoZhun1 - (nowTime - appTime)
         let AutoGlobDataBiaozhun2Value = AutoGlobData.adBiaoZhun2 - (nowTime - maxTime2)
