@@ -411,7 +411,8 @@ let autoUtils = {
     },
     getRandomClosecreen() {
         let hour = 60 * 60 * 1000
-        let num = Number(this.getRandomInt(1.5, 2))
+        // let num = Number(this.getRandomInt(1.5, 2))
+        let num = 2
         return { timestr: Number(time.nowStamp()) + parseInt(num * hour), timeHour: num }
     },
     isxiping(obj) {

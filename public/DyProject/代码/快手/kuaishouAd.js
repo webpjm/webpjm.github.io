@@ -504,7 +504,7 @@ let kaishouAd = {
 
         let flag = false
         for(let i=0;i<10;i++){
-            if(autoUtils.getText('精选')&&this.isVideoPage()) {
+            if(this.isJingxuanAndPengYou()&&this.isVideoPage()) {
                 flag = true
                 break;
             }else{
@@ -521,7 +521,7 @@ let kaishouAd = {
     },
     //是否在首页我的页面
     isIndexPageMy() {
-        return autoUtils.getText('精选') && autoUtils.getText('关注') && autoUtils.getText('粉丝')&& autoUtils.getText('我')
+        return this.isJingxuanAndPengYou() && autoUtils.getText('关注') && autoUtils.getText('粉丝')&& autoUtils.getText('我')
     },
     // 是否在小程序列表页的入口
     isMiniAppListPage() {
@@ -588,7 +588,7 @@ let kaishouAd = {
         if (num > 10) {
             autoUtils.loginApp(AutoGlobData.appPhoneName)
         }
-        if (autoUtils.getText('精选')&&autoUtils.getText('我')) {
+        if (this.isJingxuanAndPengYou()&&autoUtils.getText('我')) {
             if (this.isIndexPageMy()) {
                 this.fromMyToAppList()
             } else {
@@ -826,7 +826,11 @@ let kaishouAd = {
     },
     isIndexPage() {
         autoUtils.logText('找精选和@')
-        return autoUtils.getText('精选') && !autoUtils.getText('发现') && !autoUtils.getText('关注')
+        if(AutoGlobData.appPhoneName.indexOf('极速版')>-1) {
+            return autoUtils.getText('我') && autoUtils.getText('发现') && autoUtils.getText('关注')
+        }else{
+            return autoUtils.getText('精选') && !autoUtils.getText('发现') && !autoUtils.getText('关注')
+        }
     },
     //返回首页 开始养机
     backToHome(num) {
@@ -859,6 +863,7 @@ let kaishouAd = {
             if (this.isIndexPage()) {
                 autoUtils.logText('返回首页成功了')
             } else {
+
                 autoUtils.logText('返回首页失败了,开始尝试重新返回页面')
                 autoUtils.autoBack()
                 num++
@@ -1712,9 +1717,16 @@ let kaishouAd = {
         this.goSearchPage()
         this.onlyMove(6)
     },
+    isJingxuanAndPengYou() {
+        if(AutoGlobData.appPhoneName.indexOf('极速版')>-1) {
+            return autoUtils.getText('朋友')
+        }else{
+            return autoUtils.getText('精选')
+        }
+    },
     backToMy(num) {
         num = num ? num : 1
-        if (autoUtils.getText('精选') && autoUtils.getText('我')) {
+        if (this.isJingxuanAndPengYou() && autoUtils.getText('我')) {
             if (this.isIndexPageMy()) {
                 autoUtils.logText('找到我的页面了')
             } else {

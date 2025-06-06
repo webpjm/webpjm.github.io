@@ -1,4 +1,5 @@
 var AutoGlobData = {
+    todayIsDownLoadGame: false, // 是否今天下载游戏
     runApp: "1", //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4 精养机不看广告 5 其他任务(微信、APP、快手...)
     runModel: '1', //  运行模式 1 养机+看广告 2 精养机+不看广告 3 看广告+不养机 
     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部

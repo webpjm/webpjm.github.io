@@ -296,6 +296,10 @@
                             value: "4",
                             label: "重置当前的搜索和养机的队列"
                         },
+                        {
+                            value: "5",
+                            label: "今日是否随机下载一个游戏"
+                        },
                         // {
                         //     value: "5",
                         //     label: "预留的值--5"
@@ -318,7 +322,7 @@
             methods: {
                 changeRunApp(){
                     if(this.globData.runApp == 5 || this.globData.runApp == 6){
-                        this.globData.lookRangeNum= [3, 4]
+                        this.globData.lookRangeNum= [2, 3]
                     }else{
                         this.globData.lookRangeNum= [1, 1]
                     }

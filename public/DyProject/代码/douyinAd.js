@@ -1062,7 +1062,14 @@ let douyinAd = {
         this.backToHome()
         this.yangjimodel5()
         this.backToHome()
+        this.yangjimodel1()
+        this.yangjimodel1()
+        this.backToHome()
         this.yangjimodel5()
+        this.backToHome()
+        this.yangjimodel6()
+        this.backToHome()
+        this.yangjimodel1()
         this.backToHome()
         this.yangjimodel5()
         this.yangjiSpeed = 'slow'
@@ -2549,6 +2556,11 @@ let douyinAd = {
                         if (autoUtils.getText('领取成功') || this.getCvByText('广告的领取成功')) {
                             autoUtils.logText('领取成功了')
 
+                            let adDetail = adUtils.getAdDetailByPhoneId()
+
+                            let todayLook = adDetail.todayLookNum + 1
+                            // let todayClickNum = adDetail.todayClickNum
+
                             if (autoUtils.getText('进入直播')) {
                                 let num = autoUtils.getRandomInt(1, 10, 'int')
                                 if (num > 3) {
@@ -2557,46 +2569,78 @@ let douyinAd = {
                                     autoUtils.sleep(5, '进入广告直播详情了')
                                     this.handleAdDetail()
                                 }
-                            }
-                            // else if(rand.randNumber(1, 10) >5) {
-                            //     autoUtils.logText('随机到了主动点击')
-                            //     hid.click(rand.randNumber(screen.getScreenWidth() / 2 - 10, screen.getScreenWidth() / 2 + 10), rand.randNumber(screen.getScreenHeight() / 2 - 10, screen.getScreenHeight() / 2 + 10))
-                            //     autoUtils.sleep(5, '开始检测广告是否播放完成或者跳转了详情页')
-                            //      if (this.isAdPage()) {
-                            //         autoUtils.sleep(2, '没有跳转成功，还在广告页面停留')
-                            //      }else{
-                            //         this.handleAdDetail()
-                            //         if (this.getCvByText('广告的领取成功') || autoUtils.getText('领取成功')) {
-                            //             autoUtils.logText('返回广告界面成功了')
-                            //         }else{
-                            //             autoUtils.autoBack()
-                            //         }
-                            //      }
-                            // }
+                            }else{
+                                // if(todayClickNum<2) {
+                                //     // 测试在广告的第四个第9个点击
+                                // }
 
-                            let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
-                            let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
-                            let isDownLoad = false
-                            if (downloadtotal < needdownload) {
-                                if (autoUtils.getText("下载")) {
-                                    autoUtils.logText('可以点击下载了')
-                                    autoUtils.sleep(3, '开始发送邮件')
-                                    // 钉钉设置了只有发送包括通知两个字才能发送成功
-                                    let str = `广告下载转化通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                                    ws.send(str)
-
-                                    autoUtils.clickGetText('下载')
-                                    isDownLoad = true
-                                    autoUtils.logText('等待下载完成')
-                                    autoUtils.sleep(rand.randNumber(30,60))
+                                //无论今日点击了几次都在第四个或者第9个广告的时候主动点击
+                                if(todayLook == 4 || todayLook == 9) {
+                                    autoUtils.logText('开始主动点击')
+                                    hid.click(rand.randNumber(screen.getScreenWidth() / 2 - 10, screen.getScreenWidth() / 2 + 10), rand.randNumber(screen.getScreenHeight() / 2 - 10, screen.getScreenHeight() / 2 + 10))
+                                    autoUtils.sleep(5, '开始检测广告是否播放完成或者跳转了详情页')
+                                    if (this.isAdPage()) {
+                                        autoUtils.sleep(2, '没有跳转成功，还在广告页面停留')
+                                    }else{
+                                        this.handleAdDetail()
+                                        if (this.getCvByText('广告的领取成功') || autoUtils.getText('领取成功')) {
+                                            autoUtils.logText('返回广告界面成功了')
+                                        }else{
+                                            autoUtils.autoBack()
+                                        }
+                                    }
                                 }
                             }
 
-                            if(autoUtils.getText("下载")){
-                                let str = `广告下载通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                                ws.send(str)
-                                // autoUtils.sleep(10, '开始等待是否下载')
+                            if(AutoGlobData.todayIsDownLoadGame) {
+                                if(AutoGlobData.phoneLookTotal.todayDownLoadTotal == 0) {
+                                    if(rand.randNumber(1, 10) >5) {
+                                        autoUtils.logText('随机到了主动点击')
+
+                                        if (autoUtils.getText("下载")) {
+                                            autoUtils.logText('可以点击下载了')
+                                            autoUtils.sleep(3, '开始发送邮件')
+                                            // 钉钉设置了只有发送包括通知两个字才能发送成功
+                                            let str = `广告转化通知（游戏下载）:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                                            ws.send(str)
+        
+                                            autoUtils.clickGetText('下载')
+                                            isDownLoad = true
+                                            autoUtils.logText('等待下载完成')
+                                            autoUtils.sleep(rand.randNumber(30,60))
+                                        }
+
+                                    }
+                                }else{
+                                    autoUtils.logText('今日已经随机下载了一款游戏了')
+                                }
                             }
+
+                            // let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
+                            // let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
+                            // let isDownLoad = false
+                            // if (downloadtotal < needdownload) {
+                            //     if (autoUtils.getText("下载")) {
+                            //         autoUtils.logText('可以点击下载了')
+                            //         autoUtils.sleep(3, '开始发送邮件')
+                            //         // 钉钉设置了只有发送包括通知两个字才能发送成功
+                            //         let str = `广告转化通知（游戏下载）:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                            //         ws.send(str)
+
+                            //         autoUtils.clickGetText('下载')
+                            //         isDownLoad = true
+                            //         autoUtils.logText('等待下载完成')
+                            //         autoUtils.sleep(rand.randNumber(30,60))
+                            //     }
+                            // }
+
+                            // if(autoUtils.getText("下载")){
+                            //     let str = `游戏下载通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                            //     ws.send(str)
+                            //     // autoUtils.sleep(10, '开始等待是否下载')
+                            // }
+
+
                             // 保存图片
                             autoUtils.sleep(2, '开始保存图片')
                             autoUtils.setSuccessPic(name)

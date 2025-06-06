@@ -373,7 +373,7 @@ let adUtils = {
         return detail
     },
     getAdDetailByPhoneId() {
-        let detail = {todayLookNum: 0,allLookNum:0,lastLookTime:0,lastLookTimeStr:''}
+        let detail = {todayLookNum: 0,allLookNum:0,lastLookTime:0,lastLookTimeStr:'',todayClickNum: 0,}
         let arr = []
         let apiList = AutoGlobData.adListApiData
         for (let i = 0; i < apiList.length; i++) {
@@ -388,6 +388,7 @@ let adUtils = {
             detail.allLookNum+=item.lookAdTotal
             if (autoUtils.getTodayTime(item.lastLookTime) == autoUtils.getTodayTime(time.nowStamp())) {
                 detail.todayLookNum+=item.todayLookNum
+                detail.todayClickNum+=item.todayClickNum
             }
         })
 
@@ -403,6 +404,7 @@ let adUtils = {
     getAllLookTotal() {
         let total = 0
         let downLoad = 0
+        let todayDownLoadTotal = 0
         let apiList = AutoGlobData.adListApiData
         for (let i = 0; i < apiList.length; i++) {
 
@@ -410,8 +412,9 @@ let adUtils = {
                 // autoUtils.logText('获取' + apiList[i].appName + '的值'+apiList[i].lookAdTotal)
                 total += apiList[i].lookAdTotal
                 downLoad += apiList[i].downLoadTotal
+                todayDownLoadTotal += apiList[i].todayDownLoad
             }
         }
-        return {total:total,downLoadTotal: downLoad}
+        return {total:total,downLoadTotal: downLoad,todayDownLoadTotal: todayDownLoadTotal}
     },
 }
