@@ -1,11 +1,19 @@
 let autoTaskKs = {
     runAppList: {
-        "1": '抖音',
-        "2": '抖音火山版',
-        "3": '抖音',
-        "4": '抖音极速版',
         "5": '快手',
-        "6": '快手极速版',
+        "7": '快手极速版',
+    },
+    startTask() {
+        autoUtils.logText(AutoGlobData.otherValue,'有其他设置的值')
+         // 判断是否存在特殊配置参数
+        if (AutoGlobData.otherValue&&AutoGlobData.otherValue.length>0) {
+             // 执行特殊配置任务（快速模式/测试模式/重置模式等）
+            this.setOtherValue()
+        } else {
+            // 正常启动任务流程
+            autoUtils.logText('开始任务')
+            autoTaskKs.initApp() // 调用主初始化流程
+        }
     },
     //初始化 总逻辑是this.setRunModel先执行养机逻辑 在执行kaishouAd.lookModel看小程序广告的逻辑
     initApp(name) {
@@ -36,12 +44,12 @@ let autoTaskKs = {
         kaishouAd.getTodayDataInfo()
         let yangjiNum = kaishouAd.todayDataInfo.yangjiNum
         autoUtils.logText(yangjiNum, 'yangjiNum')
-        // 模式3: 只看广告不养机
+        // 模式1: 先看广告不养机
         if (AutoGlobData.runModel == 3) {
             autoUtils.logText('不养机模式')
             this.startRunAppList()
         }
-        // 模式1: 常规养机+广告
+        // 模式2: 先养机+广告
         else if (AutoGlobData.runModel == 1) {
             if (yangjiNum == 0) {
                 autoUtils.logText('养机次数小于1,先养机')
@@ -51,12 +59,12 @@ let autoTaskKs = {
             }
             this.startRunAppList()
         }
-        // 模式2: 精养机无广告
+        // 模式3: 精养机无广告
         else if (AutoGlobData.runModel == 2) {
             kaishouAd.jingyangji()
             autoTaskKs.logText('精养机任务完成')
         }
-        // 模式5: 全程只看广告不养机
+        // 模式4： 只在推荐页刷视频
         else if (AutoGlobData.runModel == 8) {
             kaishouAd.onlyIndexPageYangji()
             autoUtils.qiutApp()
@@ -120,7 +128,7 @@ let autoTaskKs = {
                     timestart = time.nowStamp();
                     timeObj = autoUtils.getRandomClosecreen()
                     // 重置当前的任务队列
-                    config.setConfig(AutoGlobData.configUrl, 'taskAppRunList', JSON.stringify([]))
+                    // config.setConfig(AutoGlobData.configUrl, 'taskAppRunList', JSON.stringify([]))
                     autoUtils.logText("息屏结束，重新开始任务")
                     this.taskAppRun(taskAppList[i], taskAppList)
                 } else {
@@ -224,17 +232,5 @@ let autoTaskKs = {
         }
         
         
-    },
-    startTask() {
-        autoUtils.logText(AutoGlobData.otherValue,'有其他设置的值')
-         // 判断是否存在特殊配置参数
-        if (AutoGlobData.otherValue&&AutoGlobData.otherValue.length>0) {
-             // 执行特殊配置任务（快速模式/测试模式/重置模式等）
-            this.setOtherValue()
-        } else {
-            // 正常启动任务流程
-            autoUtils.logText('开始任务')
-            autoTaskKs.initApp() // 调用主初始化流程
-        }
     }
 }

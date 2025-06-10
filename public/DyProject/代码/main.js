@@ -4,9 +4,33 @@ let autoTask = {
         "1": '抖音',
         "2": '抖音火山版',
         "3": '抖音', // 抖音+抖音火山版
-        "4": '抖音极速版',
-        "5": '快手',
-        "6": '快手极速版',
+        "4": '抖音极速版'
+    },
+    startTask() {
+        // 快手任务的逻辑
+       if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 7) {
+           autoUtils.logText('开始快手任务')
+           autoTaskKs.startTask()
+           // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
+           return;
+       }
+       // 金币任务的逻辑
+       if (AutoGlobData.runApp == 8) {
+            autoUtils.logText('开始金币任务')
+            autoTaskKs.startTask()
+            return;
+        }
+
+        // 抖音任务的逻辑
+       autoUtils.logText(AutoGlobData.otherValue,'有其他设置的值')
+       if (AutoGlobData.otherValue&&AutoGlobData.otherValue.length>0) {
+            // 执行特殊配置任务（快速模式/测试模式/重置模式等）
+           this.setOtherValue()
+       } else {
+           // 正常启动任务流程
+           autoUtils.logText('开始任务')
+           autoTask.initApp() // 调用主初始化流程
+       }
     },
     //初始化 总逻辑是this.setRunModel先执行养机逻辑 在执行douyinAd.lookModel看小程序广告的逻辑
     initApp(name) {
@@ -31,12 +55,12 @@ let autoTask = {
         douyinAd.getTodayDataInfo()
         let yangjiNum = douyinAd.todayDataInfo.yangjiNum
         autoUtils.logText(yangjiNum, 'yangjiNum')
-        // 模式3: 只看广告不养机
+        // 模式3: 抖音+抖音火山
         if (AutoGlobData.runModel == 3) {
-            autoUtils.logText('不养机模式')
+            autoUtils.logText('抖音+抖音火山模式')
             this.startRunAppList()
         }
-        // 模式1: 常规养机+广告
+        // 模式1: 常规养机后广告
         else if (AutoGlobData.runModel == 1) {
             if (yangjiNum == 0) {
                 autoUtils.logText('养机次数小于1,先养机')
@@ -61,7 +85,7 @@ let autoTask = {
         else if (AutoGlobData.runModel == 5) {
             this.startRunAppList()
         }
-        // 模式8: 全程只看广告不养机
+        // 模式8: 只在推荐页养机
         else if (AutoGlobData.runModel == 8) {
             douyinAd.onlyIndexPageYangji()
             autoUtils.qiutApp()
@@ -331,25 +355,6 @@ let autoTask = {
         }
         
         
-    },
-    startTask() {
-         // 判断是否存在特殊配置参数
-        if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
-            autoUtils.logText('开始快手任务')
-            autoTaskKs.startTask()
-            // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
-            return;
-        }
-
-        autoUtils.logText(AutoGlobData.otherValue,'有其他设置的值')
-        if (AutoGlobData.otherValue&&AutoGlobData.otherValue.length>0) {
-             // 执行特殊配置任务（快速模式/测试模式/重置模式等）
-            this.setOtherValue()
-        } else {
-            // 正常启动任务流程
-            autoUtils.logText('开始任务')
-            autoTask.initApp() // 调用主初始化流程
-        }
     }
 }
 

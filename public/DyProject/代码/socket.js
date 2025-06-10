@@ -216,6 +216,6 @@ function startSocket(num) {
     ws.connet("ws://140.143.153.128:30001");  
     // jiaming1.serv00.net 对应socket IP地址： 128.204.223.95:30001
     // ws.connet("ws://128.204.223.95:30001/");  
-    
+    // http://daming360.cloudns.ch:30001/ cloud cdn代理
 }
 // startSocket()

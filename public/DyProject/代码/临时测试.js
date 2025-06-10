@@ -7,6 +7,7 @@
 // douyinAd.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
 // douyinAd.testAAA()
 
+// console.log(app.getPackName())
 
 // autoUtils.clickGetText('视频')
 // sleep.time('22:10:10');

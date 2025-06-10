@@ -2316,52 +2316,6 @@ let douyinAd = {
             autoUtils.logText('不是主动介入，关闭弹窗，继续执行')
         }
     },
-    isSamePage(time, text) {
-        let isPageSame = false
-        // 首次截图并获取各点RGB值  
-        // 定义要检查的坐标列表
-        var checkPoints = [
-            { x: 0.8194, y: 0.5254 },
-            { x: 0.2847, y: 0.8047 },
-            { x: 0.4931, y: 0.6055 },
-        ];
-        // 首次截图并获取各点RGB值  
-        var img = screen.screenShotFull();
-        var rgbValues = [];
-        for (var point of checkPoints) {
-            var rgb = img.getPointRGB(point.x, point.y);
-            rgbValues.push(rgb);
-        }
-        autoUtils.logText("首次截图RGB值:", rgbValues);
-        // 等待一段时间后再次截图  
-        autoUtils.logText('开始等待后比较两个页面是否一样')
-        let num = parseInt(time / 2)
-        for (let i = 0; i < num; i++) {
-            autoUtils.sleep(2, text)
-            var imgNext = screen.screenShotFull();
-            // 比较两次截图的RGB值  
-            var isSceneChanged = false;
-            for (var i = 0; i < checkPoints.length; i++) {
-                var newRgb = imgNext.getPointRGB(checkPoints[i].x, checkPoints[i].y);
-                if (rgbValues[i][0] !== newRgb[0] ||
-                    rgbValues[i][1] !== newRgb[1] ||
-                    rgbValues[i][2] !== newRgb[2]) {
-                    isSceneChanged = true;
-                    break; // 发现变化就跳出循环  
-                }
-            }
-            // imgNext.recycle()
-            if (isSceneChanged) {
-                autoUtils.logText('画面有变化');
-                isPageSame = false
-                break;
-            } else {
-                isPageSame = true
-                autoUtils.logText('画面无变化');
-            }
-        }
-        return isPageSame
-    },
     isLookAdByEmailMessage: false,
     getDownLoadAdFlag(name) {
         let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 45)

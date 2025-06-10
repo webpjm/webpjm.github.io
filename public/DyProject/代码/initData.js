@@ -123,7 +123,7 @@ var AutoGlobData = {
     },
     todayTimeInterval: {
         time: time.nowStamp(),
-        dataArr: [10,45,15,30,5,50,0,25,5,40,15]
+        dataArr: [10,45,15,30,5,60,0,25,5,40,15]
     },
     appPhoneName: '抖音',
     adMaxNum: 2,
