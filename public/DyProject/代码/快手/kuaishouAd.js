@@ -1954,7 +1954,7 @@ let kaishouAd = {
         // this.yangji('quick')
         let task = AutoGlobData.taskdetail
         // this.backHomeWaitAd(task)
-        this.swipeIndexAppListForAd(task, 4)
+        this.swipeIndexAppListForAd(task, 1)
         this.lookAd(task.appName)
         //小程序内部看广告的逻辑
         // this.lookAd(task.appName)
@@ -1964,24 +1964,23 @@ let kaishouAd = {
         // this.swipeIndexAppListForAd(task, 4)
         // // this.yangji('quick')
         this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 4)
+        this.swipeIndexAppListForAd(task, 1)
         this.lookAd(task.appName)
 
     },
     lookModel3() {
         let task = AutoGlobData.taskdetail
-        for (let i = 0; i < 3; i++) {
-            this.swipeIndexAppListForAd(task, 4)
+        for (let i = 0; i < 2; i++) {
+            this.swipeIndexAppListForAd(task, 1)
             this.lookAd(task.appName)
         }
     },
     lookModel4() {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
-        this.yangji('quick')
         let num = rand.randNumber(1, 2)
         for (let i = 0; i < num; i++) {
-            this.swipeIndexAppListForAd(task, 3)
+            this.swipeIndexAppListForAd(task, 1)
             this.lookAd(task.appName)
         }
 
@@ -2009,7 +2008,7 @@ let kaishouAd = {
         autoUtils.sleep(this.pageSleepTimeByType(type), text ? text : '广告等待')
     },
     lookAd(name) {
-        autoUtils.stopRunByTime()
+        // autoUtils.stopRunByTime()
         autoUtils.logText('开始准备观看广告')
         autoUtils.sleep(6, '开始点击')
         if (name.indexOf('优创') > -1) {
@@ -2080,8 +2079,6 @@ let kaishouAd = {
 
         this.randomTime('广告等待')
 
-        // this.getDownLoadAdFlag(name)
-
         //如果没有主动介入的操作
         if (!this.isLookAdByEmailMessage) {
             autoUtils.logText('此次不用主动转化')
@@ -2102,150 +2099,29 @@ let kaishouAd = {
         adUtilsKs.setSuccessAppAd(name, true, true)
         kaishouAd.isLookAdByEmailMessage = true
     },
-    // 手动转化的操作界面
-    showFloatUi(name) {
-        //初始化一个activity页面
-        var fui = new floatUI()
-        // fui.loadLayoutFile('/资源/layout.xml')
-        fui.loadXML(`<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="1000"
-    android:orientation="vertical"
-    android:padding="16dp">
-    <TextView android:layout_marginLeft='65dp' android:text="${name}" android:textSize="14dp"/>
-    <Button  android:visibility="gone" android:id="b1" android:color="#FFFFFF" 
-    android:layout_marginTop='10dp' android:layout_width="match_parent" android:layout_height="wrap_content" android:text="保存广告图片"/>
-    <Button android:id="b2" android:color="#FFFFFF"
-     android:layout_marginTop='10dp' android:layout_width="match_parent" android:layout_height="wrap_content" android:text="开始手动"/>
-    <Button android:id="b3" android:color="#FFFFFF" 
-    android:layout_marginTop='16dp'android:layout_width="match_parent" android:layout_height="wrap_content" android:text="取消操作"/>
-    <TextView android:id="b4" android:layout_marginTop='16dp' 
-    android:color="#F56C6C" android:text="完成转化后在广告界面点击确定转化" android:textSize="13dp"/>
-    </LinearLayout>`) // 里面放入layout.xml里的代码是另一种写法
-        fui.setWidth(660)
-        fui.setHeight(660)
-        fui.setPosition(screen.getScreenWidth() / 2 - 330, screen.getScreenHeight() / 2 - 600)
-
-        var button1 = fui.findViewById('b1');
-        var button2 = fui.findViewById('b2');
-        var button3 = fui.findViewById('b3');
-        var TextView = fui.findViewById('b4');
-
-        fui.setDrag(button1, true)
-        fui.setDrag(button2, true)
-        fui.setDrag(button3, true)
-        fui.setDrag(TextView, true)
-        //对控件的操作必须在ui线程下完成
-        fui.runOnUiThread(function fun() {
-            //动态设置按钮背景色
-            // button1.setVisibility(View.GONE);
-            button1.setBackgroundColor(android.graphics.Color.parseColor("#6495ED"));
-            button2.setBackgroundColor(android.graphics.Color.parseColor("#67C23A"));
-            button3.setBackgroundColor(android.graphics.Color.parseColor("#F56C6C"));
-        })
-
-        //是否下载转化了
-        let isDownload = false
-        button1.setOnClickListener(function () {
-            isDownload = true
-            debug.setGoOn()
-        })
-        //是否是真人主动确定停止的脚本
-        let isTrueUser = false
-        button2.setOnClickListener(function () {
-            isTrueUser = true
-            debug.setAllPause()
-            autoUtils.logText('确定介入成功，脚本暂停')
-            fui.runOnUiThread(function fun() {
-                // 去点击广告完成转化(下载/送礼物/留电话)
-                button1.setVisibility(View.VISIBLE)
-                button2.setVisibility(View.GONE);
-                TextView.setText('脚本已经暂停,手动操作后在广告界面点击保存图片后就不用管了')
-            })
-        })
-        //是否取消了操作
-        let isCancel = false
-        button3.setOnClickListener(function () {
-            autoUtils.logText('转化已取消')
-            isCancel = true
-            fui.close()
-            debug.setGoOn()
-        })
-        let time = rand.randNumber(15 * 60, 25 * 60)
-        for (let i = 0; i < time; i++) {
-            autoUtils.sleep(1, '等待点击开始手动')
-            fui.runOnUiThread(function fun() {
-                // 去点击广告完成转化(下载/送礼物/留电话)
-                TextView.setText('等待点击开始手动剩余' + (time - i) + '秒后自动关闭')
-            })
-            if (isTrueUser || isDownload || isCancel) {
-                if (isTrueUser) {
-                    autoUtils.logText('主动点击的暂停')
-                }
-                if (isDownload) {
-                    autoUtils.logText('主动点击的下载')
-                    fui.close()
-                    this.setAdSuccess(name)
-                }
-                if (isCancel) {
-                    autoUtils.logText('主动点击的取消操作')
-                }
-                break;
-            }
-        }
-        // autoUtils.logText(isTrueUser, '是否是真实用户')
-
-        if (!isTrueUser && !isDownload && !isCancel) {
-            fui.close()
-            autoUtils.logText('不是主动介入，关闭弹窗，继续执行')
-        }
-    },
     isLookAdByEmailMessage: false,
-    getDownLoadAdFlag(name) {
-        let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 45)
-        let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
-        this.isLookAdByEmailMessage = false
-        // if (downloadtotal < needdownload)
-        if (downloadtotal < needdownload) {
-            // rand.randNumber(1, 10) > 5
-            if (rand.randNumber(1, 10) > 5) {
-                autoUtils.logText('可以点击下载了')
-                autoUtils.sleep(3, '开始发送邮件')
-                // 钉钉设置了只有发送包括通知两个字才能发送成功
-                let str = `广告转化通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                ws.send(str)
-
-                autoUtils.logText('准备等待手动操作')
-                this.showFloatUi(name)
-
-
-            } else {
-                autoUtils.logText('下载的随机条件不满足')
-            }
-        }
-    },
     isAppDetail() {
         return autoUtils.getText("收藏") || autoUtils.getText("下载") || autoUtils.getText("下載") || autoUtils.getText("随机一张") || autoUtils.getText("查看全部") || autoUtils.getText("保存") || autoUtils.getText("立即") || autoUtils.getText("观看")
     },
     clickAdDownloadBtn(name, num) {
         num = num ? num : 1
         adUtilsKs.loadAdList()
+        
+        // let time = adUtilsKs.getAppAdTime(name)
 
-        let time = adUtilsKs.getAppAdTime(name)
+        // if (time > 0) {
+        //     autoUtils.logText('时间条件未满足，继续等待')
+        //     time = time + rand.randNumber(-15 * 60, 35 * 60)
+        //     if (time < 0) {
+        //         time = rand.randNumber(5, 35 * 60)
+        //     }
+        //     if (this.lookModelValue == 6) {
+        //         autoUtils.logText('不等待直接看广告')
+        //     } else {
+        //         autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
+        //     }
 
-        if (time > 0) {
-            autoUtils.logText('时间条件未满足，继续等待')
-            time = time + rand.randNumber(-15 * 60, 35 * 60)
-            if (time < 0) {
-                time = rand.randNumber(5, 35 * 60)
-            }
-            if (this.lookModelValue == 6) {
-                autoUtils.logText('不等待直接看广告')
-            } else {
-                autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
-            }
-
-        }
+        // }
 
         this.randomTime('开始点击收藏等')
 
@@ -2366,73 +2242,6 @@ let kaishouAd = {
                 hid.click(rand.randNumber(screen.getScreenWidth() / 2 - 10, screen.getScreenWidth() / 2 + 10), rand.randNumber(screen.getScreenHeight() / 2 - 10, screen.getScreenHeight() / 2 + 10))
 
             }
-            // else if (autoUtils.getText('额外') && !autoUtils.getText('下载')) {
-            //     autoUtils.sleep(5, '咨询')
-            //     autoUtils.clickGetText('额外')
-            //     if (autoUtils.getText('打开')) {
-            //         autoUtils.sleep(3, '打开')
-            //         autoUtils.clickGetText('打开')
-            //     }
-            //     autoUtils.sleep(5, '打开')
-            //     if (autoUtils.getText('打开')) {
-            //         autoUtils.sleep(3, '打开')
-            //         autoUtils.clickGetText('打开')
-            //     }
-
-            //     autoUtils.sleep(15, '打开等待')
-
-            //     let num1 = autoUtils.getRandomInt(3, 6, 'int')
-            //     for (let i = 0; i < num1; i++) {
-            //         let time = this.detailWaitTime()
-            //         autoUtils.sleep(time, '广告详情等待滑动')
-            //         this.detailSwipe()
-            //     }
-
-            //     autoUtils.loginApp(this.runAppName)
-
-
-            // } 
-            // else if (autoUtils.getText('打开')) {
-            //     autoUtils.sleep(5, '打开')
-            //     autoUtils.clickGetText('打开')
-            //     autoUtils.sleep(5, '打开')
-            //     if (autoUtils.getText('打开')) {
-            //         autoUtils.sleep(3, '打开')
-            //         autoUtils.clickGetText('打开')
-            //     }
-
-            //     autoUtils.sleep(5, '打开')
-            //     if (autoUtils.getText('打开')) {
-            //         autoUtils.sleep(3, '打开')
-            //         autoUtils.clickGetText('打开')
-            //     }
-
-            //     autoUtils.sleep(15, '打开等待')
-
-            //     let num1 = autoUtils.getRandomInt(3, 6, 'int')
-            //     for (let i = 0; i < num1; i++) {
-            //         let time = this.detailWaitTime()
-            //         autoUtils.sleep(time, '广告详情等待滑动')
-            //         this.detailSwipe()
-            //     }
-
-
-            //     autoUtils.loginApp(this.runAppName)
-
-
-            // } 
-            
-            // if (!autoUtils.getText('成功领取')) {
-
-            //     let num1 = autoUtils.getRandomInt(3, 6, 'int')
-            //     for (let i = 0; i < num1; i++) {
-            //         let time = this.detailWaitTime()
-            //         autoUtils.sleep(time, '广告详情等待滑动')
-            //         this.detailSwipe()
-            //     }
-
-            //     autoUtils.autoBack()
-            // }
 
     },
     checkAdSuccess(num, name) {
