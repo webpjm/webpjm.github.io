@@ -2218,128 +2218,7 @@ let douyinAd = {
         adUtils.setSuccessAppAd(name, true, true)
         douyinAd.isLookAdByEmailMessage = true
     },
-    // 手动转化的操作界面
-    showFloatUi(name) {
-        //初始化一个activity页面
-        var fui = new floatUI()
-        // fui.loadLayoutFile('/资源/layout.xml')
-        fui.loadXML(`<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="1000"
-    android:orientation="vertical"
-    android:padding="16dp">
-    <TextView android:layout_marginLeft='65dp' android:text="${name}" android:textSize="14dp"/>
-    <Button  android:visibility="gone" android:id="b1" android:color="#FFFFFF" 
-    android:layout_marginTop='10dp' android:layout_width="match_parent" android:layout_height="wrap_content" android:text="保存广告图片"/>
-    <Button android:id="b2" android:color="#FFFFFF"
-     android:layout_marginTop='10dp' android:layout_width="match_parent" android:layout_height="wrap_content" android:text="开始手动"/>
-    <Button android:id="b3" android:color="#FFFFFF" 
-    android:layout_marginTop='16dp'android:layout_width="match_parent" android:layout_height="wrap_content" android:text="取消操作"/>
-    <TextView android:id="b4" android:layout_marginTop='16dp' 
-    android:color="#F56C6C" android:text="完成转化后在广告界面点击确定转化" android:textSize="13dp"/>
-    </LinearLayout>`) // 里面放入layout.xml里的代码是另一种写法
-        fui.setWidth(660)
-        fui.setHeight(660)
-        fui.setPosition(screen.getScreenWidth() / 2 - 330, screen.getScreenHeight() / 2 - 600)
-
-        var button1 = fui.findViewById('b1');
-        var button2 = fui.findViewById('b2');
-        var button3 = fui.findViewById('b3');
-        var TextView = fui.findViewById('b4');
-
-        fui.setDrag(button1, true)
-        fui.setDrag(button2, true)
-        fui.setDrag(button3, true)
-        fui.setDrag(TextView, true)
-        //对控件的操作必须在ui线程下完成
-        fui.runOnUiThread(function fun() {
-            //动态设置按钮背景色
-            // button1.setVisibility(View.GONE);
-            button1.setBackgroundColor(android.graphics.Color.parseColor("#6495ED"));
-            button2.setBackgroundColor(android.graphics.Color.parseColor("#67C23A"));
-            button3.setBackgroundColor(android.graphics.Color.parseColor("#F56C6C"));
-        })
-
-        //是否下载转化了
-        let isDownload = false
-        button1.setOnClickListener(function () {
-            isDownload = true
-            debug.setGoOn()
-        })
-        //是否是真人主动确定停止的脚本
-        let isTrueUser = false
-        button2.setOnClickListener(function () {
-            isTrueUser = true
-            debug.setAllPause()
-            autoUtils.logText('确定介入成功，脚本暂停')
-            fui.runOnUiThread(function fun() {
-                // 去点击广告完成转化(下载/送礼物/留电话)
-                button1.setVisibility(View.VISIBLE)
-                button2.setVisibility(View.GONE);
-                TextView.setText('脚本已经暂停,手动操作后在广告界面点击保存图片后就不用管了')
-            })
-        })
-        //是否取消了操作
-        let isCancel = false
-        button3.setOnClickListener(function () {
-            autoUtils.logText('转化已取消')
-            isCancel = true
-            fui.close()
-            debug.setGoOn()
-        })
-        let time = rand.randNumber(15 * 60, 25 * 60)
-        for (let i = 0; i < time; i++) {
-            autoUtils.sleep(1, '等待点击开始手动')
-            fui.runOnUiThread(function fun() {
-                // 去点击广告完成转化(下载/送礼物/留电话)
-                TextView.setText('等待点击开始手动剩余' + (time - i) + '秒后自动关闭')
-            })
-            if (isTrueUser || isDownload || isCancel) {
-                if (isTrueUser) {
-                    autoUtils.logText('主动点击的暂停')
-                }
-                if (isDownload) {
-                    autoUtils.logText('主动点击的下载')
-                    fui.close()
-                    this.setAdSuccess(name)
-                }
-                if (isCancel) {
-                    autoUtils.logText('主动点击的取消操作')
-                }
-                break;
-            }
-        }
-        // autoUtils.logText(isTrueUser, '是否是真实用户')
-
-        if (!isTrueUser && !isDownload && !isCancel) {
-            fui.close()
-            autoUtils.logText('不是主动介入，关闭弹窗，继续执行')
-        }
-    },
     isLookAdByEmailMessage: false,
-    getDownLoadAdFlag(name) {
-        let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 45)
-        let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
-        this.isLookAdByEmailMessage = false
-        // if (downloadtotal < needdownload)
-        if (downloadtotal < needdownload) {
-            // rand.randNumber(1, 10) > 5
-            if (rand.randNumber(1, 10) > 5) {
-                autoUtils.logText('可以点击下载了')
-                autoUtils.sleep(3, '开始发送邮件')
-                // 钉钉设置了只有发送包括通知两个字才能发送成功
-                let str = `广告转化通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                ws.send(str)
-
-                autoUtils.logText('准备等待手动操作')
-                this.showFloatUi(name)
-                
-
-            } else {
-                autoUtils.logText('下载的随机条件不满足')
-            }
-        }
-    },
     isAppDetail() {
         return autoUtils.getText("收藏") || autoUtils.getText("下载") || autoUtils.getText("下載") || autoUtils.getText("随机一张") || autoUtils.getText("查看全部") || autoUtils.getText("保存") || autoUtils.getText("立即") || autoUtils.getText("观看")
     },
@@ -2568,31 +2447,35 @@ let douyinAd = {
                                 }else{
                                     autoUtils.logText('今日已经随机下载了一款游戏了')
                                 }
+                            }else{
+                                let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
+                                let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
+                                let isDownLoad = false
+                                autoUtils.logText('自动下载游戏'+needdownload+'-'+downloadtotal)
+                                
+                                if (downloadtotal < needdownload) {
+                                    if (autoUtils.getText("下载")) {
+                                        autoUtils.logText('可以点击下载了')
+                                        autoUtils.sleep(3, '开始发送邮件')
+                                        // 钉钉设置了只有发送包括通知两个字才能发送成功
+                                        let str = `广告转化通知（游戏下载）:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                                        ws.send(str)
+
+                                        autoUtils.clickGetText('下载')
+                                        isDownLoad = true
+                                        autoUtils.logText('等待下载完成')
+                                        autoUtils.sleep(rand.randNumber(30,60))
+                                    }
+                                }
+
+                                if(autoUtils.getText("下载")){
+                                    let str = `游戏下载通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                                    ws.send(str)
+                                    // autoUtils.sleep(10, '开始等待是否下载')
+                                }
                             }
 
-                            // let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
-                            // let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
-                            // let isDownLoad = false
-                            // if (downloadtotal < needdownload) {
-                            //     if (autoUtils.getText("下载")) {
-                            //         autoUtils.logText('可以点击下载了')
-                            //         autoUtils.sleep(3, '开始发送邮件')
-                            //         // 钉钉设置了只有发送包括通知两个字才能发送成功
-                            //         let str = `广告转化通知（游戏下载）:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                            //         ws.send(str)
-
-                            //         autoUtils.clickGetText('下载')
-                            //         isDownLoad = true
-                            //         autoUtils.logText('等待下载完成')
-                            //         autoUtils.sleep(rand.randNumber(30,60))
-                            //     }
-                            // }
-
-                            // if(autoUtils.getText("下载")){
-                            //     let str = `游戏下载通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                            //     ws.send(str)
-                            //     // autoUtils.sleep(10, '开始等待是否下载')
-                            // }
+                           
 
 
                             // 保存图片

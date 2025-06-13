@@ -107,27 +107,16 @@ let autoTask = {
     },
     //设置运行APP
     setRunAppList() {
-        let phoneId = device.getDeviceIntID()
-        // 固定模式：根据设备ID获取预配置的小程序列表
-        if (AutoGlobData.miniAppNum == 1) {
-            // 优先使用当前设备的配置，若无则使用默认设备"531011851"的配置
-            AutoGlobData.taskApp = AutoGlobData.phoneListRunAppObj[phoneId] || AutoGlobData.phoneListRunAppObj["531011851"]
-             // 打乱小程序顺序（避免每次运行顺序相同）
-            AutoGlobData.taskApp = autoUtils.shuffleObj(AutoGlobData.taskApp)
+        // 数量配置映射表：
+        // 2 → 5个  3 → 8个  4 → 全部小程序
+        let appNumObj = {
+            '1': 3,
+            '2': 5,
+            '3': 8,
+            '4': AutoGlobData.appList.length
         }
-        // 随机模式：根据配置生成随机数量的小程序列表
-        else {
-            // 数量配置映射表：
-            // 2 → 5个  3 → 8个  4 → 全部小程序
-            let appNumObj = {
-                '2': 5,
-                '3': 8,
-                '4': AutoGlobData.appList.length
-            }
-             // 根据配置选择数量，默认取全部
-            this.setAppRunNum(appNumObj[AutoGlobData.miniAppNum] || 8)
-            // this.setAppRunNum(AutoGlobData.appList.length)
-        }
+            // 根据配置选择数量，默认取全部
+        this.setAppRunNum(appNumObj[AutoGlobData.miniAppNum] || AutoGlobData.appList.length)
 
         autoUtils.logText('运行的小程序是' + JSON.stringify(AutoGlobData.taskApp))
 
