@@ -652,7 +652,7 @@ let kaishouAd = {
 
         // }
 
-        if (autoUtils.getText('反馈') && autoUtils.getText(name)) {
+        if (autoUtils.getText('反馈')) {
             flag = true
         }
 
