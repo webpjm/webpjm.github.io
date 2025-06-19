@@ -652,7 +652,7 @@ let kaishouAd = {
 
         // }
 
-        if (autoUtils.getText('反馈') || autoUtils.getText(name)) {
+        if (autoUtils.getText('反馈') && autoUtils.getText(name)) {
             flag = true
         }
 
@@ -1987,7 +1987,7 @@ let kaishouAd = {
     },
     lookModel5() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 4)
+        this.swipeIndexAppListForAd(task, 1)
         // this.yangji('quick')
         // this.yangji('quick')
         // this.swipeIndexAppListForAd(task, 4)
