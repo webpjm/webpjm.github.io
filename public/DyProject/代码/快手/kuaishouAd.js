@@ -672,10 +672,10 @@ let kaishouAd = {
             autoUtils.sleep(3, '等待后寻找')
         }
 
-        if (this.isAppDetailPage(name)) {
-            autoUtils.logText('小程序进入成功了');
-            return;
-        }
+        // if (this.isAppDetailPage(name)) {
+        //     autoUtils.logText('小程序进入成功了');
+        //     return;
+        // }
 
         let cvName = this.hanldeCvTextByAppName(name)
 
@@ -1630,7 +1630,7 @@ let kaishouAd = {
             autoUtils.logText('当前养机小程序', list[i].appName)
             this.findAppListPage(list[i].appName)
             autoUtils.sleep(6, '开始滑动页面')
-            this.onlyMove(3)
+            this.onlyMove(1)
         }
     },
     commonSearchVideo() {
