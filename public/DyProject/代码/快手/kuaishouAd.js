@@ -2297,32 +2297,29 @@ let kaishouAd = {
                                  }
                             }
 
-                            let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
-                            let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
-                            let isDownLoad = false
-                            if (downloadtotal < needdownload) {
-                                if (autoUtils.getText("下载")) {
-                                    autoUtils.logText('可以点击下载了')
-                                    autoUtils.sleep(3, '开始发送邮件')
-                                    // 钉钉设置了只有发送包括通知两个字才能发送成功
-                                    let str = `快手广告下载转化通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                                    ws.send(str)
+                            // let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
+                            // let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
+                            // let isDownLoad = false
+                            // if (downloadtotal < needdownload) {
+                            //     if (autoUtils.getText("下载")) {
+                            //         autoUtils.logText('可以点击下载了')
+                            //         autoUtils.sleep(3, '开始发送邮件')
+                            //         // 钉钉设置了只有发送包括通知两个字才能发送成功
+                            //         let str = `快手广告下载转化通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                            //         ws.send(str)
 
-                                    autoUtils.clickGetText('下载')
-                                    isDownLoad = true
-                                    autoUtils.logText('等待下载完成')
-                                    autoUtils.sleep(rand.randNumber(30, 60))
+                            //         autoUtils.clickGetText('下载')
+                            //         isDownLoad = true
+                            //         autoUtils.logText('等待下载完成')
+                            //         autoUtils.sleep(rand.randNumber(30, 60))
+                            //     }
+                            // }
 
-                                    // let str = `快手广告下载通知:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
-                                    // ws.send(str)
-                                }
-                            }
-
-                            autoUtils.sleep(60, '继续等待后保存图片')
+                            // autoUtils.sleep(5, '继续等待后保存图片')
 
                             
                             // 保存图片
-                            autoUtils.sleep(2, '开始保存图片')
+                            autoUtils.sleep(5, '开始保存图片')
                             autoUtils.setSuccessPicKs(name)
 
                             let longTime = rand.randNumber(10, 16)
