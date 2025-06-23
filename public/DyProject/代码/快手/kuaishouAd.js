@@ -1978,16 +1978,18 @@ let kaishouAd = {
     lookModel4() {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
-        let num = rand.randNumber(1, 2)
-        for (let i = 0; i < num; i++) {
-            this.swipeIndexAppListForAd(task, 1)
-            this.lookAd(task.appName)
-        }
+        // let num = rand.randNumber(1, 2)
+        // for (let i = 0; i < num; i++) {
+        //     this.swipeIndexAppListForAd(task, 1)
+        //     this.lookAd(task.appName)
+        // }
+        this.lookAd(task.appName)
 
     },
     lookModel5() {
         let task = AutoGlobData.taskdetail
         this.swipeIndexAppListForAd(task, 1)
+        this.lookAd(task.appName)
         // this.yangji('quick')
         // this.yangji('quick')
         // this.swipeIndexAppListForAd(task, 4)
@@ -2049,7 +2051,7 @@ let kaishouAd = {
             this.randomTime('云帆等待')
         }
         else if (name.indexOf('洛雪') > -1) {
-            this.onlyMove(3)
+            // this.onlyMove(3)
             hid.clickPercent(0.3889, 0.4609)
         }
         else if (name.indexOf('番茄') > -1) {
@@ -2296,7 +2298,8 @@ let kaishouAd = {
                                     }
                                  }
                             }
-
+                            let isDownLoad = false
+                            
                             // let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
                             // let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
                             // let isDownLoad = false

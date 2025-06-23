@@ -1,9 +1,34 @@
 
 // 调用 OCR 功能识别中文，并将结果输出
-// runTime.Import('initData.js')
+runTime.Import('initData.js')
 // runTime.Import('douyinAd.js')
-// runTime.Import('tool.js')
+runTime.Import('tool.js')
+ runTime.Import('快手/ksAdTool.js')
+runTime.Import('快手/kuaishouAd.js')
+runTime.Import('快手/ksInit.js')
 
+kaishouAd.swipeIndexAppListForAd({appName:'洛雪壁纸'}, 1)
+kaishouAd.lookAd('洛雪壁纸')
+
+printl(device.getVersion())
+// autoUtils.sleep(6000,'测试')
+// console.log(1)
+// var t2= new thread();
+// t2.runJsCode( ()=>{
+//         //10秒后停止t1线程
+//        autoUtils.sleep(3,'测试1线程')
+//         console.log(3)
+// },"监控线程")
+// console.log(2)
+// debug.setAllPause()
+// console.log(5)
+//先定义一个线程t1
+
+//定义t2线程
+
+
+// autoUtils.sleep(6,'测试')
+// t2.stop()
 // douyinAd.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
 // douyinAd.testAAA()
 

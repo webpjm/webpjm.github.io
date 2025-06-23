@@ -32,9 +32,10 @@ let autoUtils = {
     stopRunByTime() {
         let date = new Date() // 时间戳为秒：10位数
         let hour = Number(date.getHours())
-        if (hour >= 1 && hour <= 6) {
-            this.logText('当前2点到6点之间-时间条件不通过')
+        if (hour >= 0 && hour <= 6&&AutoGlobData.appPhoneName.indexOf('抖')>-1) {
+            this.logText('当前0点到6点之间-时间条件不通过')
             this.qiutApp()
+            
             //暂停脚本，如果有快手任务或者其他任务的则注释此处
             debug.setAllPause()
         }
@@ -51,14 +52,11 @@ let autoUtils = {
                 this.autoHome()
                 this.sleep(randomNum,'开始运行火山')
                 if(AutoGlobData.appPhoneName.indexOf('火山') == -1) {
-                    
                     AutoGlobData.appPhoneName = "抖音火山版"
                     AutoGlobData.runModel == 5
                     this.loginApp(AutoGlobData.appPhoneName)
                 }
             }
-            //暂停脚本，如果有快手任务或者其他任务的则注释此处
-            // debug.setAllPause()
         }
     }, 
     autoHome() {
@@ -124,6 +122,7 @@ let autoUtils = {
             if(timeFlag>300) {
                 this.showLog()
             }
+            // 早上抖音晚上火上版时候，随机时间返回主页等待
             let randNum = rand.randNumber(60,100)
             for (let i = 0; i < timeFlag; i++) {
                 this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)

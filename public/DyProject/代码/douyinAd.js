@@ -464,8 +464,8 @@ let douyinAd = {
         autoUtils.logText(this.timeTypeOptions[type])
         let timeTypeMethod = {
             "1": this.sleepTimeVideoMehtod(3, 20),
-            "2": this.sleepTimeVideoMehtod(35, 80),
-            "3": this.sleepTimeVideoMehtod(60, 100),
+            "2": this.sleepTimeVideoMehtod(30, 50),
+            "3": this.sleepTimeVideoMehtod(50, 80),
         }
         return timeTypeMethod[type]
     },
