@@ -126,6 +126,13 @@ var ksjisuban = {
             autoUtils.clickGetText('去赚')
         }
 
+        if (autoUtils.getText('打卡')) {
+            autoUtils.autoBack()
+            autoUtils.sleep(3,'等待')
+            autoUtils.clickGetText('去赚')
+        }
+
+        autoUtils.sleep(5,'等待')
         if (!autoUtils.getText('任务中心') && !autoUtils.getText('我的金币')) {
             this.backToHome(1)
             autoUtils.clickGetText('去赚')
