@@ -7,10 +7,12 @@ runTime.Import('tool.js')
 runTime.Import('快手/kuaishouAd.js')
 runTime.Import('快手/ksInit.js')
 
-kaishouAd.swipeIndexAppListForAd({appName:'洛雪壁纸'}, 1)
-kaishouAd.lookAd('洛雪壁纸')
 
-printl(device.getVersion())
+// console.log(parseInt(500/10))
+// kaishouAd.swipeIndexAppListForAd({appName:'洛雪壁纸'}, 1)
+// kaishouAd.lookAd('洛雪壁纸')
+
+// printl(device.getVersion())
 // autoUtils.sleep(6000,'测试')
 // console.log(1)
 // var t2= new thread();
@@ -192,22 +194,14 @@ printl(device.getVersion())
 // new image().MLKitOcrRect('zh',[0,0,1,1])screen.MLKitOcr('zh',2)
 
 
-// var ocrRes = screen.MLKitOcr('zh', 1);
-// console.log(ocrRes,'aaa')
-// let result = ocrRes.getJson()
 
-// for (var i = 0; i < result.length; i++) {
-//    let str = String(result[i].text)
-//    console.log(str,result[i],str.indexOf('柠檬壁纸库'))
-// //    str = str.replace(/\s/g, "")
-// // //    autoUtils.logText(str,str.indexOf('全部>')>-1,'aaaa全部> ')
-// //    if(str.indexOf('洛雪')>-1) {
-// //       autoUtils.logText(str,result[i],'aaaa')
-// //         hid.touchDown(0, result[i].rect.right,result[i].rect.bottom);
-// //             sleep.millisecond(rand.randNumber(5000, 10000));
-// //             hid.touchUp(0);
-// //    }
-// }
+
+
+if(autoUtils.getText('奖励')) {
+                    console.log('aa')
+                }
+
+// console.log(autoUtils.getText('再看'))
 // auto.clickPoint(941,1687)
 //找图返回目标数组
 // var detects=opencv.findImagesEx('图色593933.cv');

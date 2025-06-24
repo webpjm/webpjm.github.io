@@ -459,7 +459,7 @@ let adUtilsKs = {
         return detail
     },
     getAdDetailByPhoneId() {
-        let detail = {todayLookNum: 0,allLookNum:0,lastLookTime:0,lastLookTimeStr:''}
+        let detail = {todayLookNum: 0,allLookNum:0,lastLookTime:0,lastLookTimeStr:'',todayClickNum: 0,}
         let arr = []
         let apiList = adUtilsKs.adListApiData
         for (let i = 0; i < apiList.length; i++) {
@@ -474,6 +474,7 @@ let adUtilsKs = {
             detail.allLookNum+=item.lookAdTotal
             if (autoUtils.getTodayTime(item.lastLookTime) == autoUtils.getTodayTime(time.nowStamp())) {
                 detail.todayLookNum+=item.todayLookNum
+                detail.todayClickNum+=item.todayClickNum
             }
         })
 
@@ -482,7 +483,7 @@ let adUtilsKs = {
 
         detail.lastLookTime = timeArr[0]
         if(timeArr[0]) {
-            detail.lastLookTimeStr = autoUtils.getTodayTime(timeArr[0]) +" "+  autoUtils.getTimeStr(timeArr[0])
+            detail.lastLookTimeStr = autoUtils.getTodayTime(timeArr[0]) +" "+  autoUtils.getTimeStr(Number(timeArr[0]))
         }
         return detail
     },

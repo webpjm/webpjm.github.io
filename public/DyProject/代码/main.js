@@ -14,10 +14,16 @@ let autoTask = {
            // 其他任务的逻辑,相对独立的不和抖音的功能重复的，比如微信流量主，其他的一些对接广告的APP
            return;
        }
-       // 金币任务的逻辑
+       // 混合金币任务的逻辑
        if (AutoGlobData.runApp == 8) {
-            autoUtils.logText('开始金币任务')
+            autoUtils.logText('金币任务的逻辑未完成，开始快手任务')
             autoTaskKs.startTask()
+            return;
+        }
+        // 金币任务的逻辑
+       if (AutoGlobData.runApp == 9) {
+            autoUtils.logText('开始快手金币任务')
+            ksjisuban.startTask()
             return;
         }
 

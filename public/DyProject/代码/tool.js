@@ -1,6 +1,6 @@
 try {
     //调试的时候会不打开start.js初始化界面，获取不到globData导致报错，加入try catch防止报错
-    if(globData) {
+    if (globData) {
         let data = JSON.parse(globData)
         AutoGlobData.runApp = data.runApp
         AutoGlobData.runModel = data.runModel
@@ -22,43 +22,49 @@ try {
 
 let autoUtils = {
     useSocket: true,
-    loginApp(name,notAll) {
+    loginApp(name, notAll) {
+        if (name == '抖音') {
+            if (this.isIndexPage()) {
+                this.logText('返回首页成功')
+                return;
+            }
+        }
         this.sleep(3, '登录开始--先返回主页')
         this.autoHome()
         this.sleep(3, '开始登录' + name)
-        this.findApp(name, 1,notAll)
+        this.findApp(name, 1, notAll)
     },
     // 根据时间判断是否停止
     stopRunByTime() {
         let date = new Date() // 时间戳为秒：10位数
         let hour = Number(date.getHours())
-        if (hour >= 0 && hour <= 6&&AutoGlobData.appPhoneName.indexOf('抖')>-1) {
+        if (hour >= 0 && hour <= 6 && AutoGlobData.appPhoneName.indexOf('抖') > -1) {
             this.logText('当前0点到6点之间-时间条件不通过')
             this.qiutApp()
-            
+
             //暂停脚本，如果有快手任务或者其他任务的则注释此处
             debug.setAllPause()
         }
         //中午停止运行为抖音火山版晚上腾时间
-        else if(hour>=13 && hour<18 && AutoGlobData.runApp == 6) {
+        else if (hour >= 13 && hour < 18 && AutoGlobData.runApp == 6) {
             this.logText('当前18点到21点之间-时间条件不通过')
             // this.qiutApp()
-            let currentTimeNum = new Date().getHours()*60*60 + new Date().getMinutes()*60
-            let setTimeNum = 18*60*60 + 30*60  // 距离下午18:30需要等待的时间
+            let currentTimeNum = new Date().getHours() * 60 * 60 + new Date().getMinutes() * 60
+            let setTimeNum = 18 * 60 * 60 + 30 * 60  // 距离下午18:30需要等待的时间
             let num = setTimeNum - currentTimeNum
-            if(num>0) {
-                console.log(num,'需要等待的时间')
-                let randomNum = num + rand.randNumber(-600,600) // 随机十分钟左右启动
+            if (num > 0) {
+                console.log(num, '需要等待的时间')
+                let randomNum = num + rand.randNumber(-600, 600) // 随机十分钟左右启动
                 this.autoHome()
-                this.sleep(randomNum,'开始运行火山')
-                if(AutoGlobData.appPhoneName.indexOf('火山') == -1) {
+                this.sleep(randomNum, '开始运行火山')
+                if (AutoGlobData.appPhoneName.indexOf('火山') == -1) {
                     AutoGlobData.appPhoneName = "抖音火山版"
                     AutoGlobData.runModel == 5
                     this.loginApp(AutoGlobData.appPhoneName)
                 }
             }
         }
-    }, 
+    },
     autoHome() {
         if (device.getModel() == 'V1809A') {
             hid.home()
@@ -89,14 +95,14 @@ let autoUtils = {
         this.sleep(5, '关闭弹窗')
     },
     // 打印+当前时间
-    logText(text,text1) {
+    logText(text, text1) {
         text1 = text1 ? text1 : ''
         let str = this.getTimeStr()
         if (hid.isOn()) {
             print.log(text)
             // autoUtils.logText(text)
         } else {
-            print.log(text+text1, 'hid连接已关闭')
+            print.log(text + text1, 'hid连接已关闭')
         }
         try {
             if (!hid.isOn()) {
@@ -110,7 +116,7 @@ let autoUtils = {
                 ws.send(device.getDeviceIntID() + '@这是图片@' + str1 + screen.screenShot(374, 666, 50).toJpgBase64(50))
             }
         }
-        catch (err) {}
+        catch (err) { }
     },
     // 等待
     sleep(timeFlag, text) {
@@ -119,21 +125,46 @@ let autoUtils = {
         let arr = [-0.2, -0.3, -0.4, -0.5, 0.1, 0.2, 0.3, 0.5]
         timeFlag = timeFlag + this.shuffle(arr)[0]
         if (timeFlag > 60) {
-            if(timeFlag>300) {
+
+            //定义t2线程
+            var t2 = new thread();
+            let flag = false
+            if (timeFlag > 20 * 60) {
+                flag = true
+                this.autoHome()
+                sleep.millisecond(毫秒 = 3000);
+                t2.runJsCode(() => {
+                    ksjisuban.startTask()
+                }, "监控线程")
+            }
+            else if (timeFlag > 300) {
                 this.showLog()
             }
-            // 早上抖音晚上火上版时候，随机时间返回主页等待
-            let randNum = rand.randNumber(60,100)
-            for (let i = 0; i < timeFlag; i++) {
-                this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
-                sleep.millisecond(毫秒 = 1000);
-                if(text.indexOf('运行火山版')>-1) {
-                    if(i == randNum) {
-                        this.autoHome()
+
+            // 如果大于了20分钟
+            if (flag) {
+                for (let i = 0; i < timeFlag; i++) {
+                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
+                    sleep.millisecond(毫秒 = 1000);
+                }
+                t2.stop()
+                // 重新登录APP
+                autoUtils.loginApp(AutoGlobData.appPhoneName)
+            } else {
+                // 早上抖音晚上火上版时候，随机时间返回主页等待
+                let randNum = rand.randNumber(60, 100)
+                for (let i = 0; i < timeFlag; i++) {
+                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
+                    sleep.millisecond(毫秒 = 1000);
+                    if (text.indexOf('运行火山版') > -1) {
+                        if (i == randNum) {
+                            this.autoHome()
+                        }
                     }
                 }
+                this.hideLog()
             }
-            this.hideLog()
+
         } else {
             this.logText('开始等待' + (timeFlag) + '秒-------' + text)
             sleep.millisecond(毫秒 = 1000 * timeFlag);
@@ -150,7 +181,7 @@ let autoUtils = {
     },
     // 随机数组对象
     shuffleObj(arr) {
-        autoUtils.logText(arr,'aaaaaa')
+        autoUtils.logText(arr, 'aaaaaa')
         let i = arr.length;
         let newArr = []
         let newArr1 = []
@@ -167,10 +198,10 @@ let autoUtils = {
         }
         return newArr1;
     },
-    
+
     getTimeStr(time) {
         let date = new Date() // 时间戳为秒：10位数
-        if(time) {
+        if (time) {
             date = new Date(time)
         }
         let hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
@@ -179,27 +210,27 @@ let autoUtils = {
         return `${hour}:${minute}:${second}`
     },
     // 运行完成后一定要执行closeApp的方法
-    findApp(name, num,notAll) {
+    findApp(name, num, notAll) {
         this.logText("登录次数" + num)
         this.sleep(5, '开始寻找APP')
         num++
         let flag = false
-        if(notAll) {
+        if (notAll) {
             flag = this.getText(name)
-        }else{
+        } else {
             flag = this.getText(name, "isAll")
         }
-        
-        if (!flag&&num < 8) {
-            if (num>0&&num <= 3) {
+
+        if (!flag && num < 8) {
+            if (num > 0 && num <= 3) {
                 this.sleep(2, '开始左滑动寻找APP')
                 hid.swipM(screen.getScreenWidth() - 50, screen.getScreenHeight() / 2, 100, screen.getScreenHeight() / 2)
-                this.findApp(name, num,notAll)
-            }else if (num>3&&num < 6) {
+                this.findApp(name, num, notAll)
+            } else if (num > 3 && num < 6) {
                 this.sleep(2, '开始右滑动寻找APP')
                 hid.swipM(100, screen.getScreenHeight() / 2, screen.getScreenWidth() - 50, screen.getScreenHeight() / 2)
-                this.findApp(name, num,notAll)
-            } 
+                this.findApp(name, num, notAll)
+            }
             else {
                 this.logText('多次都没有找到，开始app启动')
                 app.openApp(this.getPackage(name))
@@ -209,12 +240,12 @@ let autoUtils = {
             if (flag) {
                 this.logText("找到了图标，准备点击" + name)
 
-                if(notAll) {
+                if (notAll) {
                     this.clickGetText(name, true)
-                }else{
+                } else {
                     this.clickGetTextAll(name, true)
                 }
-                
+
                 let time = this.getRandomInt(10, 15, 'int')
                 this.sleep(time, '启动APP中')
 
@@ -259,30 +290,30 @@ let autoUtils = {
     //判断文字是否存在 默认模糊查找 isall 精确查找
     getText(text, isAll) {
         let isExsit = false
-        var arrFind = [1,1.5,2,2.5,3,3.5]
+        var arrFind = [1, 1.5, 2, 2.5, 3, 3.5]
         var findIndex = 1
         var isFind = false
-        for(var i=0;i<arrFind.length;i++) {
+        for (var i = 0; i < arrFind.length; i++) {
             var ocrResult = screen.MLKitOcr('zh', arrFind[i]);
             var str = ocrResult.getAllString();
-            if(str.indexOf(text)>-1) {
+            if (str.indexOf(text) > -1) {
                 isFind = true
                 findIndex = arrFind[i]
                 // autoUtils.logText(findIndex,'findIndex')
-                if(!isAll) {
+                if (!isAll) {
                     isExsit = true
                 }
                 break;
             }
         }
 
-        if(!isFind) {
+        if (!isFind) {
             return false
         }
-        if(isExsit) {
+        if (isExsit) {
             return true
         }
-        
+
         this.sleep(1, '开始精准查找（完全匹配）' + text)
 
         var ocrRes = screen.MLKitOcr('zh', findIndex);
@@ -298,19 +329,19 @@ let autoUtils = {
                 if (str == text) {
                     isExsit = true
                 }
-            } 
+            }
         }
 
         return isExsit
     },
-    handleScaleObj(obj,scale) {
-        obj.rect.left = obj.rect.left*scale
-        obj.rect.right = obj.rect.right*scale
-        obj.rect.top = obj.rect.top*scale
-        obj.rect.bottom = obj.rect.bottom*scale
+    handleScaleObj(obj, scale) {
+        obj.rect.left = obj.rect.left * scale
+        obj.rect.right = obj.rect.right * scale
+        obj.rect.top = obj.rect.top * scale
+        obj.rect.bottom = obj.rect.bottom * scale
         return obj
     },
-    handleOcrText(result,text,all) {
+    handleOcrText(result, text, all) {
         let obj = ''
 
         for (var i = 0; i < result.length; i++) {
@@ -321,11 +352,11 @@ let autoUtils = {
                     obj = result[i]
                     break;
                 }
-            } 
-            else{
+            }
+            else {
                 //autoUtils.logText('模糊找到了'+str,text)
-                if (str.indexOf(text)>-1) {
-                    autoUtils.logText('找到了',str)
+                if (str.indexOf(text) > -1) {
+                    autoUtils.logText('找到了', str)
                     obj = result[i]
                     break;
                 }
@@ -336,43 +367,43 @@ let autoUtils = {
     },
     clickByText(text, move, all) {
         let obj = false
-        var arrFind = [1,1.5,2,2.5,3,3.5]
-        for(var i=0;i<arrFind.length;i++) {
-            autoUtils.logText(arrFind[i],'scale')
+        var arrFind = [1, 1.5, 2, 2.5, 3, 3.5]
+        for (var i = 0; i < arrFind.length; i++) {
+            autoUtils.logText(arrFind[i], 'scale')
             var ocrRes = screen.MLKitOcr('zh', arrFind[i]);
             let result = ocrRes.getJson()
-            let data = this.handleOcrText(result,text,all)
-            if(data) {
-                obj =  this.handleScaleObj(data,arrFind[i])
+            let data = this.handleOcrText(result, text, all)
+            if (data) {
+                obj = this.handleScaleObj(data, arrFind[i])
                 break;
             }
         }
 
         if (obj) {
-            this.sleep(2, '开始点击---'+text)
+            this.sleep(2, '开始点击---' + text)
             if (!move) {
                 this.randomClickHid(obj)
             } else {
-                this.randomClickHid(obj,true)
+                this.randomClickHid(obj, true)
                 // hid.click(obj.rect.left + 100, obj.rect.top - 100)
             }
-        }else{
+        } else {
             autoUtils.logText('没有找到')
         }
 
         return obj
     },
     // 随机点击
-    randomClickHid(obj,move) {
-        let x = obj.rect.left 
-        let y = obj.rect.top 
-        if(move) {
+    randomClickHid(obj, move) {
+        let x = obj.rect.left
+        let y = obj.rect.top
+        if (move) {
             x = x + 100
             y = y - 100
-        }else {
+        } else {
             let random_w = 10;
-            x  = rand.randNumber(obj.rect.left+random_w, obj.rect.right-random_w)
-            y = rand.randNumber(obj.rect.top-5, obj.rect.bottom-5)
+            x = rand.randNumber(obj.rect.left + random_w, obj.rect.right - random_w)
+            y = rand.randNumber(obj.rect.top - 5, obj.rect.bottom - 5)
         }
         hid.touchDown(0, x, y);
         sleep.millisecond(rand.randNumber(50, 200));
@@ -380,16 +411,16 @@ let autoUtils = {
         this.sleep(3, '开始点击后---')
     },
     // 随机点击
-    randomClickHidXAndY(x,y) {
-        let x_w = rand.randNumber(x, x+500)
-        let y_w = rand.randNumber(y, y+500)
+    randomClickHidXAndY(x, y) {
+        let x_w = rand.randNumber(x, x + 500)
+        let y_w = rand.randNumber(y, y + 500)
 
         hid.touchDown(0, x_w, y_w);
         sleep.millisecond(rand.randNumber(50, 500));
         hid.touchUp(0);
         this.sleep(3, '开始点击后---')
     },
-     //模糊查找后点击 move是否原位置点击 默认原位置点击 桌面图标需要偏移点击
+    //模糊查找后点击 move是否原位置点击 默认原位置点击 桌面图标需要偏移点击
     clickGetText(text, move) {
         let success = this.clickByText(text, move)
         return success
@@ -591,20 +622,20 @@ let autoUtils = {
     },
     getPinYin(name) {
         let obj = {
-            '洛雪':'luoxue',
-            '云帆':'yunfan',
-            '海豚':'haitun',
-            '柠檬':'ningmeng',
-            '橙子':'chengzi',
-            '番茄':'fanqie',
-            '橘子':'juzi',
-            '熊猫':'xiongmao',
-            '西瓜':'xigua',
-            '优创':'youchuang',
-            '数字':'shuzi',
+            '洛雪': 'luoxue',
+            '云帆': 'yunfan',
+            '海豚': 'haitun',
+            '柠檬': 'ningmeng',
+            '橙子': 'chengzi',
+            '番茄': 'fanqie',
+            '橘子': 'juzi',
+            '熊猫': 'xiongmao',
+            '西瓜': 'xigua',
+            '优创': 'youchuang',
+            '数字': 'shuzi',
         }
         let str = 'luoxue'
-        for(let key in obj) {
+        for (let key in obj) {
             if (name.indexOf(key) > -1) {
                 str = obj[key]
             }
@@ -618,7 +649,7 @@ let autoUtils = {
             return '云帆'
         } else if (name.indexOf('海豚') > -1) {
             return '海豚'
-        }else if (name.indexOf('西瓜') > -1) {
+        } else if (name.indexOf('西瓜') > -1) {
             return '西瓜'
         } else if (name.indexOf('柠檬') > -1) {
             return '柠檬'
@@ -630,7 +661,7 @@ let autoUtils = {
             return '橘子'
         } else if (name.indexOf('熊猫') > -1) {
             return '熊猫'
-        }else if (name.indexOf('数字大挑战') > -1) {
+        } else if (name.indexOf('数字大挑战') > -1) {
             return '数字'
         } if (name.indexOf('优创') > -1) {
             return '优创'
@@ -640,5 +671,28 @@ let autoUtils = {
     },
     getCurrentTime() {
         return time.nowStamp()
-    }
+    },
+    shouldClick(currentAds, currentClicks) {
+        // 每三个广告为一组，计算当前广告属于哪一组
+        let group = Math.floor((currentAds - 1) / 3) + 1;
+
+        // 如果当前组数大于已点击次数，说明需要在当前组内点击
+        if (group > currentClicks) {
+            // 如果当前广告是该组的第一个，且之前没有点击，随机决定是否点击
+            if (currentAds % 3 === 1 && currentClicks === group - 1) {
+                return Math.random() < 1 / 3;
+            }
+            // 如果当前广告是该组的第二个，且之前没有点击，随机决定是否点击
+            if (currentAds % 3 === 2 && currentClicks === group - 1) {
+                return Math.random() < 1 / 2;
+            }
+            // 如果当前广告是该组的第三个，且之前没有点击，必须点击
+            if (currentAds % 3 === 0 && currentClicks === group - 1) {
+                return true;
+            }
+        }
+
+        // 如果当前组数等于已点击次数，说明已经点击过，返回false
+        return false;
+    },
 }

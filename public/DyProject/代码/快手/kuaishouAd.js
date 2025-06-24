@@ -2234,9 +2234,6 @@ let kaishouAd = {
             } else if (autoUtils.getText('申请')) {
                 autoUtils.sleep(5, '申请')
                 autoUtils.clickGetText('申请')
-            } else if (autoUtils.getText('去逛逛')) {
-                autoUtils.sleep(5, '去逛逛')
-                autoUtils.clickGetText('去逛逛')
             } else if (autoUtils.getText('咨询')) {
                 autoUtils.sleep(5, '咨询')
                 autoUtils.clickGetText('咨询')
@@ -2272,17 +2269,20 @@ let kaishouAd = {
                     } else {
                         if (autoUtils.getText('成功领取') || this.getCvByText('广告的领取成功')) {
                             autoUtils.logText('领取成功了')
+                            
+                            let adDetail = adUtilsKs.getAdDetailByPhoneId()
 
-                            if (autoUtils.getText('进入直播')) {
-                                let num = autoUtils.getRandomInt(1, 10, 'int')
-                                if (num > 3) {
-                                    autoUtils.sleep(5, '点击进入直播')
-                                    autoUtils.clickGetText('进入直播')
-                                    autoUtils.sleep(5, '进入广告直播详情了')
-                                    this.handleAdDetail()
-                                }
+                            let todayLook = adDetail.todayLookNum+1
+                            let todayClickNum = adDetail.todayClickNum
+
+                            //每三个广告随机点击一次
+                            let isClick = autoUtils.shouldClick(todayLook,todayClickNum)
+
+                            if (autoUtils.getText('关注')) {
+                                autoUtils.sleep(5, '进入广告直播详情了')
+                                this.handleAdDetail()
                             }
-                            else if(rand.randNumber(1, 10) >3) {
+                            else if(isClick) {
                                 autoUtils.logText('随机到了主动点击')
                                 this.goDetailAd()
                                 autoUtils.sleep(5, '开始检测广告是否播放完成或者跳转了详情页')

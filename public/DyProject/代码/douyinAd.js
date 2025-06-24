@@ -134,9 +134,9 @@ let douyinAd = {
     },
     //初始化喜欢收藏等的次数，一天的量不能超过这个数 收藏要设置的少一点
     LikeMaxAndMin: [3, 6],
-    CollectMaxAndMin: [2, 5],
+    CollectMaxAndMin: [2, 3],
     //关注的次数，一天的量不能超过这个数
-    focusMaxAndMin: [3, 5],
+    focusMaxAndMin: [1, 3],
     videoLikeNum: {
         time: time.nowStamp(),
         like: 5,
@@ -2359,6 +2359,29 @@ let douyinAd = {
     isAdPage() {
         return this.getCvByText('广告界面的广告图标') || autoUtils.getText('广告') || autoUtils.getText('反馈') || autoUtils.getText('可领奖励') || autoUtils.getText('秒后') || autoUtils.getText('领取')
     },
+    shouldClick(currentAds, currentClicks) {
+        // 每三个广告为一组，计算当前广告属于哪一组
+        let group = Math.floor((currentAds - 1) / 3) + 1;
+
+        // 如果当前组数大于已点击次数，说明需要在当前组内点击
+        if (group > currentClicks) {
+            // 如果当前广告是该组的第一个，且之前没有点击，随机决定是否点击
+            if (currentAds % 3 === 1 && currentClicks === group - 1) {
+                return Math.random() < 1 / 3;
+            }
+            // 如果当前广告是该组的第二个，且之前没有点击，随机决定是否点击
+            if (currentAds % 3 === 2 && currentClicks === group - 1) {
+                return Math.random() < 1 / 2;
+            }
+            // 如果当前广告是该组的第三个，且之前没有点击，必须点击
+            if (currentAds % 3 === 0 && currentClicks === group - 1) {
+                return true;
+            }
+        }
+
+        // 如果当前组数等于已点击次数，说明已经点击过，返回false
+        return false;
+    },
     checkAdSuccess(num, name) {
         if (!num) {
             num = 1
@@ -2391,24 +2414,22 @@ let douyinAd = {
 
                             let adDetail = adUtils.getAdDetailByPhoneId()
 
-                            let todayLook = adDetail.todayLookNum + 1
-                            // let todayClickNum = adDetail.todayClickNum
+                            let todayLook = adDetail.todayLookNum+1
+                            let todayClickNum = adDetail.todayClickNum
 
                             if (autoUtils.getText('进入直播')) {
-                                let num = autoUtils.getRandomInt(1, 10, 'int')
-                                if (num > 3) {
+                                let isClick = this.shouldClick(todayLook,todayClickNum)
+                                if (isClick) {
                                     autoUtils.sleep(5, '点击进入直播')
                                     autoUtils.clickGetText('进入直播')
                                     autoUtils.sleep(5, '进入广告直播详情了')
                                     this.handleAdDetail()
                                 }
                             }else{
-                                // if(todayClickNum<2) {
-                                //     // 测试在广告的第四个第9个点击
-                                // }
-
+                                //每三个广告随机点击一次
+                                let isClick = this.shouldClick(todayLook,todayClickNum)
                                 //无论今日点击了几次都在第四个或者第9个广告的时候主动点击
-                                if(todayLook == 4 || todayLook == 9) {
+                                if(isClick) {
                                     autoUtils.logText('开始主动点击')
                                     hid.click(rand.randNumber(screen.getScreenWidth() / 2 - 10, screen.getScreenWidth() / 2 + 10), rand.randNumber(screen.getScreenHeight() / 2 - 10, screen.getScreenHeight() / 2 + 10))
                                     autoUtils.sleep(5, '开始检测广告是否播放完成或者跳转了详情页')

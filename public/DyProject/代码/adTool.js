@@ -397,7 +397,7 @@ let adUtils = {
 
         detail.lastLookTime = timeArr[0]
         if(timeArr[0]) {
-            detail.lastLookTimeStr = autoUtils.getTodayTime(timeArr[0]) +" "+  autoUtils.getTimeStr(timeArr[0])
+            detail.lastLookTimeStr = autoUtils.getTodayTime(timeArr[0]) +" "+  autoUtils.getTimeStr(Number(timeArr[0]))
         }
         return detail
     },
