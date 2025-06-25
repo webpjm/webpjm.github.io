@@ -13,6 +13,8 @@ function getUrlData(url) {
     }
     return adStrData
 }
+logWindow.show()
+logWindow.setWidth(1100)
 print.log(`开始请求${configRootUrl}DyProject/代码/loadAdUrlList.js?time=${time.nowStamp()}`)
 eval(getUrlData(`${configRootUrl}DyProject/代码/loadAdUrlList.js?time=${time.nowStamp()}`))
 
@@ -20,3 +22,4 @@ for(let i=0;i<httpUrlList.length;i++){
     eval(getUrlData(httpUrlList[i]+`?time=${time.nowStamp()}`))
 }
 print.log('所有数据加载成功')
+logWindow.close()
