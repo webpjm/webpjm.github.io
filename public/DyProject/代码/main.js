@@ -26,6 +26,12 @@ let autoTask = {
             ksjisuban.startTask()
             return;
         }
+        // 金币任务的逻辑
+       if (AutoGlobData.runApp == 10) {
+            autoUtils.logText('开始喜番金币任务')
+            xifan.startTask()
+            return;
+        }
 
         // 抖音任务的逻辑
        autoUtils.logText(AutoGlobData.otherValue,'有其他设置的值')
