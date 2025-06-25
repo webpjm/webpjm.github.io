@@ -249,5 +249,3 @@ var xifan = {
 
     }
 }
-
-xifan.startTask()
