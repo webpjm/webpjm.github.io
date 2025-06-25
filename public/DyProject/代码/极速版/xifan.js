@@ -54,6 +54,7 @@ var xifan = {
         num++
         console.log(num + '返回次数')
         autoUtils.sleep(5, '开始等待')
+
         if (autoUtils.getText('首页') && autoUtils.getText('福利')) {
             autoUtils.clickGetText('福利')
             autoUtils.logText('返回成功')
@@ -62,6 +63,7 @@ var xifan = {
                 autoUtils.autoBack()
             }
             else {
+                autoUtils.qiutApp()
                 autoUtils.loginApp('喜番',true)
             }
             this.backToHome(num)
@@ -219,12 +221,23 @@ var xifan = {
         autoUtils.sleep(3, '开始领取奖励（返回操作）')
         autoUtils.autoBack()
         autoUtils.sleep(2, '开始检测是否返回成功')
+
+        if(autoUtils.getText('继续')) {
+            autoUtils.clickGetText('继续')
+        }
         if (autoUtils.getText('看广告领')||autoUtils.getText('首页')||autoUtils.getText('福利')) {
-            autoUtils.logText('返回成功')
+             autoUtils.logText('返回成功')
              this.goToLookVideo()
         } else {
+            
+
             autoUtils.sleep(3, '返回检测' + (num - 1) + '次')
-            if (autoUtils.getText('立即领取')) {
+            
+            if (this.todayDataInfo.lookNum % 3 == 0) {
+                this.closeAdIcon()
+                this.goToLookVideo()
+            }
+            else if (autoUtils.getText('立即领取')) {
                 if (autoUtils.getText('立即领取')) {
                     autoUtils.clickGetText('立即领取')
                     this.checkAdSuccess()
@@ -243,5 +256,10 @@ var xifan = {
 
         }
 
-    }
+    },
+    closeAdIcon() {
+        if(autoUtils.getText('放弃')) {
+            autoUtils.clickGetText('放弃')
+        }
+    },
 }
