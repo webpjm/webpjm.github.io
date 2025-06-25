@@ -127,14 +127,15 @@ let autoUtils = {
         if (timeFlag > 60) {
 
             //定义t2线程
-            var t2 = new thread();
+            var t2 = null;
             let flag = false
             if (timeFlag > 20 * 60) {
                 flag = true
+                t2 = new thread()
                 this.autoHome()
                 sleep.millisecond(毫秒 = 3000);
                 t2.runJsCode(() => {
-                    ksjisuban.startTask()
+                    // ksjisuban.startTask()
                 }, "监控线程")
             }
             else if (timeFlag > 300) {
