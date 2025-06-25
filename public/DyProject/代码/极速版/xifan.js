@@ -1,7 +1,3 @@
-runTime.Import('initData.js')
-    runTime.Import('tool.js')
-    runTime.Import('快手/ksAdTool.js')
-    runTime.Import('快手/kuaishouAd.js')
 var xifan = {
     configUrlKsJiSu: '/sdcard/configXiFan.ini', // 默认抖音存储空间
     todayDataInfo: {

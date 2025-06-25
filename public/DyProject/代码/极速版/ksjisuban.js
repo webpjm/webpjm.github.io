@@ -54,6 +54,13 @@ var ksjisuban = {
         num++
         console.log(num + '返回次数')
         autoUtils.sleep(5, '开始等待')
+
+         if (autoUtils.getText('取消')) {
+            autoUtils.clickGetText('取消')
+            autoUtils.qiutApp()
+            autoUtils.loginApp('快手极速版')
+        } 
+
         if (autoUtils.getText('去赚') && autoUtils.getText('首页')) {
             autoUtils.logText('返回成功')
         } else {
@@ -244,18 +251,15 @@ var ksjisuban = {
             hid.click(screen.getScreenWidth() / 2, 500)
         }
 
-        if (!autoUtils.getText('成功')) {
+        this.handleAdDetailMore()
 
-            this.handleAdDetailMore()
-
-            let num1 = autoUtils.getRandomInt(3, 6, 'int')
-            for (let i = 0; i < num1; i++) {
-                autoUtils.sleep(5, '广告详情等待滑动')
-                this.detailSwipe()
-            }
-
-            autoUtils.autoBack()
+        let num1 = autoUtils.getRandomInt(3, 6, 'int')
+        for (let i = 0; i < num1; i++) {
+            autoUtils.sleep(5, '广告详情等待滑动')
+            this.detailSwipe()
         }
+
+        autoUtils.autoBack()
 
 
     },

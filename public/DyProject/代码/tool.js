@@ -136,6 +136,7 @@ let autoUtils = {
                 sleep.millisecond(毫秒 = 3000);
                 t2.runJsCode(() => {
                     // ksjisuban.startTask()
+                    xifan.startTask()
                 }, "监控线程")
             }
             else if (timeFlag > 300) {
