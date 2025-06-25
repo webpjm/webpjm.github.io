@@ -16,6 +16,8 @@ if (!isLocal) {
     runTime.Import('快手/ksAdTool.js')
     runTime.Import('快手/kuaishouAd.js')
     runTime.Import('快手/ksInit.js')
+    runTime.Import('极速版/ksjisuban.js')
+    runTime.Import('极速版/xifan.js')
     runTime.Import('main.js')
 }
 

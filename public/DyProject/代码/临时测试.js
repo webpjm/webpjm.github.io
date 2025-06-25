@@ -3,11 +3,11 @@
 runTime.Import('initData.js')
 // runTime.Import('douyinAd.js')
 runTime.Import('tool.js')
- runTime.Import('快手/ksAdTool.js')
-runTime.Import('快手/kuaishouAd.js')
-runTime.Import('快手/ksInit.js')
+//  runTime.Import('快手/ksAdTool.js')
+// runTime.Import('快手/kuaishouAd.js')
+// runTime.Import('快手/ksInit.js')
 
-
+autoUtils.clickGetText('首页')
 // console.log(parseInt(500/10))
 // kaishouAd.swipeIndexAppListForAd({appName:'洛雪壁纸'}, 1)
 // kaishouAd.lookAd('洛雪壁纸')
