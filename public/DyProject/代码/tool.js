@@ -132,15 +132,15 @@ let autoUtils = {
             if (timeFlag > 20 * 60) {
                 flag = true
                 t2 = new thread()
-                this.autoHome()
                 sleep.millisecond(毫秒 = 3000);
-                this.showLog()
                 t2.runJsCode(() => {
-                    // ksjisuban.startTask()
-                    // xifan.startTask()
+                    if(autoUtils.getPackageNotAll('喜番')) {
+                        this.autoHome()
+                        xifan.startTask()
+                    }
                 }, "监控线程")
             }
-            else if (timeFlag > 300) {
+            else  {
                 this.showLog()
             }
 
@@ -285,6 +285,16 @@ let autoUtils = {
         let str = ''
         for (var i = 0; i < list.length; i++) {
             if (list[i].appName == name) {
+                str = list[i].package
+            }
+        }
+        return str
+    },
+    getPackageNotAll(name) {
+        let list = JSON.parse(app.getAllApp())
+        let str = ''
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].appName.indexOf(name)>-1) {
                 str = list[i].package
             }
         }
