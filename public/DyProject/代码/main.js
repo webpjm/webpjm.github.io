@@ -326,11 +326,13 @@ let autoTask = {
     setOtherValue() {
         if (AutoGlobData.otherValue.indexOf('3')>-1) {
             // 切换APP时清除当前任务队列，重置今日广告的次数（适用于比如今天抖音的任务完成了，只想在火山版看几个广告）
+            autoUtils.logText('重置今日广告的次数,清除当前任务队列')
             this.resetRunAppAndAdNum()
             // autoTask.initApp('fast')
         }
         if (AutoGlobData.otherValue.indexOf('4')>-1) {
             // 重置当前的搜索，使其搜索字符串为initData里的搜索数组第一项的第一个字符串
+            autoUtils.logText('重置当前的搜索，使其搜索字符串为initData里的搜索数组第一项的第一个字符串')
             this.resetCurrentSearchStr()
             // 快速开始任务
             // autoTask.initApp('fast')

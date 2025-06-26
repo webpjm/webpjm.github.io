@@ -132,7 +132,6 @@ let autoUtils = {
             if (timeFlag > 20 * 60) {
                 flag = true
                 t2 = new thread()
-                sleep.millisecond(毫秒 = 3000);
                 t2.runJsCode(() => {
                     if(autoUtils.getPackageNotAll('喜番')) {
                         this.autoHome()

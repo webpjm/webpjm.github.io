@@ -1374,14 +1374,15 @@ let douyinAd = {
     },
     // 生成互动的随机时间
     sleepActionVideo(time) {
-        let arr = [-0.2, -0.3, -0.4, -0.5, 0.1, 0.2, 0.5]
-        let timeNum = 1 + autoUtils.shuffle(arr)[0]
+        autoUtils.sleep(1, '等待中剩余'+time+'秒') 
+        // let arr = [-0.2, -0.3, -0.4, -0.5, 0.1, 0.2, 0.5]
+        // let timeNum = 1 + autoUtils.shuffle(arr)[0]
         // autoUtils.sleep(1, '等待中')
-        if(rand.randNumber(1,10) > 8){ //减小服务器的压力
-            autoUtils.sleep(1, '等待中剩余'+time+'秒') 
-        }else{
-            sleep.millisecond(毫秒 = 1000 * timeNum);
-        }
+        // if(rand.randNumber(1,10) > 8){ //减小服务器的压力
+        //     autoUtils.sleep(1, '等待中剩余'+time+'秒') 
+        // }else{
+        //     sleep.millisecond(毫秒 = 1000 * timeNum);
+        // }
         
     },
     // 点击视频的关注等
