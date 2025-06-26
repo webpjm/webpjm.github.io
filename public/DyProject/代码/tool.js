@@ -134,9 +134,10 @@ let autoUtils = {
                 t2 = new thread()
                 this.autoHome()
                 sleep.millisecond(毫秒 = 3000);
+                this.showLog()
                 t2.runJsCode(() => {
                     // ksjisuban.startTask()
-                    xifan.startTask()
+                    // xifan.startTask()
                 }, "监控线程")
             }
             else if (timeFlag > 300) {
