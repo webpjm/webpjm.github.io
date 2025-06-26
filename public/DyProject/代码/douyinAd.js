@@ -616,6 +616,10 @@ let douyinAd = {
     clickPopMiniApp() {
         hid.swip(screen.getScreenWidth() - 100, screen.getScreenHeight() * 0.18, 50, screen.getScreenHeight() * 0.18, rand.randNumber(20, 50), 0, 0)
         autoUtils.sleep(3, '右滑动进入弹窗')
+
+        let x = screen.getScreenWidth() - screen.getScreenWidth() / 3
+        hid.swipEx(x, screen.getScreenHeight() / 2 + 200, x, screen.getScreenHeight() / 2 - 200, 0, rand.randNumber(500, 1500), 0)
+
         if (autoUtils.getText('常用小程序')) {
             autoUtils.clickGetText('全部>')
         } else {
