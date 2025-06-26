@@ -1094,9 +1094,9 @@ let douyinAd = {
         // let timeEnd = time.nowStamp()
         // let allNum = rand.randNumber(15, 20)
         // autoUtils.logText(allNum + '滑动次数上限')
-        let huadongNum = rand.randNumber(3, 6)
+        let huadongNum = rand.randNumber(2, 4)
         if(type == 'video') {
-            huadongNum = rand.randNumber(5, 10)
+            huadongNum = rand.randNumber(5, 8)
         }
          autoUtils.logText(huadongNum + '需要滑动的次数')
         // 如果时间小于随机时间，则循坏滑动视频或直播
@@ -1983,6 +1983,7 @@ let douyinAd = {
         } else if (lookModelValue == 5) {
             this.lookModel5()
         }else if (lookModelValue == 6) {
+            this.lookModel6()
             autoUtils.logText('不等待看广告')
         }
         autoUtils.sleep(10, '等待后观看广告')
@@ -2104,6 +2105,13 @@ let douyinAd = {
         
     },
     lookModel5() {
+        let task = AutoGlobData.taskdetail
+        this.swipeIndexAppListForAd(task, 2)
+        // this.yangji('quick')
+        // this.yangji('quick')
+        // this.swipeIndexAppListForAd(task, 4)
+    },
+    lookModel6() {
         let task = AutoGlobData.taskdetail
         this.swipeIndexAppListForAd(task, 2)
         // this.yangji('quick')
@@ -2325,6 +2333,7 @@ let douyinAd = {
             else {
                 if(name.indexOf('数字')>-1) {
                     autoUtils.logText('数字大挑战直接观看')
+                    this.checkAdSuccess(1, name)
                 }else{
                     autoUtils.logText('没有检测到立即观看')
                     num = 1
@@ -2502,7 +2511,7 @@ let douyinAd = {
                             autoUtils.sleep(2, '开始保存图片')
                             autoUtils.setSuccessPic(name)
 
-                            let longTime = rand.randNumber(10, 16)
+                            let longTime = rand.randNumber(5, 8)
 
                             autoUtils.sleep(longTime, '点击领取成功')
 
