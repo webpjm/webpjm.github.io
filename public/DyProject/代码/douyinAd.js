@@ -668,6 +668,7 @@ let douyinAd = {
             autoUtils.clickGetText('全部>')
         } else {
             if (this.isMiniAppListPage()) {
+                autoUtils.clickGetText('最近使用')
                 autoUtils.logText('找到了小程序列表入口页面')
                 
             } else {
