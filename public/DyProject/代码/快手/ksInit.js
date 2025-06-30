@@ -16,13 +16,18 @@ let autoTaskKs = {
         }
     },
     //初始化 总逻辑是this.setRunModel先执行养机逻辑 在执行kaishouAd.lookModel看小程序广告的逻辑
-    initApp(name) {
+    initApp(name,type) {
          AutoGlobData.taskApp = adUtilsKs.taskApp
          AutoGlobData.appList = adUtilsKs.appList
 
         autoUtils.logText('最新版本：快手1.0')
         // 设置当前运行的APP名称（从预定义列表获取）
-        AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp] || '快手'
+        if(type) {
+            AutoGlobData.appPhoneName = '快手'
+        }else{
+            AutoGlobData.appPhoneName = this.runAppList[AutoGlobData.runApp] || '快手'
+        }
+        
 
         // 快速任务模式处理（通过socket调用）
 

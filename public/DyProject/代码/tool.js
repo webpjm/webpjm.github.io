@@ -124,6 +124,7 @@ let autoUtils = {
         // 等待大于5分钟
         let arr = [-0.2, -0.3, -0.4, -0.5, 0.1, 0.2, 0.3, 0.5]
         timeFlag = timeFlag + this.shuffle(arr)[0]
+        let appPhoneName = AutoGlobData.appPhoneName
         if (timeFlag > 60) {
 
             //定义t2线程
@@ -134,7 +135,7 @@ let autoUtils = {
                 t2 = new thread()
                 t2.runJsCode(() => {
                     this.autoHome()
-                    autoTaskKs.initApp('fast')
+                    autoTaskKs.initApp('fast','快手')
                 }, "监控线程")
             }
             else if (timeFlag > 10 * 60) {
@@ -157,7 +158,8 @@ let autoUtils = {
                     sleep.millisecond(毫秒 = 1000);
                 }
                 t2.stop()
-                // 重新登录APP
+                // 重新登录原APP
+                AutoGlobData.appPhoneName = appPhoneName
                 autoUtils.loginApp(AutoGlobData.appPhoneName)
             } else {
                 // 早上抖音晚上火上版时候，随机时间返回主页等待
