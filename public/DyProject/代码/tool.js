@@ -133,11 +133,18 @@ let autoUtils = {
                 flag = true
                 t2 = new thread()
                 t2.runJsCode(() => {
-                    if(autoUtils.getPackageNotAll('喜番')) {
-                        this.autoHome()
-                        xifan.startTask()
-                    }
+                    this.autoHome()
+                    autoTaskKs.initApp('fast')
                 }, "监控线程")
+            }
+            else if (timeFlag > 10 * 60) {
+                this.autoHome()
+                this.showLog()
+                for (let i = 0; i < timeFlag; i++) {
+                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
+                    sleep.millisecond(毫秒 = 1000);
+                }
+                autoUtils.loginApp(AutoGlobData.appPhoneName)
             }
             else  {
                 this.showLog()

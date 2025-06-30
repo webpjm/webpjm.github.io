@@ -65,11 +65,9 @@ let douyinAd = {
         { type: 1, text: '返回手机主页等待后看广告' },
         { type: 3, text: '小程序页停留几分钟+返回抖音养鸡' },
         { type: 5, text: '只是停留不看广告' },
-        // { type: 2, text: '小程序首页停留几分钟+返回手机主页等待+看广告' },
         { type: 3, text: '小程序页停留几分钟+返回抖音养鸡' },
         { type: 4, text: '先抖音养鸡在在小程序页停留几分钟看广告' },
-        { type: 6, text: '不等待直接看广告' },
-        
+        { type: 6, text: '不等待直接看广告' }
     ],
     // 养机模式的值 用于养机缓存变化的值 自定义一个乱中有序
     yangjiModelData: [
@@ -377,6 +375,53 @@ let douyinAd = {
             autoUtils.logText('视频长度小于30秒,没有检测到进度条')
         }
         return durationTime
+    },
+    startMoveByType(timeAll, type) {
+        // num = this.setHuaDongCishu(num)
+        this.currentSwipNum = 0
+        this.duibiaoVideoOrZhiBoNum = 0
+        this.isNotGoodTypeNum = 0
+        // let timeStart = time.nowStamp()
+        autoUtils.sleep(3, '等待三秒')
+        // let timeEnd = time.nowStamp()
+        // let allNum = rand.randNumber(15, 20)
+        // autoUtils.logText(allNum + '滑动次数上限')
+        let huadongNum = rand.randNumber(2, 2)
+        if(type == 'video') {
+            huadongNum = rand.randNumber(3, 5)
+        }
+         autoUtils.logText(huadongNum + '需要滑动的次数')
+        // 如果时间小于随机时间，则循坏滑动视频或直播
+        for (let i = 0; i < huadongNum; i++) {
+            // autoUtils.logText((timeEnd - timeStart) / 1000, '当前运行时长')
+            // autoUtils.logText(timeAll + '需要运行的总时长')
+            this.currentSwipNum++
+            if (type == 'video') {
+                this.handelVideo()
+            } else {
+                this.handelZhiBo()
+            }
+            autoUtils.sleep(3, '开始滑动')
+            this.startHuaDong()
+            timeEnd = time.nowStamp()
+        }
+        // if((timeEnd - timeStart) / 1000 < timeAll ) {
+        //     // autoUtils.logText('还没有达到总时长，再快速养机一次')
+        //     let time1 = timeAll - ((timeEnd - timeStart) / 1000)
+        //     this.autoHome()
+        //     autoUtils.sleep(time1, '等待中间休息')
+        //     autoUtils.loginApp(AutoGlobData.appPhoneName)
+        //     // this.yangji('quick')
+        // }
+        // autoUtils.logText((timeEnd - timeStart) / 1000, '当前运行时长')
+        // autoUtils.logText(timeAll, '需要运行的总时长')
+        // autoUtils.logText(this.duibiaoVideoOrZhiBoNum,this.currentSwipNum, 'duibiaoVideoOrZhiBoNum')
+    },
+    startMoveVideoByTime(time) {
+        this.startMoveByType(time, 'video')
+    },
+    startMoveZhiBoByTime(time) {
+        this.startMoveByType(time, 'zhibo')
     },
     isFirstYangjiToday() {
         return this.todayDataInfo.yangjiNum == 0;
@@ -1089,53 +1134,7 @@ let douyinAd = {
     currentSwipNum: 0,
     duibiaoVideoOrZhiBoNum: 0,
     isNotGoodTypeNum: 0,
-    startMoveByType(timeAll, type) {
-        // num = this.setHuaDongCishu(num)
-        this.currentSwipNum = 0
-        this.duibiaoVideoOrZhiBoNum = 0
-        this.isNotGoodTypeNum = 0
-        // let timeStart = time.nowStamp()
-        autoUtils.sleep(3, '等待三秒')
-        // let timeEnd = time.nowStamp()
-        // let allNum = rand.randNumber(15, 20)
-        // autoUtils.logText(allNum + '滑动次数上限')
-        let huadongNum = rand.randNumber(2, 4)
-        if(type == 'video') {
-            huadongNum = rand.randNumber(5, 8)
-        }
-         autoUtils.logText(huadongNum + '需要滑动的次数')
-        // 如果时间小于随机时间，则循坏滑动视频或直播
-        for (let i = 0; i < huadongNum; i++) {
-            // autoUtils.logText((timeEnd - timeStart) / 1000, '当前运行时长')
-            // autoUtils.logText(timeAll + '需要运行的总时长')
-            this.currentSwipNum++
-            if (type == 'video') {
-                this.handelVideo()
-            } else {
-                this.handelZhiBo()
-            }
-            autoUtils.sleep(3, '开始滑动')
-            this.startHuaDong()
-            timeEnd = time.nowStamp()
-        }
-        // if((timeEnd - timeStart) / 1000 < timeAll ) {
-        //     // autoUtils.logText('还没有达到总时长，再快速养机一次')
-        //     let time1 = timeAll - ((timeEnd - timeStart) / 1000)
-        //     this.autoHome()
-        //     autoUtils.sleep(time1, '等待中间休息')
-        //     autoUtils.loginApp(AutoGlobData.appPhoneName)
-        //     // this.yangji('quick')
-        // }
-        // autoUtils.logText((timeEnd - timeStart) / 1000, '当前运行时长')
-        // autoUtils.logText(timeAll, '需要运行的总时长')
-        // autoUtils.logText(this.duibiaoVideoOrZhiBoNum,this.currentSwipNum, 'duibiaoVideoOrZhiBoNum')
-    },
-    startMoveVideoByTime(time) {
-        this.startMoveByType(time, 'video')
-    },
-    startMoveZhiBoByTime(time) {
-        this.startMoveByType(time, 'zhibo')
-    },
+    
     //简单快速养 看广告过程中穿插的养机 
     // normal 正常养机（日常维护用普通模式）quick 快速养（观看广告中穿插的养机）
     // 用于简单养机 随机用
@@ -1198,22 +1197,17 @@ let douyinAd = {
     },
     firstYangJiMethod() {
         // 首次养机打两个标签 搜索两次
-        let num = rand.randNumber(3, 6)
+        let num = rand.randNumber(2, 4)
         autoUtils.logText('首次养机滑动的次数--'+num)
         for (let i = 0; i < num; i++) {
             this.handelVideo()
             this.startHuaDong()
         }
-        let type = rand.randNumber(1, 2)
-        let searchMethods = {
-            1: () => this.yangjimodel5(),
-            2: () => this.yangjimodel6(),
-            // 3: this.yangjimodel7(),
-        }
+       
         //推荐页滑动几次
         // this.onlyMove(2)
         // 随机搜索养机
-        searchMethods[type]()
+        this.yangjimodel5()
         this.todayDataInfo.yangjiNum++
         this.setConfig('todayDataInfo', this.todayDataInfo)
         this.backToHome()
@@ -1492,7 +1486,7 @@ let douyinAd = {
             time = rand.randNumber(120, 150)
         } else if (this.yangjiSpeed == 'slow') {
             // 5-10分钟
-            time = rand.randNumber(600, 800)
+            time = rand.randNumber(300, 500)
         } else {
             // 9-10分钟
             time = rand.randNumber(500, 600)
@@ -2106,19 +2100,19 @@ let douyinAd = {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
         this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 2)
+        this.swipeIndexAppListForAd(task, 1)
         
     },
     lookModel5() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 2)
+        this.swipeIndexAppListForAd(task, 1)
         // this.yangji('quick')
         // this.yangji('quick')
         // this.swipeIndexAppListForAd(task, 4)
     },
     lookModel6() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 2)
+        this.swipeIndexAppListForAd(task, 1)
         // this.yangji('quick')
         // this.yangji('quick')
         // this.swipeIndexAppListForAd(task, 4)
