@@ -131,7 +131,7 @@ let douyinAd = {
         "yangjiNum": 0,       // 今日养机的次数
     },
     //初始化喜欢收藏等的次数，一天的量不能超过这个数 收藏要设置的少一点
-    LikeMaxAndMin: [3, 6],
+    LikeMaxAndMin: [5, 8],
     CollectMaxAndMin: [2, 3],
     //关注的次数，一天的量不能超过这个数
     focusMaxAndMin: [1, 3],
