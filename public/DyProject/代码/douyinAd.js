@@ -478,9 +478,9 @@ let douyinAd = {
     swipeZhiBoNum: 0,
     setHuaDongCishu(num) {
         // 获取任务的次数  15次左右传15 
-        if (num <= 1) {
-            num = 2
-        }
+        // if (num <= 1) {
+        //     num = 2
+        // }
         let arr = []
         for (let i = 0; i <= num; i++) {
             arr.push(i + 1)
@@ -489,9 +489,9 @@ let douyinAd = {
 
         let allNum = modelArr[0] + modelArr[1]
 
-        if (allNum < num) {
-            allNum = rand.randNumber(3, 5)
-        }
+        // if (allNum < num) {
+        //     allNum = rand.randNumber(3, 5)
+        // }
         return allNum
     },
 
