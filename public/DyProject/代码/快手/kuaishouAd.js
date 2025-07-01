@@ -2147,6 +2147,11 @@ let kaishouAd = {
             }
             else if (autoUtils.getText("观看")) {
                 autoUtils.clickGetText("观看")
+            }else{
+                autoUtils.logText('没有找到')
+                if(name.indexOf('柠檬')>-1) {
+                    hid.clickPercent(0.8681,0.7461)
+                }
             }
 
             // let time = this.sleepTimeVideoShort()
@@ -2172,10 +2177,24 @@ let kaishouAd = {
                 this.checkAdSuccess(1, name)
             }
             else {
-                autoUtils.logText('没有检测到立即观看')
-                num = 1
-                this.swipeIndexAppListForAd({ appName: name }, 2)
-                this.lookAd(name)
+
+                if(name.indexOf('柠檬')>-1) {
+                    hid.clickPercent(0.8681,0.7461)
+                    autoUtils.sleep(5, '开始点击下载后')
+                }
+                
+                if (autoUtils.getText("立即")) {
+                    autoUtils.sleep(rand.randNumber(5, 10), '立即观看')
+                    autoUtils.clickGetText("立即")
+                    autoUtils.sleep(10, '开始点击立即观看后')
+                    this.checkAdSuccess(1, name)
+                }else{
+                    autoUtils.logText('没有检测到立即观看')
+                    num = 1
+                    this.swipeIndexAppListForAd({ appName: name }, 2)
+                    this.lookAd(name)
+                }
+
 
             }
 
@@ -2273,7 +2292,7 @@ let kaishouAd = {
                                  }else{
                                     this.handleAdDetail()
 
-                                    if (this.getCvByText('广告的领取成功') || autoUtils.getText('领取成功')) {
+                                    if (this.getCvByText('广告的领取成功') || autoUtils.getText('成功')) {
                                         autoUtils.logText('返回广告界面成功了')
                                     }else{
                                         autoUtils.autoBack()
