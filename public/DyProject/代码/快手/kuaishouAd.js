@@ -598,28 +598,22 @@ let kaishouAd = {
         } else {
             if (this.isMiniAppListPage()) {
                 autoUtils.logText('找到了小程序列表入口页面')
-                // this.handleJisuBanEnterAppList()
             } else {
-                name = autoUtils.getShortName(name)
-                if (this.isAppDetailPage(name)) {
-                    autoUtils.logText('在小程序内部了')
-                } else {
-                    autoUtils.autoBack()
-                    num++
-                    if (num == 8) {
-                        autoUtils.autoHome()
-                        autoUtils.sleep(10, '开始重新寻找')
-                        autoUtils.loginApp(AutoGlobData.appPhoneName)
-                    }
-
-                    if (num == 10) {
-                        autoUtils.logText(num + '多次都没找到，从此处清理后台，重起抖音或者抖音极速版后再进入小程序')
-                        autoUtils.clearRecentsApp()
-                        num = 1
-                    }
-
-                    this.fromIndexMyToAppList(num, name)
+                autoUtils.autoBack()
+                num++
+                if (num == 8) {
+                    autoUtils.autoHome()
+                    autoUtils.sleep(10, '开始重新寻找')
+                    autoUtils.loginApp(AutoGlobData.appPhoneName)
                 }
+
+                if (num == 10) {
+                    autoUtils.logText(num + '多次都没找到，从此处清理后台，重起抖音或者抖音极速版后再进入小程序')
+                    autoUtils.clearRecentsApp()
+                    num = 1
+                }
+
+                this.fromIndexMyToAppList(num, name)
 
             }
         }
@@ -1229,15 +1223,7 @@ let kaishouAd = {
     },
     // 生成互动的随机时间
     sleepActionVideo(time) {
-        let arr = [-0.2, -0.3, -0.4, -0.5, 0.1, 0.2, 0.5]
-        let timeNum = 1 + autoUtils.shuffle(arr)[0]
-        // autoUtils.sleep(1, '等待中')
-        if (rand.randNumber(1, 10) > 8) { //减小服务器的压力
-            autoUtils.sleep(1, '等待中剩余' + time + '秒')
-        } else {
-            sleep.millisecond(毫秒 = 1000 * timeNum);
-        }
-
+        autoUtils.sleep(1, '等待中剩余' + time + '秒')
     },
     // 点击视频的关注等
     actionVedio(type, time) {
@@ -2081,11 +2067,7 @@ let kaishouAd = {
 
         this.randomTime('广告等待')
 
-        //如果没有主动介入的操作
-        if (!this.isLookAdByEmailMessage) {
-            autoUtils.logText('此次不用主动转化')
-            this.clickAdDownloadBtn(name, 1)
-        }
+        this.clickAdDownloadBtn(name, 1)
 
 
     },

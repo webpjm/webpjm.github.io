@@ -7,6 +7,7 @@ runTime.Import('tool.js')
 // runTime.Import('快手/kuaishouAd.js')
 // runTime.Import('快手/ksInit.js')
 
+console.log(autoUtils.getText('优创汇大全'))
 
 // autoUtils.clickGetText('首页')
 // console.log(parseInt(500/10))
