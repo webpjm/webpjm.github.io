@@ -704,33 +704,11 @@ let douyinAd = {
             this.clickPopMiniApp()
         }
     },
-    fromIndexToAppList(name) {
-        autoUtils.logText('从推荐页的更多进入小程序')
-        this.backToHome()
-        autoUtils.sleep(5, '等待点击')
-        this.clickCv('首页左上角更多图标')
-        if (autoUtils.getText('小程序') && autoUtils.getText('常用功能')) {
-            autoUtils.clickGetText('全部>')
-        } else {
-            if (this.isMiniAppListPage()) {
-                autoUtils.clickGetText('最近使用')
-                autoUtils.logText('找到了小程序列表入口页面')
-                
-            } else {
-                autoUtils.autoHome()
-                autoUtils.sleep(10, '开始重新寻找')
-                autoUtils.loginApp(AutoGlobData.appPhoneName)
-                autoUtils.logText('换个方式去寻找小程序')
-                this.fromIndexMyToAppList(1, name)
-            }
-        }
-        this.handleJisuBanEnterAppList()
-
-    },
     fromIndexMyToAppList(num, name) {
         num = num ? num : 1
         if (num > 10) {
             autoUtils.loginApp(AutoGlobData.appPhoneName)
+            autoUtils.backToHome()
         }
         if (autoUtils.getText('首页') && autoUtils.getText('朋友')) {
             if (this.isIndexPageMy()) {
@@ -741,6 +719,8 @@ let douyinAd = {
             }
         } else {
             if (this.isMiniAppListPage()) {
+                autoUtils.sleep(3, '开始点击最近使用')
+                autoUtils.clickGetText('最近使用')
                 autoUtils.logText('找到了小程序列表入口页面')
                 // this.handleJisuBanEnterAppList()
             } else {
@@ -770,12 +750,6 @@ let douyinAd = {
         this.handleJisuBanEnterAppList()
     },
     goAppListPage(name) {
-        // let type = rand.randNumber(1, 10)
-        // if (type > 8 && AutoGlobData.appPhoneName.indexOf("火山") == -1) {
-        //     this.fromIndexToAppList(name)
-        // } else {
-        //     this.fromIndexMyToAppList(1, name)
-        // }
         this.fromIndexMyToAppList(1, name)
     },
     isAppDetailPage(name) {
@@ -810,9 +784,7 @@ let douyinAd = {
     findMiniAppNameAndClick(name, num) {
         //前提是进入了小程序列表页 在此寻找小程序
         num = num ? num : 1
-        // if (!autoUtils.getText(name)) {
-        //     name = name.slice(0, 2)
-        // }
+
         autoUtils.sleep(5, '等待后寻找')
         
         if (autoUtils.getText('取消')) {
@@ -828,12 +800,6 @@ let douyinAd = {
         
 
         let newName = name
-        // if(!autoUtils.getText(name)) {
-        //     if(name.indexOf('柠檬')>-1) {
-        //         newName = '柠'
-        //     }
-        //     autoUtils.logText('没有找到'+name+'使用'+newName+'去寻找')
-        // }
 
         let cvName = this.hanldeCvTextByAppName(name)
 
@@ -847,8 +813,7 @@ let douyinAd = {
                 return;
             }
         }
-
-        if (autoUtils.getText(newName)) {
+        else if (autoUtils.getText(newName)) {
             autoUtils.logText('找到了开始点击'+newName)
             autoUtils.clickGetText(newName)
 
@@ -2054,12 +2019,10 @@ let douyinAd = {
     },
     swipeIndexAppListForAd(task, swipeNum) {
         this.toAppListPage(task.appName)
+        this.onlyMove(swipeNum)
+        
         let arr = [1, 2, 3]
         let num = autoUtils.shuffle(arr)[0]
-
-        // this.starthuadong(10)
-        this.onlyMove(swipeNum)
-
         for (let i = 0; i < num; i++) {
             let time = this.detailWaitTime()
             autoUtils.sleep(time, '距离小的滑动')
