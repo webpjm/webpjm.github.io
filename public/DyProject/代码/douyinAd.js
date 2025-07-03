@@ -793,6 +793,12 @@ let douyinAd = {
             autoUtils.sleep(3, '等待后寻找')
         } 
 
+        if (autoUtils.getText('最近使用')) {
+            autoUtils.logText('小程序最近使用');
+            autoUtils.clickGetText('最近使用')
+            autoUtils.sleep(3, '等待后寻找')
+        } 
+
         if (this.isAppDetailPage(name)) {
             autoUtils.logText('小程序进入成功了');
             return;
