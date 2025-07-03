@@ -1021,7 +1021,7 @@ let douyinAd = {
             autoUtils.autoBack()
             autoUtils.sleep(3, '等待')
         }
-        if (autoUtils.getText('取消')) {
+        if (autoUtils.getText('取消',true)) {
             autoUtils.sleep(2, '等待关闭取消')
             autoUtils.clickGetText('取消')
             autoUtils.sleep(3, '取消')
