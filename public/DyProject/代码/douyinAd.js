@@ -2214,12 +2214,8 @@ let douyinAd = {
         let timeAddNum = this.todayTimeInterval.dataArr[0]
 
         autoUtils.logText("当前时间间隔，默认取第一个"+JSON.stringify(this.todayTimeInterval.dataArr))
-        this.todayTimeInterval.dataArr.shift()
-        if(this.todayTimeInterval.dataArr.length>0) {
-            this.setConfig('todayTimeInterval', this.todayTimeInterval)
-        }else{
-            this.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
-        }
+        
+        
         
         let time = adUtils.getAppAdTime(name,timeAddNum* 60 * 1000)
 
@@ -2227,7 +2223,6 @@ let douyinAd = {
             autoUtils.logText('时间条件未满足，继续等待')
             // time = time + timeAddNum
             autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
-            
         }
 
         this.randomTime('开始点击收藏等')
@@ -2468,9 +2463,6 @@ let douyinAd = {
                                 // }
                             }
 
-                           
-
-
                             // 保存图片
                             autoUtils.sleep(2, '开始保存图片')
                             autoUtils.setSuccessPic(name)
@@ -2512,6 +2504,13 @@ let douyinAd = {
                                     autoUtils.sleep(5)
                                     autoUtils.autoBack()
                                 }
+                            }
+
+                            this.todayTimeInterval.dataArr.shift()
+                            if(this.todayTimeInterval.dataArr.length>0) {
+                                this.setConfig('todayTimeInterval', this.todayTimeInterval)
+                            }else{
+                                this.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
                             }
 
                             break;
