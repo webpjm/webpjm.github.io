@@ -2223,6 +2223,8 @@ let douyinAd = {
             autoUtils.logText('时间条件未满足，继续等待')
             // time = time + timeAddNum
             autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
+        }else{
+            autoUtils.logText('时间条件满足，开始点击看广告')
         }
 
         this.randomTime('开始点击收藏等')
