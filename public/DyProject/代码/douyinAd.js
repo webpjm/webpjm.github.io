@@ -793,12 +793,6 @@ let douyinAd = {
             autoUtils.sleep(3, '等待后寻找')
         } 
 
-        if (autoUtils.getText('最近使用')) {
-            autoUtils.logText('小程序最近使用');
-            autoUtils.clickGetText('最近使用')
-            autoUtils.sleep(3, '等待后寻找')
-        } 
-
         if (this.isAppDetailPage(name)) {
             autoUtils.logText('小程序进入成功了');
             return;
@@ -859,6 +853,7 @@ let douyinAd = {
                 num = 1
                 autoUtils.logText('多次都没找到，返回重新寻找')
                 autoUtils.sleep(5, '开始重新寻找')
+                autoUtils.autoBack()
                 this.fromIndexMyToAppList(1, name)
                 this.findMiniAppNameAndClick(name, 1)
 
@@ -2173,13 +2168,14 @@ let douyinAd = {
 
         this.randomTime('广告等待')
 
-        // this.getDownLoadAdFlag(name)
-
         //如果没有主动介入的操作
-        if (!this.isLookAdByEmailMessage) {
-            autoUtils.logText('此次不用主动转化')
-            this.clickAdDownloadBtn(name, 1)
-        }
+
+        // if (!this.isLookAdByEmailMessage) {
+        //     autoUtils.logText('此次不用主动转化')
+        //     this.clickAdDownloadBtn(name, 1)
+        // }
+
+        this.clickAdDownloadBtn(name, 1)
 
 
     },
@@ -2242,8 +2238,8 @@ let douyinAd = {
                 autoUtils.sleep(5, '点击下载后')
             }
             //洛雪壁纸 海豚
-            else if (autoUtils.getText("收藏")) {
-                autoUtils.clickGetText("收藏")
+            else if (autoUtils.getText("收藏",true)) {
+                autoUtils.clickGetTextAll("收藏")
             }
             //橙子壁纸 番茄
             else if (autoUtils.getText("下载")) {
