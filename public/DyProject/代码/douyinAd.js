@@ -99,6 +99,7 @@ let douyinAd = {
         { type: 5, text: '在搜索页的视频养机' },
         { type: 5, text: '在搜索页的视频养机' },
         { type: 1, text: '在推荐页养机' },
+        { type: 6, text: '在搜索页的直播养机' },
         { type: 7, text: '在搜索页的综合样机养机' },
         { type: 1, text: '在推荐页养机' },
         // { type: 4, text: '在小程序列表页养机' },
