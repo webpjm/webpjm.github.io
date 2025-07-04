@@ -124,56 +124,28 @@ let autoUtils = {
         // 等待大于5分钟
         let arr = [-0.2, -0.3, -0.4, -0.5, 0.1, 0.2, 0.3, 0.5]
         timeFlag = timeFlag + this.shuffle(arr)[0]
-        let appPhoneName = AutoGlobData.appPhoneName
         if (timeFlag > 60) {
-
-            //定义t2线程
-            var t2 = null;
-            let flag = false
-            if (timeFlag > 20 * 60) {
-                flag = true
-                t2 = new thread()
-                t2.runJsCode(() => {
-                    this.autoHome()
-                    autoTaskKs.initApp('fast','快手')
-                }, "监控线程")
-            }
-            else if (timeFlag > 10 * 60) {
+            
+            this.showLog()
+            if(timeFlag>15*60) {
                 this.autoHome()
-                this.showLog()
-                for (let i = 0; i < timeFlag; i++) {
-                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
-                    sleep.millisecond(毫秒 = 1000);
-                }
-                autoUtils.loginApp(AutoGlobData.appPhoneName)
             }
-            else  {
-                this.showLog()
-            }
-
-            // 如果大于了20分钟
-            if (flag) {
-                for (let i = 0; i < timeFlag; i++) {
-                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
-                    sleep.millisecond(毫秒 = 1000);
-                }
-                t2.stop()
-                // 重新登录原APP
-                AutoGlobData.appPhoneName = appPhoneName
-                autoUtils.loginApp(AutoGlobData.appPhoneName)
-            } else {
-                // 早上抖音晚上火上版时候，随机时间返回主页等待
-                let randNum = rand.randNumber(60, 100)
-                for (let i = 0; i < timeFlag; i++) {
-                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
-                    sleep.millisecond(毫秒 = 1000);
-                    if (text.indexOf('运行火山版') > -1) {
-                        if (i == randNum) {
-                            this.autoHome()
-                        }
+             // 早上抖音晚上火上版时候，随机时间返回主页等待
+            let randNum = rand.randNumber(60, 100)
+            for (let i = 0; i < timeFlag; i++) {
+                this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
+                sleep.millisecond(毫秒 = 1000);
+                if (text.indexOf('运行火山版') > -1) {
+                    if (i == randNum) {
+                        this.autoHome()
                     }
                 }
-                this.hideLog()
+            }
+
+            this.hideLog()
+
+            if(timeFlag>15*60) {
+                this.loginApp(AutoGlobData.appPhoneName)
             }
 
         } else {

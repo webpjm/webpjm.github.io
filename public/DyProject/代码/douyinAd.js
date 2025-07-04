@@ -728,7 +728,7 @@ let douyinAd = {
                 if (this.isAppDetailPage(name)) {
                     autoUtils.logText('在小程序内部了')
                 } else {
-                    autoUtils.autoBack()
+                    
                     num++
                     if (num == 8) {
                         autoUtils.autoHome()
@@ -741,7 +741,7 @@ let douyinAd = {
                         autoUtils.clearRecentsApp()
                         num = 1
                     }
-
+                    autoUtils.autoBack()
                     this.fromIndexMyToAppList(num, name)
                 }
 
@@ -2324,7 +2324,8 @@ let douyinAd = {
                 this.clickAdDownloadBtn(name)
             }else{
                 this.lookAd(name)
-                autoUtils.logText('点击后进入详情失败，开始重新执行lookAd方法')}
+                autoUtils.logText('点击后进入详情失败，开始重新执行lookAd方法')
+            }
         }
     },
     isAdPage() {
