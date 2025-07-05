@@ -5,6 +5,8 @@ var AutoGlobData = {
     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
     lookRangeNum: [1, 2], // 最少最多观看数量 
     phoneIp: '', //  ip地址
+    chaPingNum:'0', //插屏广告数量，如果是5那么就用10/5 没间隔两个看一个插屏 插屏广告数据存本地 看完视频广告后取本地插屏数据更新到最新的广告数据里 
+    chaPingModel: '1', //插屏广告模式，看完一个插屏广告等10分钟左右后看视频广告 或者只看插屏广告 所有插屏都看完再看视频广告
     configUrl: '/sdcard/config.ini', // 默认抖音存储空间
     configUrlDy: '/sdcard/config.ini', // 默认抖音存储空间
     configUrlKs: '/sdcard/configKs.ini', // 默认抖音存储空间

@@ -129,6 +129,20 @@
                     </div>
                 </div>
                 <div class="itemwrap">
+                    <div class="title"><i class="el-icon-star-on"></i>插屏广告数量设置</div>
+                    <el-select style="width:100%;" v-model="globData.chaPingNum" @change="changeNum" placeholder="插屏广告数量设置">
+                        <el-option v-for="item in chaPingOptionsNum" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="itemwrap">
+                    <div class="title"><i class="el-icon-star-on"></i>插屏广告模式设置</div>
+                    <el-select style="width:100%;" v-model="globData.chaPingModel" @change="changeNum" placeholder="插屏广告模式设置">
+                        <el-option v-for="item in chaPingModelOptions" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="itemwrap">
                     <div class="title"><i class="el-icon-collection"></i>其他设置</div>
                     <el-select multiple style="width:100%;" v-model="globData.otherValue" @change="changeRun" placeholder="其他设置">
                         <el-option v-for="item in otherOptionsNum" :key="item.value" :label="item.label" :value="item.value">
@@ -164,7 +178,9 @@
                         runApp: "1",
                         miniAppNum: "4",
                         lookRangeNum: [1, 1],
-                        otherValue:''
+                        otherValue:'',
+                        chaPingNum:"0",
+                        chaPingModel:"1"
                     },
                     marks: {
                         1: '1',
@@ -278,6 +294,66 @@
                             value: "4",
                             label: "随机全部"
                         },
+                    ],
+                    chaPingOptionsNum: [
+                        {
+                            value: "0",
+                            label: "0个"
+                        },
+                        {
+                            value: "1",
+                            label: "1个"
+                        },
+                        {
+                            value: "2",
+                            label: "2个"
+                        },
+                        {
+                            value: "3",
+                            label: "3个"
+                        },
+                        {
+                            value: "4",
+                            label: "4个"
+                        },
+                        {
+                            value: "5",
+                            label: "2个"
+                        },
+                        {
+                            value: "5",
+                            label: "5个"
+                        },
+                        {
+                            value: "6",
+                            label: "6个"
+                        },
+                        {
+                            value: "7",
+                            label: "7个"
+                        },
+                        {
+                            value: "8",
+                            label: "8个"
+                        },
+                        {
+                            value: "9",
+                            label: "9个"
+                        },
+                        {
+                            value: "10",
+                            label: "10个"
+                        },
+                    ],
+                    chaPingModelOptions: [
+                        {
+                            value: "1",
+                            label: "看完插屏后看视频广告"
+                        },
+                        {
+                            value: "2",
+                            label: "看完插屏后不看视频广告"
+                        }
                     ],
                     otherOptionsNum: [
                     	{

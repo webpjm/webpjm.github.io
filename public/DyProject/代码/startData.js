@@ -9,7 +9,9 @@ let globData = {
     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
     lookRangeNum: [1, 2], // 最少最多观看数量 
     phoneIp: '',  //  ip地址
-    otherValue: []
+    otherValue: [],
+    chaPingNum:'0',
+    chaPingModel:'1'
 }
 
 // 设置接收远程UI值的回调
