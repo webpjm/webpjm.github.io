@@ -19,7 +19,7 @@ let douyinAd = {
         '广告界面的广告图标': '图色226207.cv',
         '广告的领取成功': '图色494529.cv',
         '广告的可领奖励': '图色148106.cv',
-        '寻找柠檬壁纸图标':'图色183483.cv',
+        '寻找柠檬壁纸图标': '图色183483.cv',
         '寻找橘子壁纸图标': '图色315859.cv',
         '寻找橙子壁纸图标': '图色781467.cv',
         '寻找洛雪壁纸图标': '图色495375.cv',
@@ -33,27 +33,27 @@ let douyinAd = {
     },
     hanldeCvTextByAppName(appName) {
         let str = '寻找洛雪壁纸图标'
-        if(appName.indexOf('洛雪')>-1) {
+        if (appName.indexOf('洛雪') > -1) {
             str = '寻找洛雪壁纸图标'
-        }else if(appName.indexOf('熊猫')>-1) {
+        } else if (appName.indexOf('熊猫') > -1) {
             str = '寻找熊猫壁纸图标'
-        }else if(appName.indexOf('柠檬')>-1) {
+        } else if (appName.indexOf('柠檬') > -1) {
             str = '寻找柠檬壁纸图标'
-        }else if(appName.indexOf('橘子')>-1) {
+        } else if (appName.indexOf('橘子') > -1) {
             str = '寻找橘子壁纸图标'
-        }else if(appName.indexOf('番茄')>-1) {
+        } else if (appName.indexOf('番茄') > -1) {
             str = '寻找番茄壁纸图标'
-        }else if(appName.indexOf('西瓜')>-1) {
+        } else if (appName.indexOf('西瓜') > -1) {
             str = '寻找西瓜壁纸图标'
-        }else if(appName.indexOf('云帆')>-1) {
+        } else if (appName.indexOf('云帆') > -1) {
             str = '寻找云帆壁纸图标'
-        }else if(appName.indexOf('橙子')>-1) {
+        } else if (appName.indexOf('橙子') > -1) {
             str = '寻找橙子壁纸图标'
-        }else if(appName.indexOf('海豚')>-1) {
+        } else if (appName.indexOf('海豚') > -1) {
             str = '寻找海豚壁纸图标'
-        }else if(appName.indexOf('优创')>-1) {
+        } else if (appName.indexOf('优创') > -1) {
             str = '寻找优创汇壁纸图标'
-        }else if(appName.indexOf('数字')>-1) {
+        } else if (appName.indexOf('数字') > -1) {
             str = '寻找数字大挑战图标'
         }
         return str
@@ -104,8 +104,8 @@ let douyinAd = {
         { type: 1, text: '在推荐页养机' },
         // { type: 4, text: '在小程序列表页养机' },
         // { type: 8, text: '在我的喜欢中穿插右滑查看主页中的视频养机' },
-        
-        
+
+
     ],
     // 养机模式的值
     yangjiModelType: 1,
@@ -388,10 +388,10 @@ let douyinAd = {
         // let allNum = rand.randNumber(15, 20)
         // autoUtils.logText(allNum + '滑动次数上限')
         let huadongNum = rand.randNumber(2, 2)
-        if(type == 'video') {
+        if (type == 'video') {
             huadongNum = rand.randNumber(3, 5)
         }
-         autoUtils.logText(huadongNum + '需要滑动的次数')
+        autoUtils.logText(huadongNum + '需要滑动的次数')
         // 如果时间小于随机时间，则循坏滑动视频或直播
         for (let i = 0; i < huadongNum; i++) {
             // autoUtils.logText((timeEnd - timeStart) / 1000, '当前运行时长')
@@ -685,7 +685,7 @@ let douyinAd = {
 
     },
     handleJisuBanEnterAppList() {
-        if (AutoGlobData.appPhoneName == '抖音极速版' || AutoGlobData.appPhoneName.indexOf('火山')>-1) {
+        if (AutoGlobData.appPhoneName == '抖音极速版' || AutoGlobData.appPhoneName.indexOf('火山') > -1) {
             if (autoUtils.getText('最近使用')) {
                 autoUtils.clickGetText('最近使用')
             }
@@ -729,7 +729,7 @@ let douyinAd = {
                 if (this.isAppDetailPage(name)) {
                     autoUtils.logText('在小程序内部了')
                 } else {
-                    
+
                     num++
                     if (num == 8) {
                         autoUtils.autoHome()
@@ -754,32 +754,32 @@ let douyinAd = {
         this.fromIndexMyToAppList(1, name)
     },
     isAppDetailPage(name) {
-        
+
         let flag = false
-        if(!autoUtils.getText('最近使用')) {
+        if (!autoUtils.getText('最近使用')) {
             if (!autoUtils.getText(name)) {
                 name = name.slice(0, 2)
             }
-            if(name.indexOf('数字')>-1) {
-                if(autoUtils.getText('2048')) {
+            if (name.indexOf('数字') > -1) {
+                if (autoUtils.getText('2048')) {
                     flag = true
                 }
-            }else{
+            } else {
                 if (autoUtils.getText(name) && autoUtils.getText('反馈')) {
-                    flag = true 
-                }else {
+                    flag = true
+                } else {
                     //找不到橘子或者柠檬时候 有反馈就行了
-                    if(name.indexOf('橘子')>-1 && autoUtils.getText('反馈')) {
-                        flag = true 
+                    if (name.indexOf('橘子') > -1 && autoUtils.getText('反馈')) {
+                        flag = true
                     }
-                    if(name.indexOf('柠檬')>-1 && autoUtils.getText('反馈')) {
-                        flag = true 
+                    if (name.indexOf('柠檬') > -1 && autoUtils.getText('反馈')) {
+                        flag = true
                     }
                 }
             }
-            
+
         }
-        
+
         return flag
     },
     findMiniAppNameAndClick(name, num) {
@@ -787,18 +787,18 @@ let douyinAd = {
         num = num ? num : 1
 
         autoUtils.sleep(5, '等待后寻找')
-        
+
         if (autoUtils.getText('取消')) {
             autoUtils.logText('小程序取消');
             autoUtils.clickGetText('取消')
             autoUtils.sleep(3, '等待后寻找')
-        } 
+        }
 
         if (this.isAppDetailPage(name)) {
             autoUtils.logText('小程序进入成功了');
             return;
-        } 
-        
+        }
+
 
         let newName = name
 
@@ -806,7 +806,7 @@ let douyinAd = {
 
         autoUtils.logText(cvName)
 
-        if(this.getCvByText(cvName)) {
+        if (this.getCvByText(cvName)) {
             this.clickCv(cvName)
             autoUtils.sleep(rand.randNumber(10, 15), '检验是否在小程序页面')
             if (this.isAppDetailPage(name)) {
@@ -815,7 +815,7 @@ let douyinAd = {
             }
         }
         else if (autoUtils.getText(newName)) {
-            autoUtils.logText('找到了开始点击'+newName)
+            autoUtils.logText('找到了开始点击' + newName)
             autoUtils.clickGetText(newName)
 
             autoUtils.sleep(rand.randNumber(15, 25), '检验是否在小程序页面')
@@ -844,9 +844,9 @@ let douyinAd = {
 
         } else {
 
-            autoUtils.sleep(5, '开始下滑寻找'+name)
+            autoUtils.sleep(5, '开始下滑寻找' + name)
             hid.swipAI(this.getSwipeX(), screen.getScreenHeight() - 300, this.getSwipeX(), screen.getScreenHeight() - 850)
-            autoUtils.sleep(2, '等待寻找'+name)
+            autoUtils.sleep(2, '等待寻找' + name)
             if (num < 6) {
                 num++
                 this.findMiniAppNameAndClick(name, num)
@@ -942,13 +942,13 @@ let douyinAd = {
         autoUtils.logText(`执行上滑操作-方式${type}`);
         const params = this.generateSwipeParams();
         let { x, startY, endX, endY } = params
-        if(type == 1) {
+        if (type == 1) {
             hid.swipEx(x, startY, endX, endY, 0, rand.randNumber(500, 1500), 0)
-        }else if(type == 2) {
+        } else if (type == 2) {
             hid.swipEx(x, startY, endX, endY, 0, 500, 0)
-        }else if(type == 3) {
+        } else if (type == 3) {
             hid.swipEx(x, startY, endX, endY, 0, rand.randNumber(300, 800), rand.randNumber(0, 500))
-        }else{
+        } else {
             hid.swipEx(x, startY, endX, endY, 0, 500, 0)
         }
     },
@@ -988,7 +988,7 @@ let douyinAd = {
             autoUtils.autoBack()
             autoUtils.sleep(3, '等待')
         }
-        if (autoUtils.getText('取消',true)) {
+        if (autoUtils.getText('取消', true)) {
             autoUtils.sleep(2, '等待关闭取消')
             autoUtils.clickGetText('取消')
             autoUtils.sleep(3, '取消')
@@ -1101,7 +1101,7 @@ let douyinAd = {
     currentSwipNum: 0,
     duibiaoVideoOrZhiBoNum: 0,
     isNotGoodTypeNum: 0,
-    
+
     //简单快速养 看广告过程中穿插的养机 
     // normal 正常养机（日常维护用普通模式）quick 快速养（观看广告中穿插的养机）
     // 用于简单养机 随机用
@@ -1116,8 +1116,8 @@ let douyinAd = {
         8: '在我的喜欢中养机',
         9: '在我的收藏中养机',
     },
-    onlyIndexPageYangji () {
-        for(var i=0;i<10;i++) {
+    onlyIndexPageYangji() {
+        for (var i = 0; i < 10; i++) {
             this.yangjimodel1()
         }
     },
@@ -1165,12 +1165,12 @@ let douyinAd = {
     firstYangJiMethod() {
         // 首次养机打两个标签 搜索两次
         let num = rand.randNumber(2, 4)
-        autoUtils.logText('首次养机滑动的次数--'+num)
+        autoUtils.logText('首次养机滑动的次数--' + num)
         for (let i = 0; i < num; i++) {
             this.handelVideo()
             this.startHuaDong()
         }
-       
+
         //推荐页滑动几次
         // this.onlyMove(2)
         // 随机搜索养机
@@ -1189,18 +1189,18 @@ let douyinAd = {
         autoUtils.sleep(2, '开始处理视频')
         // 获取视频权重
         let flag = false
-        for(var i=0;i<5;i++) {
-            if(this.isVideoPage()) {
+        for (var i = 0; i < 5; i++) {
+            if (this.isVideoPage()) {
                 flag = true
                 break;
-            }else{
+            } else {
                 autoUtils.sleep(3, '开始检测视频标识')
             }
         }
-        if(!flag) {
+        if (!flag) {
             this.startHuaDong()
             autoUtils.sleep(3, '开始检测视频标识')
-            if(!this.isVideoPage()) {
+            if (!this.isVideoPage()) {
                 autoUtils.logText('没有检测到视频标识，等待5s开始下一个动作，返回寻找视频')
                 this.goIndexPageByType('首页的推荐')
                 return;
@@ -1212,7 +1212,7 @@ let douyinAd = {
         }
         if (!this.isDuiBiaoVideo()) {
             autoUtils.logText('这不是对标视频')
-            autoUtils.sleep(rand.randNumber(20,35), '等待后进行下一步')
+            autoUtils.sleep(rand.randNumber(20, 35), '等待后进行下一步')
             autoUtils.sleep(5, '开始处理下一个')
             return;
         }
@@ -1313,12 +1313,12 @@ let douyinAd = {
         // time = time + rand.randNumber(30, 60)
 
         if (actionType.length > 0) {
-            if(rand.randNumber(1,10)>3) {
+            if (rand.randNumber(1, 10) > 3) {
                 this.actionVedio(autoUtils.shuffle(actionType)[0], time)
-            }else{
+            } else {
                 autoUtils.logText('随机到不互动，进行下一步')
             }
-            
+
         } else {
 
 
@@ -1340,7 +1340,7 @@ let douyinAd = {
     },
     // 生成互动的随机时间
     sleepActionVideo(time) {
-        autoUtils.sleep(1, '等待中剩余'+time+'秒') 
+        autoUtils.sleep(1, '等待中剩余' + time + '秒')
         // let arr = [-0.2, -0.3, -0.4, -0.5, 0.1, 0.2, 0.5]
         // let timeNum = 1 + autoUtils.shuffle(arr)[0]
         // autoUtils.sleep(1, '等待中')
@@ -1349,7 +1349,7 @@ let douyinAd = {
         // }else{
         //     sleep.millisecond(毫秒 = 1000 * timeNum);
         // }
-        
+
     },
     // 点击视频的关注等
     actionVedio(type, time) {
@@ -1374,7 +1374,7 @@ let douyinAd = {
                     this.todayDataInfo.todayLikeNum++
                     this.setConfig('todayDataInfo', this.todayDataInfo)
                 }
-                this.sleepActionVideo(time-i)
+                this.sleepActionVideo(time - i)
             }
         } else if (type == 2) {
             for (let i = 0; i < time; i++) {
@@ -1384,7 +1384,7 @@ let douyinAd = {
                     this.todayDataInfo.todayCollect++
                     this.setConfig('todayDataInfo', this.todayDataInfo)
                 }
-                this.sleepActionVideo(time-i)
+                this.sleepActionVideo(time - i)
             }
         } else if (type == 3) {
             for (let i = 0; i < time; i++) {
@@ -1394,7 +1394,7 @@ let douyinAd = {
                     this.todayDataInfo.todayFocus++
                     this.setConfig('todayDataInfo', this.todayDataInfo)
                 }
-                this.sleepActionVideo(time-i)
+                this.sleepActionVideo(time - i)
             }
         }
 
@@ -1462,14 +1462,14 @@ let douyinAd = {
     },
     // 滑动直播屏幕 关注 发评论 送礼物 互动
     handelZhiBo(back) {
-        
+
         autoUtils.sleep(10, '等待10秒')
         if (this.getCvByText('直播的礼物按钮') || autoUtils.getText('说点什么')) {
             autoUtils.logText(time, '进入直播了')
             this.handleZhiboDetail()
             autoUtils.sleep(10, '等待10秒')
         } else {
-            autoUtils.sleep(rand.randNumber(30,60), '没有找到直播礼物按钮，判断为不在直播页面，等待20秒后继续')
+            autoUtils.sleep(rand.randNumber(30, 60), '没有找到直播礼物按钮，判断为不在直播页面，等待20秒后继续')
         }
         if (back) {
             autoUtils.sleep(3, '当前直播是从视频进入的，开始返回视频')
@@ -1511,10 +1511,10 @@ let douyinAd = {
 
         if (this.zhiboInfo.zhiBoisFocus || this.isFromAdZhiBo) {
             autoUtils.logText('关注过主播，增加停留时长,增加2-5分钟')
-            if(this.isFromAdZhiBo) {
+            if (this.isFromAdZhiBo) {
                 //避免看直播太长，总推荐直播广告
                 time = time + rand.randNumber(60, 120)
-            }else{
+            } else {
                 time = time + rand.randNumber(120, 300)
             }
         }
@@ -1554,7 +1554,7 @@ let douyinAd = {
             } else if (i == timeAction2) {
                 objMethods[typeArr[2]]()
             }
-            this.sleepActionVideo(time-i)
+            this.sleepActionVideo(time - i)
         }
 
     },
@@ -1636,13 +1636,13 @@ let douyinAd = {
         autoUtils.sleep(6, '等待5秒')
 
         let flag = false
-        if(this.isFromAdZhiBo) {
+        if (this.isFromAdZhiBo) {
             // 广告进入的直播间刷礼物的概率大 当前送礼物小于6一定刷
-            if(this.todayDataInfo.giftNum <= 6) {
+            if (this.todayDataInfo.giftNum <= 6) {
                 flag = true
             }
-        }else{
-            if(this.todayDataInfo.giftNum <= this.maxGiveGiftNum) {
+        } else {
+            if (this.todayDataInfo.giftNum <= this.maxGiveGiftNum) {
                 flag = true
             }
         }
@@ -1911,7 +1911,7 @@ let douyinAd = {
     },
     lookModel(task) {
         this.getCurrentAppRunDetail(task.appName)
-        
+
         this.setLookModelValueData()
         let lookModelValue = this.lookModelValue
         // task.time 等待观看广告的时间 等于0就是可以看了 不等于就是需要等待的时间 
@@ -1920,14 +1920,14 @@ let douyinAd = {
         let text = ''
         let taskDetail = AutoGlobData.taskdetail
 
-        if(AutoGlobData.runModel == 5){
+        if (AutoGlobData.runModel == 5) {
             this.backHomeWaitAd(task)
             this.swipeIndexAppListForAd(taskDetail, 2)
             this.lookAd(taskDetail.appName)
-            if(rand.randNumber(1,10) > 6){
+            if (rand.randNumber(1, 10) > 6) {
                 autoUtils.logText('随机到了养机')
                 this.yangji('quick')
-            }else{
+            } else {
                 autoUtils.logText('随机到了返回主页')
                 autoUtils.autoHome()
             }
@@ -1948,12 +1948,12 @@ let douyinAd = {
             this.lookModel4()
         } else if (lookModelValue == 5) {
             this.lookModel5()
-        }else if (lookModelValue == 6) {
+        } else if (lookModelValue == 6) {
             this.lookModel6()
             autoUtils.logText('不等待看广告')
         }
         autoUtils.sleep(10, '等待后观看广告')
-        
+
         if (lookModelValue != 5) {
             this.lookAd(taskDetail.appName)
         }
@@ -1994,7 +1994,7 @@ let douyinAd = {
         else {
             hid.swipAI(x, y, x, y1)
         }
-        
+
     },
     backHomeWaitAd(task) {
         if (task.time == 0) {
@@ -2022,7 +2022,7 @@ let douyinAd = {
     swipeIndexAppListForAd(task, swipeNum) {
         this.toAppListPage(task.appName)
         this.onlyMove(swipeNum)
-        
+
         let arr = [1, 2, 3]
         let num = autoUtils.shuffle(arr)[0]
         for (let i = 0; i < num; i++) {
@@ -2066,7 +2066,7 @@ let douyinAd = {
         this.yangji('quick')
         this.yangji('quick')
         this.swipeIndexAppListForAd(task, 1)
-        
+
     },
     lookModel5() {
         let task = AutoGlobData.taskdetail
@@ -2095,27 +2095,24 @@ let douyinAd = {
     randomTime(text) {
         let type = rand.randNumber(1, 3)
         // autoUtils.sleep(5, '广告等待')
-        autoUtils.sleep(this.pageSleepTimeByType(type), text?text:'广告等待')
+        autoUtils.sleep(this.pageSleepTimeByType(type), text ? text : '广告等待')
     },
-    lookAd(name) {
-        autoUtils.stopRunByTime()
-        autoUtils.logText('开始准备观看广告')
-        autoUtils.sleep(6, '开始点击')
+    fromListPageToDetail(name) {
         if (name.indexOf('优创') > -1) {
             this.randomTime('优创等待')
             hid.clickPercent(0.4792, 0.2969)
         }
         else if (name.indexOf('海豚') > -1) {
-            
-            if(autoUtils.getText("文字")){
+
+            if (autoUtils.getText("文字")) {
                 autoUtils.clickGetText("文字")
             }
-            else if(autoUtils.getText("风格")){
+            else if (autoUtils.getText("风格")) {
                 autoUtils.clickGetText("风格")
             }
-            else if(autoUtils.getText("建筑")){
+            else if (autoUtils.getText("建筑")) {
                 autoUtils.clickGetText("建筑")
-            }else if(autoUtils.getText("节日")){
+            } else if (autoUtils.getText("节日")) {
                 autoUtils.clickGetText("节日")
             }
             this.randomTime('广告等待')
@@ -2166,7 +2163,12 @@ let douyinAd = {
         else {
             hid.clickPercent(0.3889, 0.4609)
         }
-
+    },
+    lookAd(name) {
+        autoUtils.stopRunByTime()
+        autoUtils.logText('开始准备观看广告')
+        autoUtils.sleep(6, '开始点击')
+        this.fromListPageToDetail(name)
         this.randomTime('广告等待')
 
         //如果没有主动介入的操作
@@ -2207,123 +2209,130 @@ let douyinAd = {
             this.todayTimeInterval = todayTimeInterval
         }
     },
-    clickAdDownloadBtn(name, num) {
+    clickDetailAdText(name) {
+        if (name.indexOf('橙子') > -1) {
+            hid.clickPercent(rand.randNumber(576, 782) / 1000, rand.randNumber(918, 921) / 1000)
+            autoUtils.sleep(5, '点击下载后')
+        }
+        //洛雪壁纸 海豚
+        else if (autoUtils.getText("收藏", true)) {
+            autoUtils.clickGetTextAll("收藏")
+        }
+        //橙子壁纸 番茄
+        else if (autoUtils.getText("下载")) {
+            autoUtils.clickGetText("下载")
+        }
+        //西瓜壁纸
+        else if (autoUtils.getText("保存")) {
+            autoUtils.clickGetText("保存")
+        }
+        //熊猫壁纸
+        else if (autoUtils.getText("下載")) {
+            autoUtils.clickGetText("下載")
+        }
+        //云帆壁纸
+        else if (autoUtils.getText("随机一张")) {
+            autoUtils.clickGetText("随机一张")
+        }
+        //数字大挑战
+        else if (autoUtils.getText("立即观看")) {
+            autoUtils.clickGetText("立即观看")
+        }
+        //优创汇
+        else if (autoUtils.getText("查看全部")) {
+            autoUtils.clickGetText("查看全部")
+        }
+        else if (autoUtils.getText("立即")) {
+            autoUtils.clickGetText("立即")
+        }
+        else if (autoUtils.getText("观看")) {
+            autoUtils.clickGetText("观看")
+        }
+
+        // let time = this.sleepTimeVideoShort()
+        autoUtils.sleep(rand.randNumber(10, 20), '等待后开始点击立即观看按钮')
+
+        if (autoUtils.getText("立即")) {
+            autoUtils.sleep(rand.randNumber(5, 10), '立即观看')
+            autoUtils.clickGetText("立即")
+            autoUtils.sleep(10, '开始点击立即观看后')
+            this.checkAdSuccess(1, name)
+        }
+        // 橙子壁纸是点击确定
+        else if (autoUtils.getText("确定")) {
+            autoUtils.sleep(rand.randNumber(5, 10), '确定')
+            autoUtils.clickGetText("确定")
+            autoUtils.sleep(10, '开始点击立即观看后')
+            this.checkAdSuccess(1, name)
+        }
+        else if (autoUtils.getText("观看")) {
+            autoUtils.sleep(rand.randNumber(5, 10), '观看')
+            autoUtils.clickGetText("观看")
+            autoUtils.sleep(10, '开始点击立即观看后')
+            this.checkAdSuccess(1, name)
+        }
+        else {
+            if (name.indexOf('数字') > -1) {
+                autoUtils.logText('数字大挑战直接观看')
+                this.checkAdSuccess(1, name)
+            } else {
+                autoUtils.logText('没有检测到立即观看')
+                num = 1
+                this.swipeIndexAppListForAd({ appName: name }, 2)
+                this.lookAd(name)
+            }
+
+        }
+    },
+    shortTimeMove() {
+        let arr = [1, 2, 3]
+        let num = autoUtils.shuffle(arr)[0]
+
+        for (let i = 0; i < num; i++) {
+            let time = this.detailWaitTime()
+            autoUtils.sleep(time, '短时间滑动几次')
+            hid.swipAI(screen.getScreenWidth() / 2, screen.getScreenHeight() - 300, screen.getScreenWidth() / 2, 500)
+        }
+    },
+    clickAdDownloadBtn(name, num, isWait) {
         num = num ? num : 1
         adUtils.loadAdList()
 
         this.getTodayTimeInterval()
         let timeAddNum = this.todayTimeInterval.dataArr[0]
 
-        autoUtils.logText("当前时间间隔，默认取第一个"+JSON.stringify(this.todayTimeInterval.dataArr))
-        
-        
-        
-        let time = adUtils.getAppAdTime(name,timeAddNum* 60 * 1000)
+        autoUtils.logText("当前时间间隔，默认取第一个" + JSON.stringify(this.todayTimeInterval.dataArr))
 
-        if (time > 0) {
+        let time = adUtils.getAppAdTime(name, timeAddNum * 60 * 1000)
+
+        if (time > 0&&!isWait) {
             autoUtils.logText('时间条件未满足，继续等待')
             // time = time + timeAddNum
             autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
-        }else{
+        } else {
             autoUtils.logText('时间条件满足，开始点击看广告')
+        }
+
+        if (!this.isAppDetail()) {
+            autoUtils.logText('进入详情失败')
+            this.toAppListPage(name)
+            this.fromListPageToDetail(name)
         }
 
         this.randomTime('开始点击收藏等')
 
         if (this.isAppDetail()) {
-            if (name.indexOf('橙子') > -1) {
-                hid.clickPercent(rand.randNumber(576, 782) / 1000, rand.randNumber(918, 921) / 1000)
-                autoUtils.sleep(5, '点击下载后')
-            }
-            //洛雪壁纸 海豚
-            else if (autoUtils.getText("收藏",true)) {
-                autoUtils.clickGetTextAll("收藏")
-            }
-            //橙子壁纸 番茄
-            else if (autoUtils.getText("下载")) {
-                autoUtils.clickGetText("下载")
-            }
-            //西瓜壁纸
-            else if (autoUtils.getText("保存")) {
-                autoUtils.clickGetText("保存")
-            }
-            //熊猫壁纸
-            else if (autoUtils.getText("下載")) {
-                autoUtils.clickGetText("下載")
-            }
-            //云帆壁纸
-            else if (autoUtils.getText("随机一张")) {
-                autoUtils.clickGetText("随机一张")
-            }
-            //数字大挑战
-            else if (autoUtils.getText("立即观看")) {
-                autoUtils.clickGetText("立即观看")
-            }
-            //优创汇
-            else if (autoUtils.getText("查看全部")) {
-                autoUtils.clickGetText("查看全部")
-            }
-            else if (autoUtils.getText("立即")) {
-                autoUtils.clickGetText("立即")
-            }
-            else if (autoUtils.getText("观看")) {
-                autoUtils.clickGetText("观看")
-            }
-
-            // let time = this.sleepTimeVideoShort()
-            autoUtils.sleep(rand.randNumber(10, 20), '等待后开始点击立即观看按钮')
-
-            if (autoUtils.getText("立即")) {
-                autoUtils.sleep(rand.randNumber(5, 10), '立即观看')
-                autoUtils.clickGetText("立即")
-                autoUtils.sleep(10, '开始点击立即观看后')
-                this.checkAdSuccess(1, name)
-            }
-            // 橙子壁纸是点击确定
-            else if (autoUtils.getText("确定")) {
-                autoUtils.sleep(rand.randNumber(5, 10), '确定')
-                autoUtils.clickGetText("确定")
-                autoUtils.sleep(10, '开始点击立即观看后')
-                this.checkAdSuccess(1, name)
-            }
-            else if (autoUtils.getText("观看")) {
-                autoUtils.sleep(rand.randNumber(5, 10), '观看')
-                autoUtils.clickGetText("观看")
-                autoUtils.sleep(10, '开始点击立即观看后')
-                this.checkAdSuccess(1, name)
-            }
-            else {
-                if(name.indexOf('数字')>-1) {
-                    autoUtils.logText('数字大挑战直接观看')
-                    this.checkAdSuccess(1, name)
-                }else{
-                    autoUtils.logText('没有检测到立即观看')
-                    num = 1
-                    this.swipeIndexAppListForAd({ appName: name }, 2)
-                    this.lookAd(name)
-                }
-                
-            }
-
+            this.clickDetailAdText(name)
         } else {
             autoUtils.logText('进入详情失败')
             this.toAppListPage(name)
-            //  this.starthuadong(2)
-            let arr = [1, 2, 3]
-            let num = autoUtils.shuffle(arr)[0]
-
-            for (let i = 0; i < num; i++) {
-                let time = this.detailWaitTime()
-                autoUtils.sleep(time, '短时间滑动几次')
-                hid.swipAI(screen.getScreenWidth() / 2, screen.getScreenHeight() - 300, screen.getScreenWidth() / 2, 500)
-            }
-            autoUtils.sleep(6, '开始点击')
-            hid.clickPercent(0.3889, 0.4609)
-            autoUtils.sleep(6, '开始点击后')
-            if(this.isAppDetail()) {
+            this.shortTimeMove()
+            this.fromListPageToDetail(name)
+            autoUtils.sleep(6, '进入详情后')
+            if (this.isAppDetail()) {
                 autoUtils.logText('进入详情成功')
-                this.clickAdDownloadBtn(name)
-            }else{
+                this.clickAdDownloadBtn(name,1,'noWait')
+            } else {
                 this.lookAd(name)
                 autoUtils.logText('点击后进入详情失败，开始重新执行lookAd方法')
             }
@@ -2387,41 +2396,41 @@ let douyinAd = {
 
                             let adDetail = adUtils.getAdDetailByPhoneId()
 
-                            let todayLook = adDetail.todayLookNum+1
+                            let todayLook = adDetail.todayLookNum + 1
                             let todayClickNum = adDetail.todayClickNum
 
                             if (autoUtils.getText('进入直播')) {
-                                let isClick = this.shouldClick(todayLook,todayClickNum)
+                                let isClick = this.shouldClick(todayLook, todayClickNum)
                                 if (isClick) {
                                     autoUtils.sleep(5, '点击进入直播')
                                     autoUtils.clickGetText('进入直播')
                                     autoUtils.sleep(5, '进入广告直播详情了')
                                     this.handleAdDetail()
                                 }
-                            }else{
+                            } else {
                                 //每三个广告随机点击一次
-                                let isClick = this.shouldClick(todayLook,todayClickNum)
+                                let isClick = this.shouldClick(todayLook, todayClickNum)
                                 //无论今日点击了几次都在第四个或者第9个广告的时候主动点击
-                                if(isClick) {
+                                if (isClick) {
                                     autoUtils.logText('开始主动点击')
                                     hid.click(rand.randNumber(screen.getScreenWidth() / 2 - 10, screen.getScreenWidth() / 2 + 10), rand.randNumber(screen.getScreenHeight() / 2 - 10, screen.getScreenHeight() / 2 + 10))
                                     autoUtils.sleep(5, '开始检测广告是否播放完成或者跳转了详情页')
                                     if (this.isAdPage()) {
                                         autoUtils.sleep(2, '没有跳转成功，还在广告页面停留')
-                                    }else{
+                                    } else {
                                         this.handleAdDetail()
                                         if (this.getCvByText('广告的领取成功') || autoUtils.getText('领取成功')) {
                                             autoUtils.logText('返回广告界面成功了')
-                                        }else{
+                                        } else {
                                             autoUtils.autoBack()
                                         }
                                     }
                                 }
                             }
                             let isDownLoad = false
-                            if(AutoGlobData.todayIsDownLoadGame) {
-                                if(AutoGlobData.phoneLookTotal.todayDownLoadTotal == 0) {
-                                    if(rand.randNumber(1, 10) >5) {
+                            if (AutoGlobData.todayIsDownLoadGame) {
+                                if (AutoGlobData.phoneLookTotal.todayDownLoadTotal == 0) {
+                                    if (rand.randNumber(1, 10) > 5) {
                                         autoUtils.logText('随机到了主动点击')
 
                                         if (autoUtils.getText("下载")) {
@@ -2430,23 +2439,23 @@ let douyinAd = {
                                             // 钉钉设置了只有发送包括通知两个字才能发送成功
                                             let str = `广告转化通知（游戏下载）:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
                                             ws.send(str)
-        
+
                                             autoUtils.clickGetText('下载')
                                             isDownLoad = true
                                             autoUtils.logText('等待下载完成')
-                                            autoUtils.sleep(rand.randNumber(30,60))
+                                            autoUtils.sleep(rand.randNumber(30, 60))
                                         }
 
                                     }
-                                }else{
+                                } else {
                                     autoUtils.logText('今日已经随机下载了一款游戏了')
                                 }
-                            }else{
+                            } else {
                                 // let needdownload = parseInt(AutoGlobData.phoneLookTotal.total / 50)
                                 // let downloadtotal = AutoGlobData.phoneLookTotal.downLoadTotal
-                                
+
                                 // autoUtils.logText('自动下载游戏'+needdownload+'-'+downloadtotal)
-                                
+
                                 // if (downloadtotal < needdownload) {
                                 //     if (autoUtils.getText("下载")) {
                                 //         autoUtils.logText('可以点击下载了')
@@ -2511,9 +2520,9 @@ let douyinAd = {
                             }
 
                             this.todayTimeInterval.dataArr.shift()
-                            if(this.todayTimeInterval.dataArr.length>0) {
+                            if (this.todayTimeInterval.dataArr.length > 0) {
                                 this.setConfig('todayTimeInterval', this.todayTimeInterval)
-                            }else{
+                            } else {
                                 this.setConfig('todayTimeInterval', AutoGlobData.todayTimeInterval)
                             }
 
@@ -2556,12 +2565,10 @@ let douyinAd = {
         autoUtils.logText('跳转了详情页面')
         AutoGlobData.isClick = true
 
-
-
         if (this.getCvByText('直播的礼物按钮') || autoUtils.getText('人气') || autoUtils.getText('关注') || autoUtils.getText('直播')) {
             autoUtils.logText('进入直播了增加停留时长')
             this.handleZhiboDetail(rand.randNumber(60, 100))
-            time = time ? time : rand.randNumber(60,100)
+            time = time ? time : rand.randNumber(60, 100)
             autoUtils.sleep(time, '直播等待')
         } else {
             let arr = [1, 2, 3]
@@ -2571,19 +2578,19 @@ let douyinAd = {
 
             for (let i = 0; i < num1; i++) {
                 let time = this.detailWaitTime()
-                autoUtils.sleep(time + rand.randNumber(5,15), '广告详情等待')
+                autoUtils.sleep(time + rand.randNumber(5, 15), '广告详情等待')
                 hid.swipAI(screen.getScreenWidth() / 2, 500, screen.getScreenWidth() / 2, screen.getScreenHeight() - 300)
             }
 
             for (let i = 0; i < num; i++) {
                 let time = this.detailWaitTime()
-                autoUtils.sleep(time + rand.randNumber(5,15), '广告详情等待滑动')
+                autoUtils.sleep(time + rand.randNumber(5, 15), '广告详情等待滑动')
                 this.detailSwipe()
             }
             let total = num + num1
             for (let i = 0; i < total; i++) {
                 let time = this.detailWaitTime()
-                autoUtils.sleep(time + rand.randNumber(5,15), '广告详情等待滑动')
+                autoUtils.sleep(time + rand.randNumber(5, 15), '广告详情等待滑动')
                 this.detailSwipeBack()
             }
         }

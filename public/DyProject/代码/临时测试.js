@@ -3,9 +3,11 @@
 runTime.Import('initData.js')
 runTime.Import('douyinAd.js')
 runTime.Import('tool.js')
+runTime.Import('adTool.js')
 
-console.log(autoUtils.getText("收藏",true))
-// douyinAd.performLeftSwipe()
+// console.log(autoUtils.getText("收藏",true))
+// adUtils.setSuccessAppAd("洛雪壁纸", true, false)
+douyinAd.clickAdDownloadBtn("云帆壁纸",1)
 // autoUtils.clickGetTextAll('收藏')
 //  runTime.Import('快手/ksAdTool.js')
 // runTime.Import('快手/kuaishouAd.js')

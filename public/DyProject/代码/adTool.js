@@ -281,14 +281,17 @@ let adUtils = {
         let maxTime2 = phoneTimeList.sort((a, b) => b - a)[0]
         let maxTime3 = otherPhoneTimeList.sort((a, b) => b - a)[0]
         let maxTime4 = otherPhoneOtherAppList.sort((a, b) => b - a)[0]
-        
+        let biaozhuan2 = 0
         if(addTime) {
             autoUtils.logText('重新计算等待时间，增加的时间是'+addTime/1000+'秒')
-            AutoGlobData.adBiaoZhun2 = AutoGlobData.adBiaoZhun2 + addTime
+            biaozhuan2 = AutoGlobData.adBiaoZhun2 + addTime
+        }else{
+            biaozhuan2 = AutoGlobData.adBiaoZhun2
         }
+        console.log(biaozhuan2,'时间是')
         //括号里是当前时间距离上一次广告的时间  用标准时间-括号时间就是 剩余多长时间可以观看  数值越大 等待时间越长
         let AutoGlobDataBiaozhun1Value = AutoGlobData.adBiaoZhun1 - (nowTime - appTime)
-        let AutoGlobDataBiaozhun2Value = AutoGlobData.adBiaoZhun2 - (nowTime - maxTime2)
+        let AutoGlobDataBiaozhun2Value = biaozhuan2 - (nowTime - maxTime2)
         let AutoGlobDataBiaozhun3Value = AutoGlobData.adBiaoZhun3 - (nowTime - maxTime3)
         let AutoGlobDataBiaozhun4Value = AutoGlobData.adBiaoZhun4 - (nowTime - maxTime4)
 
@@ -332,6 +335,7 @@ let adUtils = {
         detail.downLoad = download
         detail.isClick = isClick
         detail.ip = AutoGlobData.phoneIp
+        detail.customObj.appPhoneName = AutoGlobData.appPhoneName
         // autoUtils.logText(detail,'更新的广告数据')
         this.upDateAdTime(detail)
 
