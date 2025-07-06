@@ -131,6 +131,63 @@ let douyinAd = {
         "giftNum": 0,         // 今日送出礼物的数量
         "yangjiNum": 0,       // 今日养机的次数
     },
+    todayChaPingData: {
+         time: time.nowStamp(),
+         todayLookTotal: 0,
+         todayClickTotal: 0,
+         appList: [
+            {
+                appName: '洛雪壁纸',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            {
+                appName: '海豚壁纸库',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            {
+                appName: '云帆壁纸库',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            {
+                appName: '柠檬壁纸库',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            {
+                appName: '橙子壁纸库',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            {
+                appName: '番茄壁纸库',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            {
+                appName: '熊猫壁纸库',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            {
+                appName: '西瓜壁纸库',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            {
+                appName: '优创汇',
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+            { 
+                appName: '橘子壁纸库', 
+                todayLookNum: 0,
+                todayClickNum:0
+            },
+         ]
+    },
     //初始化喜欢收藏等的次数，一天的量不能超过这个数 收藏要设置的少一点
     LikeMaxAndMin: [5, 8],
     CollectMaxAndMin: [2, 3],
@@ -169,6 +226,17 @@ let douyinAd = {
             this.todayDataInfo = todayDataInfo
         }
         // printl(JSON.stringify(this.todayDataInfo))
+    },
+    // 获取今日插屏广告高的观看次数
+    getTodayChaPingAdNum() {
+        let todayDataChaPingInfo = this.getConfig('todayDataChaPingInfo')
+        if (todayDataChaPingInfo == '' || !this.isSameDay(todayDataChaPingInfo.time)) {
+            autoUtils.logText('初始化todayDataChaPingInfo数据')
+            this.setConfig('todayDataChaPingInfo', this.todayChaPingData)
+        } else {
+            autoUtils.logText('今日启动过了')
+            this.todayChaPingData = todayDataChaPingInfo
+        }
     },
     // 设置模式
     setLookModelValueData() {
@@ -2167,7 +2235,7 @@ let douyinAd = {
     lookAd(name) {
         autoUtils.stopRunByTime()
         autoUtils.logText('开始准备观看广告')
-        autoUtils.sleep(6, '开始点击')
+        autoUtils.sleep(6, '开始进入详情')
         this.fromListPageToDetail(name)
         this.randomTime('广告等待')
 
