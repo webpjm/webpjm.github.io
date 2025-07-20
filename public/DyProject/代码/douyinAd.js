@@ -547,17 +547,18 @@ let douyinAd = {
     swipeZhiBoNum: 0,
     setHuaDongCishu(num) {
         // 获取任务的次数  15次左右传15 
-        // if (num <= 1) {
-        //     num = 2
-        // }
-        let arr = []
-        for (let i = 0; i <= num; i++) {
-            arr.push(i + 1)
+        let allNum = 1
+        if (num == 1) {
+            allNum = 1
+        }else{
+            let arr = []
+            for (let i = 0; i <= num; i++) {
+                arr.push(i + 1)
+            }
+            let modelArr = autoUtils.shuffle(arr)
+
+            allNum = modelArr[0] + modelArr[1]
         }
-        let modelArr = autoUtils.shuffle(arr)
-
-        let allNum = modelArr[0] + modelArr[1]
-
         // if (allNum < num) {
         //     allNum = rand.randNumber(3, 5)
         // }
@@ -2022,11 +2023,53 @@ let douyinAd = {
         }
         autoUtils.sleep(10, '等待后观看广告')
 
+
+        let appNumObj = {
+            '1': 3,
+            '2': 5,
+            '3': 8,
+            '4': AutoGlobData.appList.length
+        }
+
+        let chaPingNum = AutoGlobData.chaPingNum
+        let shoudLookChaPing = false
+        if(chaPingNum>0) {
+            //观看总数
+            let taskLookTotal = appNumObj[AutoGlobData.miniAppNum]
+            //每次观看插屏的间隔
+            let jiangeNum = Math.ceil(taskLookTotal/chaPingNum)
+            let adDetail = adUtils.getAdDetailByPhoneId()
+            //今日已看的数量，比如上一个看了0个，当前的就是0+1个
+            let todayLook = adDetail.todayLookNum + 1
+            
+            // 当天没看过插屏广告并且满足间隔的条件
+            if(todayLook%jiangeNum == 0&&!taskDetail.customObj.isChaPing) {
+                shoudLookChaPing = true
+            }
+
+            if(shoudLookChaPing) {
+                this.lookChaPing()
+            }
+
+            let todayClickNum = adDetail.todayClickNum
+
+            //每三个广告随机点击一次
+            let isClick = this.shouldClick(todayLook, todayClickNum)
+
+
+        }
+        
+
+
+
         if (lookModelValue != 5) {
             this.lookAd(taskDetail.appName)
         }
         autoUtils.logText(10, '观看完成了')
 
+    },
+    lookChaPing () {
+        
     },
     detailWaitTime() {
         let shortTime = []

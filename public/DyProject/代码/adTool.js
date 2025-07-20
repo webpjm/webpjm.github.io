@@ -303,7 +303,7 @@ let adUtils = {
 
         return leftTime
     },
-    setSuccessAppAd(name, isClick,download) {
+    setSuccessAppAd(name, isClick,download,isChaPing) {
         this.loadAdList()
         let detail = this.getAdDetail(name)
         // autoUtils.logText(JSON.stringify(detail),detail.todayLookNum, autoUtils.getTodayTime(detail.lastLookTime) == autoUtils.getTodayTime(time.nowStamp()),'setSuccessAppAd111')
@@ -315,12 +315,18 @@ let adUtils = {
             if(download) {
                 detail.todayDownLoad += 1
             }
+            if(isChaPing) {
+                 detail.customObj.isChaPing += 1
+            }
         } else {
             if (isClick) {
                 detail.todayClickNum = 1
             }
             if(download) {
                 detail.todayDownLoad = 1
+            }
+            if(isChaPing) {
+                 detail.customObj.isChaPing = 1
             }
             detail.todayLookNum = 1
         }
@@ -336,6 +342,7 @@ let adUtils = {
         detail.isClick = isClick
         detail.ip = AutoGlobData.phoneIp
         detail.customObj.appPhoneName = AutoGlobData.appPhoneName
+       
         // autoUtils.logText(detail,'更新的广告数据')
         this.upDateAdTime(detail)
 
