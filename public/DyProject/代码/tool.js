@@ -122,6 +122,9 @@ let autoUtils = {
     sleep(timeFlag, text) {
         // this.logText(str+ '执行--'+text + ' -- 开始等待' + (timeFlag-i) + '秒' + ' --已运行：' + ((newTime - timestart) / (1000 * 60)).toFixed(2) + '分钟')
         // 等待大于5分钟
+        if(!text) {
+            text = ''
+        }
         let arr = [-0.2, -0.3, -0.4, -0.5, 0.1, 0.2, 0.3, 0.5]
         timeFlag = timeFlag + this.shuffle(arr)[0]
         if (timeFlag > 60) {

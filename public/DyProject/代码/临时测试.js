@@ -5,9 +5,12 @@ runTime.Import('douyinAd.js')
 runTime.Import('tool.js')
 runTime.Import('adTool.js')
 
+// douyinAd.lookModel({appName:'洛雪壁纸'})
+
+// adUtils.setSuccessAppAd('洛雪壁纸', false, false,true)
 // console.log(autoUtils.getText('广告'))
 // auto.clickPercent(0.7465,0.2383)
-autoUtils.clickGetText('海豚壁纸大全')
+// autoUtils.clickGetText('海豚壁纸大全')
 // autoUtils.sleep((30000 /2) / 1000, '时间条件未满足，继续等待')
 // console.log(123)
 // console.log(autoUtils.getText("收藏",true))

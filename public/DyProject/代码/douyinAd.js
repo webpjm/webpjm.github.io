@@ -1988,7 +1988,7 @@ let douyinAd = {
         // 根据类型判断选择哪种等待方式  
         let text = ''
         let taskDetail = AutoGlobData.taskdetail
-
+        autoUtils.logText(JSON.stringify(taskDetail))
         if (AutoGlobData.runModel == 5) {
             this.backHomeWaitAd(task)
             this.swipeIndexAppListForAd(taskDetail, 2)
@@ -2021,7 +2021,7 @@ let douyinAd = {
             this.lookModel6()
             autoUtils.logText('不等待看广告')
         }
-        autoUtils.sleep(10, '等待后观看广告')
+        autoUtils.sleep(35, '等待后观看广告')
 
 
         let appNumObj = {
@@ -2034,6 +2034,10 @@ let douyinAd = {
         let chaPingNum = AutoGlobData.chaPingNum
         let shoudLookChaPing = false
         if(chaPingNum>0) {
+            let adDetail = adUtils.getAdDetailByPhoneId()
+            //今日已看的数量，比如上一个看了0个，当前的就是0+1个
+            let todayLook = adDetail.todayLookNum + 1
+            let todayClickNum = adDetail.todayClickNum
             //观看总数
             let taskLookTotal = appNumObj[AutoGlobData.miniAppNum]
             //每次观看插屏的间隔
@@ -2044,10 +2048,7 @@ let douyinAd = {
             }
 
             if(shoudLookChaPing) {
-                let adDetail = adUtils.getAdDetailByPhoneId()
-                //今日已看的数量，比如上一个看了0个，当前的就是0+1个
-                let todayLook = adDetail.todayLookNum + 1
-                let todayClickNum = adDetail.todayClickNum
+                autoUtils.logText('观看插屏广告')
                 //每三个广告随机点击一次
                 let isClick = this.shouldClick(todayLook, todayClickNum)
                 this.lookChaPing(taskDetail.appName,isClick)
@@ -2088,7 +2089,7 @@ let douyinAd = {
         this.toAppListPage(name)
         if(name.indexOf('洛雪壁纸')>-1) {
             for(let i=0;i<10;i++){
-                if(autoUtils.getText('古风')>-1) {
+                if(autoUtils.getText('古风')) {
                     autoUtils.clickGetText('古风')
                     autoUtils.sleep(30)
                     this.checkChaPingAdSuccess(name,isClick)
@@ -2102,7 +2103,7 @@ let douyinAd = {
             }
         }
 
-        else if (name.indexOf('优创') > -1) {
+        else if (name.indexOf('优创')>-1) {
             autoUtils.sleep(10)
             hid.clickPercent(0.4792, 0.2969)
             autoUtils.sleep(5)
@@ -2115,7 +2116,7 @@ let douyinAd = {
 
         else if(name.indexOf('番茄壁纸')>-1) {
             for(let i=0;i<10;i++){
-                if(autoUtils.getText('最新壁纸')>-1) {
+                if(autoUtils.getText('最新壁纸')) {
                     autoUtils.clickGetText('最新壁纸')
                     autoUtils.sleep(30)
                     this.checkChaPingAdSuccess(name,isClick)
@@ -2154,7 +2155,7 @@ let douyinAd = {
 
         else if(name.indexOf('海豚壁纸')>-1) {
             autoUtils.sleep(5)
-            if(autoUtils.getText('海豚壁纸大全')>-1) {
+            if(autoUtils.getText('海豚壁纸大全')) {
                 autoUtils.clickGetText('海豚壁纸大全')
                 autoUtils.sleep(30)
                 this.checkChaPingAdSuccess(name,isClick)
@@ -2164,7 +2165,7 @@ let douyinAd = {
         else if(name.indexOf('柠檬壁纸')>-1) {
             autoUtils.sleep(5)
             this.performBackwardSwipe()
-            if(autoUtils.getText('浪漫专辑')>-1) {
+            if(autoUtils.getText('浪漫专辑')) {
                 autoUtils.clickGetText('浪漫专辑')
                 autoUtils.sleep(30)
                 this.checkChaPingAdSuccess(name,isClick)
@@ -2173,7 +2174,7 @@ let douyinAd = {
 
         else if(name.indexOf('橘子壁纸')>-1) {
             autoUtils.sleep(5)
-            if(autoUtils.getText('精品壁纸')>-1) {
+            if(autoUtils.getText('精品壁纸')) {
                 autoUtils.clickGetText('精品壁纸')
                 autoUtils.sleep(30)
                 this.checkChaPingAdSuccess(name,isClick)
@@ -2182,7 +2183,7 @@ let douyinAd = {
 
         else if(name.indexOf('熊猫壁纸')>-1) {
             for(let i=0;i<10;i++){
-                if(autoUtils.getText('自然风景')>-1) {
+                if(autoUtils.getText('自然风景')) {
                     autoUtils.clickGetText('自然风景')
                     autoUtils.sleep(30)
                     this.checkChaPingAdSuccess(name,isClick)
@@ -2198,7 +2199,7 @@ let douyinAd = {
 
         else if(name.indexOf('云帆壁纸')>-1) {
             autoUtils.sleep(5)
-            if(autoUtils.getText('云帆壁纸库')>-1) {
+            if(autoUtils.getText('云帆壁纸库')) {
                 autoUtils.clickGetText('云帆壁纸库')
                 autoUtils.sleep(30)
                 this.checkChaPingAdSuccess(name,isClick)
@@ -2207,7 +2208,7 @@ let douyinAd = {
 
         else if(name.indexOf('西瓜壁纸')>-1) {
             autoUtils.sleep(5)
-            if(autoUtils.getText('热门标签')>-1) {
+            if(autoUtils.getText('热门标签')) {
                 autoUtils.clickGetText('热门标签')
                 autoUtils.sleep(30)
                 this.checkChaPingAdSuccess(name,isClick)
@@ -2218,6 +2219,9 @@ let douyinAd = {
         if(time/1000>20*60) {
             autoUtils.sleep((time /2) / 1000, '时间条件未满足，继续等待剩余的一半时间后看视频广告')
         }
+        // 随机等待10-20分钟后再看视频广告
+        autoUtils.sleep(rand.randNumber(10*60,20*60), '时间条件未满足，继续等待剩余的一半时间后看视频广告')
+
 
     },
 
@@ -2232,16 +2236,16 @@ let douyinAd = {
         // }
         if(autoUtils.getText('广告') || detects!=null){
             autoUtils.logText('插屏广告加载成功')
-            autoUtils.sleep(66)
+            autoUtils.sleep(66,'插屏广告等待')
             if(isClick) {
                 if(autoUtils.getText('直播')) {
                     autoUtils.clickGetText('直播')
                 }else{
                     hid.click(rand.randNumber(screen.getScreenWidth()/2-100,screen.getScreenWidth()/2+100),rand.randNumber(screen.getScreenHeight()/2-100,screen.getScreenHeight()/2+100))
                 }
-
+                autoUtils.sleep(5,'插屏广告等待')
                 var detects = this.checkChapingIcon()
-                if(detects!=null) {
+                if(autoUtils.getText('广告') || detects!=null) {
                     autoUtils.logText('还在插屏广告界面停留')
                     autoUtils.sleep(30)
                 }else{
@@ -2289,13 +2293,13 @@ let douyinAd = {
 
             autoUtils.sleep(longTime, '开始返回小程序界面')
 
-            if(detects1!=null){
-              detects1[0].hidClick();
+            if(autoUtils.getText('广告') || detects1!=null){
+              autoUtils.autoBack()
             }
 
             autoUtils.sleep(5, '点击关闭图标后')
 
-             autoUtils.sleep(5, '开始修改广告值')
+            autoUtils.sleep(5, '开始修改广告值')
             adUtils.setSuccessAppAd(name, isClick, isDownLoad,true)
 
             autoUtils.sleep(5, '返回后等待5S')
@@ -2390,36 +2394,36 @@ let douyinAd = {
         this.yangji('quick')
         let task = AutoGlobData.taskdetail
         this.backHomeWaitAd(task)
-        this.swipeIndexAppListForAd(task, 1)
+        this.swipeIndexAppListForAd(task, 2)
 
         //小程序内部看广告的逻辑
         // this.lookAd(task.appName)
     },
     lookModel2() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 1)
+        this.swipeIndexAppListForAd(task, 2)
         this.yangji('quick')
         this.yangji('quick')
         this.backHomeWaitAd(task)
-        this.swipeIndexAppListForAd(task, 1)
+        this.swipeIndexAppListForAd(task, 2)
     },
     lookModel3() {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 1)
+        this.swipeIndexAppListForAd(task, 2)
         this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 1)
+        this.swipeIndexAppListForAd(task, 2)
     },
     lookModel4() {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
         this.yangji('quick')
-        this.swipeIndexAppListForAd(task, 1)
+        this.swipeIndexAppListForAd(task, 2)
 
     },
     lookModel5() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 1)
+        this.swipeIndexAppListForAd(task, 2)
         for (let i = 0; i < 6; i++) {
             let time = this.detailWaitTime()
             autoUtils.sleep(time, '距离小的滑动')
@@ -2431,7 +2435,7 @@ let douyinAd = {
     },
     lookModel6() {
         let task = AutoGlobData.taskdetail
-        this.swipeIndexAppListForAd(task, 1)
+        this.swipeIndexAppListForAd(task, 2)
         for (let i = 0; i < 3; i++) {
             let time = this.detailWaitTime()
             autoUtils.sleep(time, '距离小的滑动')
@@ -2495,7 +2499,7 @@ let douyinAd = {
             this.randomTime('云帆等待')
         }
         else if (name.indexOf('洛雪') > -1) {
-            this.onlyMove(3)
+            this.onlyMove(2)
             hid.clickPercent(0.3889, 0.4609)
         }
         else if (name.indexOf('番茄') > -1) {

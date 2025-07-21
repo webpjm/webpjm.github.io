@@ -342,7 +342,11 @@ let adUtils = {
         detail.isClick = isClick
         detail.ip = AutoGlobData.phoneIp
         detail.customObj.appPhoneName = AutoGlobData.appPhoneName
-       
+        if(isChaPing) {
+            detail.customObj.adType = 'chaPing'
+        }else{
+            detail.customObj.adType = 'rewardVideo'
+        }
         // autoUtils.logText(detail,'更新的广告数据')
         this.upDateAdTime(detail)
 

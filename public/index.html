@@ -188,9 +188,19 @@
               {{ scope.row.ip ? scope.row.ip.split("--")[0] :"" }}
             </template>
           </el-table-column>
-          <el-table-column align="center" prop="ip" label="IP归属地" width="150">
+          <!-- <el-table-column align="center" prop="ip" label="IP归属地" width="150">
             <template scope="scope">
               {{ scope.row.ip ? scope.row.ip.split("--")[1] : '' }}
+            </template>
+          </el-table-column> -->
+          <el-table-column align="center" prop="ip" label="APP" width="100">
+            <template scope="scope">
+              {{ scope.row.customObj.appPhoneName }}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="ip" label="广告类型" width="100">
+            <template scope="scope">
+               {{ scope.row.customObj.adType == 'chaPing'? '插屏广告':'激励视频' }}
             </template>
           </el-table-column>
           <el-table-column prop="todayLookNum" align="center" sortable label="当日观看">
