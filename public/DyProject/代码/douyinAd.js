@@ -2038,38 +2038,276 @@ let douyinAd = {
             let taskLookTotal = appNumObj[AutoGlobData.miniAppNum]
             //每次观看插屏的间隔
             let jiangeNum = Math.ceil(taskLookTotal/chaPingNum)
-            let adDetail = adUtils.getAdDetailByPhoneId()
-            //今日已看的数量，比如上一个看了0个，当前的就是0+1个
-            let todayLook = adDetail.todayLookNum + 1
-            
             // 当天没看过插屏广告并且满足间隔的条件
-            if(todayLook%jiangeNum == 0&&!taskDetail.customObj.isChaPing) {
+            if(todayLook%jiangeNum == 0&&taskDetail.customObj.isChaPing!=1&&AutoGlobData.appPhoneName=='抖音') {
                 shoudLookChaPing = true
             }
 
             if(shoudLookChaPing) {
-                this.lookChaPing()
+                let adDetail = adUtils.getAdDetailByPhoneId()
+                //今日已看的数量，比如上一个看了0个，当前的就是0+1个
+                let todayLook = adDetail.todayLookNum + 1
+                let todayClickNum = adDetail.todayClickNum
+                //每三个广告随机点击一次
+                let isClick = this.shouldClick(todayLook, todayClickNum)
+                this.lookChaPing(taskDetail.appName,isClick)
             }
-
-            let todayClickNum = adDetail.todayClickNum
-
-            //每三个广告随机点击一次
-            let isClick = this.shouldClick(todayLook, todayClickNum)
-
 
         }
         
-
-
-
         if (lookModelValue != 5) {
-            this.lookAd(taskDetail.appName)
+            this.lookAd(taskDetail.appName,shoudLookChaPing)
         }
+
         autoUtils.logText(10, '观看完成了')
 
     },
-    lookChaPing () {
+    lookChaPing (name,isClick) {
         
+        adUtils.loadAdList()
+
+        this.getTodayTimeInterval()
+        let timeAddNum = this.todayTimeInterval.dataArr[0]
+
+        autoUtils.logText("当前时间间隔，默认取第一个" + JSON.stringify(this.todayTimeInterval.dataArr))
+
+        let time = adUtils.getAppAdTime(name, timeAddNum * 60 * 1000)
+
+        if (time > 0) {
+            autoUtils.logText('时间条件未满足，继续等待')
+            if(time/1000>20*60) {
+                autoUtils.sleep((time /2) / 1000, '时间条件大于20分钟等待一半时间先看插屏')
+            }else{
+                autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
+            }
+            
+        } else {
+            autoUtils.logText('时间条件满足，开始点击看广告')
+        }
+
+        this.toAppListPage(name)
+        if(name.indexOf('洛雪壁纸')>-1) {
+            for(let i=0;i<10;i++){
+                if(autoUtils.getText('古风')>-1) {
+                    autoUtils.clickGetText('古风')
+                    autoUtils.sleep(30)
+                    this.checkChaPingAdSuccess(name,isClick)
+                    break;
+                }
+                else{
+                    this.performBackwardSwipe()
+                    autoUtils.sleep(3)
+                }
+                    
+            }
+        }
+
+        else if (name.indexOf('优创') > -1) {
+            autoUtils.sleep(10)
+            hid.clickPercent(0.4792, 0.2969)
+            autoUtils.sleep(5)
+            if(autoUtils.getText('电话区号')) {
+                autoUtils.clickGetText('电话区号')
+                autoUtils.sleep(30)
+                this.checkChaPingAdSuccess(name,isClick)
+            }
+        }
+
+        else if(name.indexOf('番茄壁纸')>-1) {
+            for(let i=0;i<10;i++){
+                if(autoUtils.getText('最新壁纸')>-1) {
+                    autoUtils.clickGetText('最新壁纸')
+                    autoUtils.sleep(30)
+                    this.checkChaPingAdSuccess(name,isClick)
+                    break;
+                }
+                else{
+                    this.performBackwardSwipe()
+                    autoUtils.sleep(3)
+                }
+                    
+            }
+        }
+
+        else if(name.indexOf('橙子壁纸')>-1) {
+            for (let i = 0; i < 3; i++) {
+                let time = this.detailWaitTime()
+                autoUtils.sleep(time, '距离小的滑动')
+                this.detailSwipe()
+            }
+            autoUtils.sleep(5)
+            hid.clickPercent(0.7396, 0.3613)
+            for(let i=0;i<10;i++){
+                if(autoUtils.getText('自然风光')>-1) {
+                    autoUtils.clickGetText('自然风光')
+                    autoUtils.sleep(30)
+                    this.checkChaPingAdSuccess(name,isClick)
+                    break;
+                }
+                else{
+                    this.performBackwardSwipe()
+                    autoUtils.sleep(3)
+                }
+                    
+            }
+        }
+
+        else if(name.indexOf('海豚壁纸')>-1) {
+            autoUtils.sleep(5)
+            if(autoUtils.getText('海豚壁纸大全')>-1) {
+                autoUtils.clickGetText('海豚壁纸大全')
+                autoUtils.sleep(30)
+                this.checkChaPingAdSuccess(name,isClick)
+            }
+        }
+
+        else if(name.indexOf('柠檬壁纸')>-1) {
+            autoUtils.sleep(5)
+            this.performBackwardSwipe()
+            if(autoUtils.getText('浪漫专辑')>-1) {
+                autoUtils.clickGetText('浪漫专辑')
+                autoUtils.sleep(30)
+                this.checkChaPingAdSuccess(name,isClick)
+            }
+        }
+
+        else if(name.indexOf('橘子壁纸')>-1) {
+            autoUtils.sleep(5)
+            if(autoUtils.getText('精品壁纸')>-1) {
+                autoUtils.clickGetText('精品壁纸')
+                autoUtils.sleep(30)
+                this.checkChaPingAdSuccess(name,isClick)
+            }
+        }
+
+        else if(name.indexOf('熊猫壁纸')>-1) {
+            for(let i=0;i<10;i++){
+                if(autoUtils.getText('自然风景')>-1) {
+                    autoUtils.clickGetText('自然风景')
+                    autoUtils.sleep(30)
+                    this.checkChaPingAdSuccess(name,isClick)
+                    break;
+                }
+                else{
+                    this.performBackwardSwipe()
+                    autoUtils.sleep(3)
+                }
+                    
+            }
+        }
+
+        else if(name.indexOf('云帆壁纸')>-1) {
+            autoUtils.sleep(5)
+            if(autoUtils.getText('云帆壁纸库')>-1) {
+                autoUtils.clickGetText('云帆壁纸库')
+                autoUtils.sleep(30)
+                this.checkChaPingAdSuccess(name,isClick)
+            }
+        }
+
+        else if(name.indexOf('西瓜壁纸')>-1) {
+            autoUtils.sleep(5)
+            if(autoUtils.getText('热门标签')>-1) {
+                autoUtils.clickGetText('热门标签')
+                autoUtils.sleep(30)
+                this.checkChaPingAdSuccess(name,isClick)
+            }
+        }
+
+
+        if(time/1000>20*60) {
+            autoUtils.sleep((time /2) / 1000, '时间条件未满足，继续等待剩余的一半时间后看视频广告')
+        }
+
+    },
+
+    checkChapingIcon() {
+        var detects = auto.findImages(['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'], 0.8, 5000, 2, [0,0,1,1]);
+        return detects
+    },
+    checkChaPingAdSuccess(name,isClick) {
+        var detects = this.checkChapingIcon()
+        // if(detects!=null){
+        // detects[0].hidClick();
+        // }
+        if(autoUtils.getText('广告') || detects!=null){
+            autoUtils.logText('插屏广告加载成功')
+            autoUtils.sleep(66)
+            if(isClick) {
+                if(autoUtils.getText('直播')) {
+                    autoUtils.clickGetText('直播')
+                }else{
+                    hid.click(rand.randNumber(screen.getScreenWidth()/2-100,screen.getScreenWidth()/2+100),rand.randNumber(screen.getScreenHeight()/2-100,screen.getScreenHeight()/2+100))
+                }
+
+                var detects = this.checkChapingIcon()
+                if(detects!=null) {
+                    autoUtils.logText('还在插屏广告界面停留')
+                    autoUtils.sleep(30)
+                }else{
+                    this.handleAdDetail()
+                }
+            }
+
+            var detects1 = this.checkChapingIcon()
+            if(autoUtils.getText('广告') || detects1!=null) {
+                autoUtils.logText('返回了插屏广告界面')
+            }else{
+                autoUtils.autoBack()
+            }
+
+            let isDownLoad = false
+            if (AutoGlobData.todayIsDownLoadGame) {
+                if (AutoGlobData.phoneLookTotal.todayDownLoadTotal == 0) {
+                    if (rand.randNumber(1, 10) > 5) {
+                        autoUtils.logText('随机到了主动点击')
+
+                        if (autoUtils.getText("下载")) {
+                            autoUtils.logText('可以点击下载了')
+                            autoUtils.sleep(3, '开始发送邮件')
+                            // 钉钉设置了只有发送包括通知两个字才能发送成功
+                            let str = `广告转化通知（游戏下载）:${AutoGlobData.phoneIdToNameList[device.getDeviceIntID()]}-小程序:${name} -- 观看总数:${AutoGlobData.phoneLookTotal.total} -- ${autoUtils.getTodayTime(time.nowStamp())} ${autoUtils.getTimeStr()} --ID:${device.getDeviceIntID()}`
+                            ws.send(str)
+
+                            autoUtils.clickGetText('下载')
+                            isDownLoad = true
+                            autoUtils.logText('等待下载完成')
+                            autoUtils.sleep(rand.randNumber(30, 60))
+                        }
+
+                    }
+                } else {
+                    autoUtils.logText('今日已经随机下载了一款游戏了')
+                }
+            }
+
+            // 保存图片
+            autoUtils.sleep(2, '开始保存图片')
+            autoUtils.setSuccessPic(name)
+
+            let longTime = rand.randNumber(5, 8)
+
+            autoUtils.sleep(longTime, '开始返回小程序界面')
+
+            if(detects1!=null){
+              detects1[0].hidClick();
+            }
+
+            autoUtils.sleep(5, '点击关闭图标后')
+
+             autoUtils.sleep(5, '开始修改广告值')
+            adUtils.setSuccessAppAd(name, isClick, isDownLoad,true)
+
+            autoUtils.sleep(5, '返回后等待5S')
+
+            
+
+        }else{
+            autoUtils.logText('插屏广告加载失败了')
+        }
+
+        this.toAppListPage()
+
     },
     detailWaitTime() {
         let shortTime = []
@@ -2182,6 +2420,11 @@ let douyinAd = {
     lookModel5() {
         let task = AutoGlobData.taskdetail
         this.swipeIndexAppListForAd(task, 1)
+        for (let i = 0; i < 6; i++) {
+            let time = this.detailWaitTime()
+            autoUtils.sleep(time, '距离小的滑动')
+            this.detailSwipe()
+        }
         // this.yangji('quick')
         // this.yangji('quick')
         // this.swipeIndexAppListForAd(task, 4)
@@ -2189,6 +2432,11 @@ let douyinAd = {
     lookModel6() {
         let task = AutoGlobData.taskdetail
         this.swipeIndexAppListForAd(task, 1)
+        for (let i = 0; i < 3; i++) {
+            let time = this.detailWaitTime()
+            autoUtils.sleep(time, '距离小的滑动')
+            this.detailSwipe()
+        }
         // this.yangji('quick')
         // this.yangji('quick')
         // this.swipeIndexAppListForAd(task, 4)
@@ -2275,7 +2523,7 @@ let douyinAd = {
             hid.clickPercent(0.3889, 0.4609)
         }
     },
-    lookAd(name) {
+    lookAd(name,lookChaPing) {
         autoUtils.stopRunByTime()
         autoUtils.logText('开始准备观看广告')
         autoUtils.sleep(6, '开始进入详情')
@@ -2289,7 +2537,7 @@ let douyinAd = {
         //     this.clickAdDownloadBtn(name, 1)
         // }
 
-        this.clickAdDownloadBtn(name, 1)
+        this.clickAdDownloadBtn(name, 1,lookChaPing)
 
 
     },
@@ -2421,6 +2669,9 @@ let douyinAd = {
             // time = time + timeAddNum
             autoUtils.sleep(time / 1000, '时间条件未满足，继续等待')
         } else {
+            if(isWait) {
+              autoUtils.logText('刚看完插屏或者第二次进入不等待开始看广告')  
+            }
             autoUtils.logText('时间条件满足，开始点击看广告')
         }
 

@@ -5,9 +5,14 @@ runTime.Import('douyinAd.js')
 runTime.Import('tool.js')
 runTime.Import('adTool.js')
 
+// console.log(autoUtils.getText('广告'))
+// auto.clickPercent(0.7465,0.2383)
+autoUtils.clickGetText('海豚壁纸大全')
+// autoUtils.sleep((30000 /2) / 1000, '时间条件未满足，继续等待')
+// console.log(123)
 // console.log(autoUtils.getText("收藏",true))
 // adUtils.setSuccessAppAd("洛雪壁纸", true, false)
-douyinAd.clickAdDownloadBtn("云帆壁纸",1)
+// douyinAd.clickAdDownloadBtn("云帆壁纸",1)
 // autoUtils.clickGetTextAll('收藏')
 //  runTime.Import('快手/ksAdTool.js')
 // runTime.Import('快手/kuaishouAd.js')
@@ -204,12 +209,6 @@ douyinAd.clickAdDownloadBtn("云帆壁纸",1)
 // new image().MLKitOcrRect('zh',[0,0,1,1])screen.MLKitOcr('zh',2)
 
 
-
-
-
-if(autoUtils.getText('奖励')) {
-                    console.log('aa')
-                }
 
 // console.log(autoUtils.getText('再看'))
 // auto.clickPoint(941,1687)
