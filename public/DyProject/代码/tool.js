@@ -10,6 +10,8 @@ try {
         AutoGlobData.otherValue = data.otherValue
         AutoGlobData.adMaxNum = data.lookRangeNum[1]
         AutoGlobData.adMiniNum = data.lookRangeNum[0]
+        AutoGlobData.chaPingNum = data.chaPingNum
+        AutoGlobData.chaPingModel = data.chaPingModel
 
         if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
             AutoGlobData.configUrl = AutoGlobData.configUrlKs
