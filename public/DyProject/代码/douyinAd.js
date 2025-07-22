@@ -1964,18 +1964,22 @@ let douyinAd = {
         }
 
         let chaPingNum = AutoGlobData.chaPingNum
+        autoUtils.logText('插屏广告观看数量'+chaPingNum)
         let shoudLookChaPing = false
         if(chaPingNum>0) {
             let adDetail = adUtils.getAdDetailByPhoneId()
             //今日已看的数量，比如上一个看了0个，当前的就是0+1个
             let todayLook = adDetail.todayLookNum + 1
+            autoUtils.logText('今日已看的数量'+todayLook)
             let todayClickNum = adDetail.todayClickNum
             //观看总数
             let taskLookTotal = appNumObj[AutoGlobData.miniAppNum]
             //每次观看插屏的间隔
             let jiangeNum = Math.ceil(taskLookTotal/chaPingNum)
+            autoUtils.logText('每次观看插屏的间隔'+jiangeNum)
+            autoUtils.logText('taskDetail.customObj.isChaPing'+taskDetail.customObj.isChaPing)
             // 当天没看过插屏广告并且满足间隔的条件
-            if(todayLook%jiangeNum == 0&&taskDetail.customObj.isChaPing!=1&&AutoGlobData.appPhoneName=='抖音') {
+            if(todayLook%jiangeNum == 0&&taskDetail.customObj.isChaPing!=1&&AutoGlobData.appPhoneName=='抖音'&&taskDetail.appName.indexOf('数字大挑战') == -1) {
                 shoudLookChaPing = true
             }
 
