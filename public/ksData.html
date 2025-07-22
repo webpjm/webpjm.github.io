@@ -8,6 +8,7 @@
   <script src="./js/axios.js"></script>
   <!-- <script src="https://gitpjm-gitpjm-a23cb3945974aba9f32fd66289d72c67586eea4fd7f95a6da.gitlab.io/js/axios.js"></script> -->
   <!-- 引入样式 -->
+   <link rel="icon" type="image/png" href="./js/快手.png">
   <link rel="stylesheet" href="./js/element.css">
   <link rel="stylesheet" href="./style.css">
   <!-- 引入组件库 -->
@@ -98,7 +99,7 @@
 
     <div style="height:1px;background: #E4E7ED;margin: 12px 0;"></div>
     <div>
-      <div v-show="activeName == 'first'" label="查看数据" name="first">
+      <div style="background:#333;" v-show="activeName == 'first'" label="查看数据" name="first">
         <el-table v-loading="loadingData" ref="el_Table" height="90vh" :data="tableData"  stripe  show-summary
           :summary-method="getSummaries" @expand-change="changeRow">
           <el-table-column type="expand">
@@ -209,7 +210,7 @@
         </el-table>
       </div>
 
-      <div v-show="activeName == 'three'" label="实时查看" name="three"  style="width: 100%;height:90vh;overflow-y:auto;">
+      <div v-show="activeName == 'three'" label="实时查看" name="three"  style="width: 100%;height:90vh;overflow-y:auto;background:#333;">
         <div class="phoneWrap"
           style="min-height:80vh;display: flex;flex-wrap: wrap;justify-content: flex-start;padding: 20px">
           <div class="item" v-if="item.display" v-for="(item,index) in socketModelList" :key="index">
@@ -335,7 +336,7 @@
       </div>
 
       <div v-show="activeName == 'second'" label="查看图片" name="second">
-        <div style="display: flex;flex-wrap:wrap;height:calc(100vh - 156px);overflow-y: auto;">
+        <div style="display: flex;flex-wrap:wrap;height:calc(100vh - 156px);overflow-y: auto;background:#333;">
           <div v-for="(item,index) in imgList" :key="index" style="width: 250px;margin: 16px;position:relative;">
             <div
               style="font-size: 16px;background:#232832;color:#fff;width: 250px;padding:10px 10px 4px 10px;box-sizing: border-box;">
