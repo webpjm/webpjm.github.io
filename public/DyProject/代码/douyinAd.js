@@ -2685,7 +2685,7 @@ let douyinAd = {
             autoUtils.logText('广告加载成功，开始等待广告结束')
 
             if (autoUtils.getText('进入直播')) {
-                autoUtils.sleep(20, '增加观看时长，自动进入直播')
+                autoUtils.sleep(30, '增加观看时长，自动进入直播')
             }
             // let zhudongclick = false
             for (let i = 0; i < 150; i++) {
