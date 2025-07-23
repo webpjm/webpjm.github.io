@@ -2247,7 +2247,7 @@ let douyinAd = {
             autoUtils.logText('插屏广告加载失败了')
         }
 
-        this.toAppListPage()
+        this.toAppListPage(name)
 
     },
     detailWaitTime() {

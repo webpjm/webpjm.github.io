@@ -4,7 +4,7 @@ runTime.Import('initData.js')
 runTime.Import('douyinAd.js')
 runTime.Import('tool.js')
 runTime.Import('adTool.js')
-
+autoUtils.sleep(rand.randNumber(10*60,20*60), '时间条件未满足，继续等待剩余的一半时间后看视频广告')
 // douyinAd.lookModel({appName:'洛雪壁纸'})
 
 // adUtils.setSuccessAppAd('洛雪壁纸', false, false,true)
