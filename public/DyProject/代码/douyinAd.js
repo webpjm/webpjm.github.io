@@ -1514,7 +1514,7 @@ let douyinAd = {
             autoUtils.logText('关注过主播，增加停留时长,增加2-5分钟')
             if (this.isFromAdZhiBo) {
                 //避免看直播太长，总推荐直播广告
-                time = time + rand.randNumber(60, 120)
+                time = time + rand.randNumber(60, 160)
             } else {
                 time = time + rand.randNumber(120, 300)
             }
@@ -1920,7 +1920,17 @@ let douyinAd = {
         // 根据类型判断选择哪种等待方式  
         let text = ''
         let taskDetail = AutoGlobData.taskdetail
-        autoUtils.logText(JSON.stringify(taskDetail))
+        let PrintObj = {
+            appName:taskDetail.appName,
+            todayLookNum:taskDetail.todayLookNum,
+            todayClickNum:taskDetail.todayClickNum,
+            todayDownLoad:taskDetail.todayDownLoad,
+            lookAdTotal:taskDetail.lookAdTotal,
+            downLoadTotal:taskDetail.downLoadTotal,
+            customObj:taskDetail.customObj,
+            ip:taskDetail.ip,
+        }
+        autoUtils.logText(JSON.stringify(PrintObj)+'这是taskDetail信息')
         if (AutoGlobData.runModel == 5) {
             this.backHomeWaitAd(task)
             this.swipeIndexAppListForAd(taskDetail, 2)

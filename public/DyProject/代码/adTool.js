@@ -322,12 +322,19 @@ let adUtils = {
             if (isClick) {
                 detail.todayClickNum = 1
             }
+
             if(download) {
                 detail.todayDownLoad = 1
+            }else{
+                detail.todayDownLoad  = 0
             }
+
             if(isChaPing) {
                  detail.customObj.isChaPing = 1
+            }else {
+                 detail.customObj.isChaPing = 0
             }
+            
             detail.todayLookNum = 1
         }
         if (isClick) {
