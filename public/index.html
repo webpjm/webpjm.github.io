@@ -1133,7 +1133,14 @@
               value.isOnline = true
             }
             if (value.phoneId == model && str != '这是图片' && str != '请求截图' && str != '停止截图' && str != '请求点击') {
-              value.messageList.unshift(str)
+              
+              if(str.indexOf('开始等待')>-1) {
+                value.messageList.shift()
+                value.messageList.unshift(str)
+              }else{
+                value.messageList.unshift(str)
+              }
+              
               if(value.messageList.length>this.staySocketNum) {
                 value.messageList = value.messageList.slice(0,this.staySocketNum)
               }
