@@ -203,7 +203,7 @@
               {{ scope.row.customObj.appPhoneName }}
             </template>
           </el-table-column>
-          <el-table-column align="center" prop="ip" label="广告类型" width="100">
+          <el-table-column align="center" prop="customObj" label="广告类型" width="100" :filters="[{text:'激励视频',value:'rewardVideo'},{text:'插屏广告',value:'chaPing'}]" :filter-method="filterModelAdType">
             <template scope="scope">
                {{ scope.row.customObj.adType == 'chaPing'? '插屏广告':'激励视频' }}
             </template>
@@ -663,6 +663,10 @@
           const property = column['property'];
           // console.log(this.timestampToTime(row[property]),value)
           return row[property].indexOf(value) > -1
+        },
+        filterModelAdType(value, row, column) {
+          const property = column['property'];
+          return row[property].adType.indexOf(value) > -1
         },
         filterModel(value, row, column) {
           const property = column['property'];
