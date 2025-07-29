@@ -390,6 +390,8 @@ let adUtils = {
         }else{
             detail.todayClickNum = 0
             detail.todayLookNum = 0
+            detail.todayDownLoad = 0
+            detail.customObj.isChaPing = 0
         }
 
         return detail

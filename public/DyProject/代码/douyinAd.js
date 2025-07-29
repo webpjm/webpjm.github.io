@@ -1989,7 +1989,7 @@ let douyinAd = {
             autoUtils.logText('每次观看插屏的间隔'+jiangeNum)
             autoUtils.logText('taskDetail.customObj.isChaPing'+taskDetail.customObj.isChaPing)
             // 当天没看过插屏广告并且满足间隔的条件
-            if(todayLook%jiangeNum == 0&&taskDetail.customObj.isChaPing!=1&&AutoGlobData.appPhoneName=='抖音'&&taskDetail.appName.indexOf('数字') == -1) {
+            if(todayLook%jiangeNum == 0&&!taskDetail.customObj.isChaPing&&AutoGlobData.appPhoneName=='抖音'&&taskDetail.appName.indexOf('数字') == -1) {
                 shoudLookChaPing = true
             }
 
