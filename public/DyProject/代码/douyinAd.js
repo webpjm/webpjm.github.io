@@ -2506,7 +2506,7 @@ let douyinAd = {
     },
     isLookAdByEmailMessage: false,
     isAppDetail() {
-        return !autoUtils.getText("最近使用") && (autoUtils.getText("收藏") || autoUtils.getText("下载") || autoUtils.getText("下載") || autoUtils.getText("随机一张") || autoUtils.getText("查看全部") || autoUtils.getText("保存") || autoUtils.getText("立即") || autoUtils.getText("观看"))
+        return !autoUtils.getText("最近使用") && !autoUtils.getText("广告") && (autoUtils.getText("收藏") || autoUtils.getText("下载") || autoUtils.getText("下載") || autoUtils.getText("随机一张") || autoUtils.getText("查看全部") || autoUtils.getText("保存") || autoUtils.getText("立即") || autoUtils.getText("观看"))
     },
     // 获取今天的数据 点击喜欢、样机等数据
     getTodayTimeInterval() {
