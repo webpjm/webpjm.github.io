@@ -2506,7 +2506,7 @@ let douyinAd = {
     },
     isLookAdByEmailMessage: false,
     isAppDetail() {
-        return !autoUtils.getText("最近使用") && !autoUtils.getText("可领") && !autoUtils.getText("领取成功") && (autoUtils.getText("收藏") || autoUtils.getText("下载") || autoUtils.getText("下載") || autoUtils.getText("随机一张") || autoUtils.getText("查看全部") || autoUtils.getText("保存") || autoUtils.getText("立即") || autoUtils.getText("观看"))
+        return !autoUtils.getText("最近使用") && (autoUtils.getText("收藏") || autoUtils.getText("下载") || autoUtils.getText("下載") || autoUtils.getText("随机一张") || autoUtils.getText("查看全部") || autoUtils.getText("保存") || autoUtils.getText("立即") || autoUtils.getText("观看"))
     },
     // 获取今天的数据 点击喜欢、样机等数据
     getTodayTimeInterval() {
@@ -2562,36 +2562,36 @@ let douyinAd = {
         // let time = this.sleepTimeVideoShort()
         autoUtils.sleep(rand.randNumber(10, 20), '等待后开始点击立即观看按钮')
 
-        if (autoUtils.getText("立即")) {
-            autoUtils.sleep(rand.randNumber(5, 10), '立即观看')
-            autoUtils.clickGetText("立即")
-            autoUtils.sleep(10, '开始点击立即观看后')
+        if(name.indexOf('数字')>-1) {
+            autoUtils.logText('数字大挑战直接观看')
             this.checkAdSuccess(1, name)
-        }
-        // 橙子壁纸是点击确定
-        else if (autoUtils.getText("确定")) {
-            autoUtils.sleep(rand.randNumber(5, 10), '确定')
-            autoUtils.clickGetText("确定")
-            autoUtils.sleep(10, '开始点击立即观看后')
-            this.checkAdSuccess(1, name)
-        }
-        else if (autoUtils.getText("观看")) {
-            autoUtils.sleep(rand.randNumber(5, 10), '观看')
-            autoUtils.clickGetText("观看")
-            autoUtils.sleep(10, '开始点击立即观看后')
-            this.checkAdSuccess(1, name)
-        }
-        else {
-            if (name.indexOf('数字') > -1) {
-                autoUtils.logText('数字大挑战直接观看')
+        }else{
+            if (autoUtils.getText("立即")) {
+                autoUtils.sleep(rand.randNumber(5, 10), '立即观看')
+                autoUtils.clickGetText("立即")
+                autoUtils.sleep(10, '开始点击立即观看后')
                 this.checkAdSuccess(1, name)
-            } else {
+            }
+            // 橙子壁纸是点击确定
+            else if (autoUtils.getText("确定")) {
+                autoUtils.sleep(rand.randNumber(5, 10), '确定')
+                autoUtils.clickGetText("确定")
+                autoUtils.sleep(10, '开始点击立即观看后')
+                this.checkAdSuccess(1, name)
+            }
+            else if (autoUtils.getText("观看")) {
+                autoUtils.sleep(rand.randNumber(5, 10), '观看')
+                autoUtils.clickGetText("观看")
+                autoUtils.sleep(10, '开始点击立即观看后')
+                this.checkAdSuccess(1, name)
+            }
+            else {
                 autoUtils.logText('没有检测到立即观看')
                 num = 1
                 this.swipeIndexAppListForAd({ appName: name }, 2)
                 this.lookAd(name)
-            }
 
+            }
         }
     },
     shortTimeMove() {
@@ -2758,7 +2758,6 @@ let douyinAd = {
                                             autoUtils.logText('等待下载完成')
                                             autoUtils.sleep(rand.randNumber(30, 60))
                                         }
-
                                     }
                                 } else {
                                     autoUtils.logText('今日已经随机下载了一款游戏了')
