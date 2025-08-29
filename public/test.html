@@ -20,9 +20,16 @@
 <!--aed 725746d242425b -->
 <!--8942088f56a3a8d836 -->
 <body>
-  <div id="app">
-    <!-- <el-button v-if="tokenData" type="primary" @click="copyDataToCangku">备份dy代码片段数据到仓库</el-button>
-    <el-button v-if="tokenData" type="primary" @click="setDouYinData">清除抖音代码片段数据</el-button> -->
+  <div id="app" style="display: flex;justify-content: center;align-items: center;width:100%;height:100vh;">
+    <div>
+
+      <!-- 备份dy代码片段数据到仓库 -->
+      <!-- <el-button v-if="tokenData" type="primary" @click="copyDataToCangku">复制</el-button> -->
+      <!-- 清除抖音代码片段数据 -->
+      <!-- <el-button v-if="tokenData" type="danger" @click="setDouYinData">删除</el-button> -->
+
+    </div>
+    
     
     <el-dialog title="输入token" :visible.sync="dialogVisible" width="30%" @close="dialogVisible = false">
       <el-input v-model="tokenData" placeholder="请输入内容"></el-input>
@@ -99,6 +106,7 @@ function base64_encode(e){var r=function(e){return encodeURIComponent(e).replace
                     "description": "douyin"
                 }
             }).then(res => {
+                alert('广告清除成功')
                 console.log("广告清除成功")
             })
         },
