@@ -11,111 +11,6 @@
    <link rel="icon" type="image/png" href="./js/抖音.png">
   <link rel="stylesheet" href="./js/element.css">
   <link rel="stylesheet" href="./style.css">
-  <!-- 深色主题样式 -->
-  <style>
-    :root {
-      --bg-primary: #121212;
-      --bg-secondary: #1e1e1e;
-      --bg-tertiary: #2d2d2d;
-      --text-primary: #ffffff;
-      --text-secondary: #cccccc;
-      --border-color: #444444;
-      --accent-color: #E6A23C;
-      --success-color: #409EFF;
-    }
-    body, .el-container {
-      background-color: var(--bg-primary) !important;
-      color: var(--text-primary) !important;
-    }
-    .el-table {
-      background-color: var(--bg-secondary) !important;
-      color: var(--text-primary) !important;
-    }
-    .el-table th {
-      background-color: var(--bg-tertiary) !important;
-      color: var(--text-primary) !important;
-      font-weight: bold !important;
-    }
-    .el-table tr {
-      background-color: var(--bg-secondary) !important;
-    }
-    .el-table tr:hover > td {
-      background-color: #3a3a3a !important;
-    }
-    .el-table__empty-block {
-      background-color: var(--bg-secondary) !important;
-    }
-    .el-button {
-      color: var(--text-primary) !important;
-      border-color: var(--border-color) !important;
-    }
-    .el-button--primary {
-      background-color: var(--accent-color) !important;
-      border-color: var(--accent-color) !important;
-    }
-    .el-button--success {
-      background-color: var(--success-color) !important;
-      border-color: var(--success-color) !important;
-    }
-    .el-dialog {
-      background-color: var(--bg-secondary) !important;
-    }
-    .el-dialog__header {
-      border-bottom: 1px solid var(--border-color) !important;
-    }
-    .el-input__inner {
-      background-color: var(--bg-tertiary) !important;
-      color: var(--text-primary) !important;
-      border-color: var(--border-color) !important;
-    }
-    .el-select-dropdown {
-      background-color: var(--bg-tertiary) !important;
-      border-color: var(--border-color) !important;
-    }
-    .el-select-dropdown__item {
-      color: var(--text-primary) !important;
-    }
-    .el-select-dropdown__item.selected {
-      background-color: #3a3a3a !important;
-    }
-    .el-radio-button__inner {
-      background-color: var(--bg-secondary) !important;
-      color: var(--text-secondary) !important;
-      border-color: var(--border-color) !important;
-    }
-    .el-radio-button.is-active .el-radio-button__inner {
-      background-color: var(--accent-color) !important;
-      color: white !important;
-    }
-    .el-pagination button, .el-pagination span:not(.el-pagination__total) {
-      color: var(--text-secondary) !important;
-    }
-    .el-pagination.is-background .el-pager li:not(.disabled).active {
-      background-color: var(--accent-color) !important;
-    }
-    .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
-      background:none!important;
-    }
-    .has-gutter tr td{
-      background:none!important;
-      /* color: #fff!important; */
-      color:#E6A23C!important;
-      font-weight:bold;
-      font-size:16px;
-    }
-    .el-loading-mask {
-      background: rgba(0, 0, 0, 0.5)!important;
-    }
-    .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
-      background:#1e1e1e!important;
-    }
-    .el-table tr > td {
-      background-color: #3a3a3a !important;
-    }
-    .el-icon-arrow-right {
-      color: #fff!important;
-    }
-  </style>
   <!-- 引入组件库 -->
   <script src="./js/vue.js"></script>
   <!-- import JavaScript -->
@@ -308,7 +203,7 @@
               {{ scope.row.customObj.appPhoneName }}
             </template>
           </el-table-column>
-          <el-table-column align="center" prop="ip" label="广告类型" width="100">
+          <el-table-column align="center" prop="customObj" label="广告类型" width="100" :filters="[{text:'激励视频',value:'rewardVideo'},{text:'插屏广告',value:'chaPing'}]" :filter-method="filterModelAdType">
             <template scope="scope">
                {{ scope.row.customObj.adType == 'chaPing'? '插屏广告':'激励视频' }}
             </template>
@@ -768,6 +663,10 @@
           const property = column['property'];
           // console.log(this.timestampToTime(row[property]),value)
           return row[property].indexOf(value) > -1
+        },
+        filterModelAdType(value, row, column) {
+          const property = column['property'];
+          return row[property].adType.indexOf(value) > -1
         },
         filterModel(value, row, column) {
           const property = column['property'];
@@ -1238,7 +1137,14 @@
               value.isOnline = true
             }
             if (value.phoneId == model && str != '这是图片' && str != '请求截图' && str != '停止截图' && str != '请求点击') {
-              value.messageList.unshift(str)
+              
+              if(str.indexOf('开始等待')>-1) {
+                value.messageList.shift()
+                value.messageList.unshift(str)
+              }else{
+                value.messageList.unshift(str)
+              }
+              
               if(value.messageList.length>this.staySocketNum) {
                 value.messageList = value.messageList.slice(0,this.staySocketNum)
               }
