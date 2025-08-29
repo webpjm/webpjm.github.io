@@ -200,12 +200,12 @@
           </el-table-column>
           <el-table-column align="center" prop="ip" label="APP" width="100">
             <template scope="scope">
-              {{ scope.row.customObj.appPhoneName }}
+              {{ scope.row.customObj ? scope.row.customObj.appPhoneName :'' }}
             </template>
           </el-table-column>
           <el-table-column align="center" prop="customObj" label="广告类型" width="100" :filters="[{text:'激励视频',value:'rewardVideo'},{text:'插屏广告',value:'chaPing'}]" :filter-method="filterModelAdType">
             <template scope="scope">
-               {{ scope.row.customObj.adType == 'chaPing'? '插屏广告':'激励视频' }}
+               {{ scope.row.customObj ? scope.row.customObj.adType == 'chaPing'? '插屏广告':'激励视频' : '' }}
             </template>
           </el-table-column>
           <el-table-column prop="todayLookNum" align="center" sortable label="当日观看">
