@@ -709,7 +709,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="model" align="center" width="150" label="设备型号">
+          <!-- <el-table-column prop="model" align="center" width="150" label="设备型号">
             <template scope="scope">
               <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
                 <i class="fas fa-mobile-alt" style="color: #3b82f6;"></i>
@@ -717,13 +717,17 @@
                   phoneIdToNameList[scope.row.phoneId] : scope.row.model }}</span>
               </div>
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
-          <el-table-column prop="phoneId" width="150" align="center" label="设备ID" :filters="modelList" :filter-method="filterModel">
+          <el-table-column prop="phoneId" width="150" align="center" label="设备名称" :filters="modelList" :filter-method="filterModel">
 
             <template scope="scope">
               <code
-                style="background: #334155; padding: 4px 8px; border-radius: 4px; font-size: 12px;">{{ scope.row.phoneId }}</code>
+                style="background: #334155; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                <!-- {{ scope.row.phoneId }} -->
+                {{ phoneIdToNameList[scope.row.phoneId] ?
+                  phoneIdToNameList[scope.row.phoneId] : scope.row.model }}
+              </code>
             </template>
           </el-table-column>
 
