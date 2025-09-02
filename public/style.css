@@ -408,6 +408,8 @@
     }
 
     .viewport .itemValue {
+      font-family: "微软雅黑";
+      text-align: left;
       padding: 8px 0;
       border-bottom: 1px solid #334155;
       transition: all 0.2s ease;
