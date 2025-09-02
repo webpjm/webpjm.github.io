@@ -796,7 +796,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, .4);
     }
 
-    @media (min-width: 900px) {
+    @media (max-width: 1400px) {
       .neon-text {
         display: none;
       }
