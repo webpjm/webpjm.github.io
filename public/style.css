@@ -408,6 +408,7 @@
     }
 
     .viewport .itemValue {
+      word-break: break-all;
       font-family: "微软雅黑";
       text-align: left;
       padding: 8px 0;
