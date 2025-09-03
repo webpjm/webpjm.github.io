@@ -41,8 +41,8 @@
 
       <h1 class="header-title neon-text">
         <!-- <img src="./js/抖音.png" alt="Logo"> -->
-         数据监控平台
-      </h1> 
+        数据监控平台
+      </h1>
 
       <div class="controls-container" style="width:30%;display: flex;justify-content: flex-end;">
 
@@ -101,33 +101,32 @@
         <div class="stat-header">
           <div class="stat-item today">
             <div class="stat-label">今日观看</div>
-            <div class="stat-num">{{ lookTotal }}</div>
+            <div class="stat-num" id="total1">{{ lookTotal }}</div>
           </div>
           <div class="stat-item today">
             <div class="stat-label">今日点击</div>
-            <div class="stat-num">{{ clickTotal }}</div>
+            <div class="stat-num" id="total2">{{ clickTotal }}</div>
           </div>
           <div class="stat-item today">
             <div class="stat-label">今日下载</div>
-            <div class="stat-num">{{ downTodayTotal }}</div>
+            <div class="stat-num" id="total3">{{ downTodayTotal }}</div>
           </div>
           <div class="stat-item today">
             <div class="stat-label">总点击</div>
-            <div class="stat-num">{{ clickAllTotal }}</div>
+            <div class="stat-num" id="total4">{{ clickAllTotal }}</div>
           </div>
           <div class="stat-item today">
             <div class="stat-label">总下载</div>
-            <div class="stat-num">{{ downAllTotal }}</div>
+            <div class="stat-num" id="total5">{{ downAllTotal }}</div>
           </div>
           <div class="stat-item today">
             <div class="stat-label">总数量</div>
-            <div class="stat-num">{{ allTotal }}</div>
+            <div class="stat-num" id="total6">{{ allTotal }}</div>
           </div>
         </div>
 
-
-        <el-table v-loading="loadingData" ref="el_Table" :data="tableData" :show-summary="false"
-          :summary-method="getSummaries" height="30vh" @expand-change="changeRow" style="width: 100%;">
+        <el-table v-loading="loadingData" ref="el_Table" :data="tableData" :show-summary="true"
+          :summary-method="getSummaries" height="30vh" @expand-change="changeRow" @filter-change="handleTopTotalNum" style="width: 100%;">
 
           <el-table-column type="expand">
             <template slot-scope="props">
@@ -369,7 +368,7 @@
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
                   <el-dropdown @command="handleCommand" style="width: 100%;">
-                    <el-button type="success" size="medium"
+                    <el-button @click="updateImg(item)" type="success" size="medium"
                       style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none;">
                       <i class="fas fa-camera" style="margin-right: 8px;"></i>
                       更新图片
@@ -565,22 +564,23 @@
           socketValuePhone: [],
           copySocketModelList: [],
           phoneIdToNameList: {
-            "071882201": 'vivoX23-坏屏幕',
-            "531011851": '荣耀30',
-            "131391382": '荣耀20',
-            "371752232": 'vivoX23-好屏幕',
+            "071882201": 'vivoX23-坏屏幕(淘汰机)',
+            "371752232": 'vivoX23-好屏幕(淘汰机)',
+            "531011851": '荣耀30-测试机',
+            "131391382": '荣耀20-1号机',
+            "042301751": 'nove5Pro-2号机',
+            "599424877": 'Mate20-3号机',
+            "811147186": '荣耀V20-4号机',
+            "491061091": '新买mate20Pro-5号机',
+            "351912422": "Mate20Pro-6号机",
             "692411262": 'Mate20',
-            "351912422": "Mate20Pro",
-            "491061091": '新买的mate20Pro',
-            "042301751": 'nove5Pro',
-            "811147186": '荣耀V20',
-
           },
           staySocketNum: 1500,
           pageSize: 15,// 预览的图片数
           pageTotal: 0,
           current: 1,
-          imgDataTotal: []
+          imgDataTotal: [],
+          topFlag: false
         }
       },
       mounted() {
@@ -603,83 +603,83 @@
         this.loadImg()
 
 
-        
+
 
       },
       methods: {
         getChartData() {
-  // 1. 走势：按小时聚合
-  const hourMap = Array(24).fill(0);           // 观看
-  const clickMap = Array(24).fill(0);          // 点击
-  this.tableData.forEach(row => {
-    // 如果 lastLookTime 没有就跳过
-    if (!row.lastLookTime) return;
-    const h = new Date(Number(row.lastLookTime)).getHours();
-    hourMap[h] += row.todayLookNum || 0;
-    clickMap[h] += row.todayClickNum || 0;
-  });
+          // 1. 走势：按小时聚合
+          const hourMap = Array(24).fill(0);           // 观看
+          const clickMap = Array(24).fill(0);          // 点击
+          this.tableData.forEach(row => {
+            // 如果 lastLookTime 没有就跳过
+            if (!row.lastLookTime) return;
+            const h = new Date(Number(row.lastLookTime)).getHours();
+            hourMap[h] += row.todayLookNum || 0;
+            clickMap[h] += row.todayClickNum || 0;
+          });
 
-  // 2. 热力图：按星期×小时聚合
-  const weekHour = Array.from({ length: 7 }, () => Array(24).fill(0));
-  this.tableData.forEach(row => {
-    if (!row.lastLookTime) return;
-    const d = new Date(Number(row.lastLookTime));
-    const week = d.getDay(); // 0=周日 … 6=周六
-    const hour = d.getHours();
-    weekHour[week][hour] += row.todayClickNum || 0;
-  });
-  const heatArray = [];
-  weekHour.forEach((arr, day) => {
-    arr.forEach((val, hour) => {
-      heatArray.push([hour, day, val]);
-    });
-  });
+          // 2. 热力图：按星期×小时聚合
+          const weekHour = Array.from({ length: 7 }, () => Array(24).fill(0));
+          this.tableData.forEach(row => {
+            if (!row.lastLookTime) return;
+            const d = new Date(Number(row.lastLookTime));
+            const week = d.getDay(); // 0=周日 … 6=周六
+            const hour = d.getHours();
+            weekHour[week][hour] += row.todayClickNum || 0;
+          });
+          const heatArray = [];
+          weekHour.forEach((arr, day) => {
+            arr.forEach((val, hour) => {
+              heatArray.push([hour, day, val]);
+            });
+          });
 
-  return { trend: { hourMap, clickMap }, heat: heatArray };
-},
+          return { trend: { hourMap, clickMap }, heat: heatArray };
+        },
         initEchartTab() {
-  const { trend, heat } = this.getChartData();
+          const { trend, heat } = this.getChartData();
 
-  // 1. 走势折线图
-  const trendChart = echarts.init(document.getElementById('trendChart'));
-  trendChart.setOption({
-    backgroundColor: 'transparent',
-    title: { text: '今日走势', textStyle: { color: '#e2e8f0', fontSize: 16 }, left: 'center' },
-    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-    legend: { textStyle: { color: '#94a3b8' }, data: ['观看', '点击'] },
-    grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
-    xAxis: {
-      type: 'category',
-      data: Array.from({ length: 24 }, (_, i) => `${i}:00`),
-      axisLine: { lineStyle: { color: '#475569' } },
-      axisLabel: { color: '#94a3b8' }
-    },
-    yAxis: {
-      type: 'value',
-      axisLine: { lineStyle: { color: '#475569' } },
-      axisLabel: { color: '#94a3b8' }
-    },
-    series: [
-      { name: '观看', type: 'line', smooth: true, data: trend.hourMap, itemStyle: { color: '#10b981' }, areaStyle: { color: 'rgba(16,185,129,.15)' } },
-      { name: '点击', type: 'line', smooth: true, data: trend.clickMap, itemStyle: { color: '#3b82f6' }, areaStyle: { color: 'rgba(59,130,246,.15)' } }
-    ]
-  });
+          // 1. 走势折线图
+          const trendChart = echarts.init(document.getElementById('trendChart'));
+          trendChart.setOption({
+            backgroundColor: 'transparent',
+            title: { text: '今日走势', textStyle: { color: '#e2e8f0', fontSize: 16 }, left: 'center' },
+            tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+            legend: { textStyle: { color: '#94a3b8' }, data: ['观看', '点击'] },
+            grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+            xAxis: {
+              type: 'category',
+              data: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+              axisLine: { lineStyle: { color: '#475569' } },
+              axisLabel: { color: '#94a3b8' }
+            },
+            yAxis: {
+              type: 'value',
+              axisLine: { lineStyle: { color: '#475569' } },
+              axisLabel: { color: '#94a3b8' }
+            },
+            series: [
+              { name: '观看', type: 'line', smooth: true, data: trend.hourMap, itemStyle: { color: '#10b981' }, areaStyle: { color: 'rgba(16,185,129,.15)' } },
+              { name: '点击', type: 'line', smooth: true, data: trend.clickMap, itemStyle: { color: '#3b82f6' }, areaStyle: { color: 'rgba(59,130,246,.15)' } }
+            ]
+          });
 
-  // 2. 点击热力图
-  const heatChart = echarts.init(document.getElementById('heatChart'));
-  heatChart.setOption({
-    backgroundColor: 'transparent',
-    title: { text: '点击热力图', textStyle: { color: '#e2e8f0', fontSize: 16 }, left: 'center' },
-    tooltip: { position: 'top' },
-    grid: { height: '70%', top: '10%' },
-    xAxis: { type: 'category', data: Array.from({ length: 24 }, (_, i) => i), splitArea: { show: true }, axisLabel: { color: '#94a3b8' } },
-    yAxis: { type: 'category', data: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'], splitArea: { show: true }, axisLabel: { color: '#94a3b8' } },
-    visualMap: { min: 0, max: Math.max(...heat.map(p => p[2])), calculable: true, inRange: { color: ['#0f172a', '#0ea5e9', '#3b82f6', '#8b5cf6', '#f472b6'] }, textStyle: { color: '#e2e8f0' } },
-    series: [{ type: 'heatmap', data: heat, label: { show: false }, emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,.5)' } } }]
-  });
+          // 2. 点击热力图
+          const heatChart = echarts.init(document.getElementById('heatChart'));
+          heatChart.setOption({
+            backgroundColor: 'transparent',
+            title: { text: '点击热力图', textStyle: { color: '#e2e8f0', fontSize: 16 }, left: 'center' },
+            tooltip: { position: 'top' },
+            grid: { height: '70%', top: '10%' },
+            xAxis: { type: 'category', data: Array.from({ length: 24 }, (_, i) => i), splitArea: { show: true }, axisLabel: { color: '#94a3b8' } },
+            yAxis: { type: 'category', data: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'], splitArea: { show: true }, axisLabel: { color: '#94a3b8' } },
+            visualMap: { min: 0, max: Math.max(...heat.map(p => p[2])), calculable: true, inRange: { color: ['#0f172a', '#0ea5e9', '#3b82f6', '#8b5cf6', '#f472b6'] }, textStyle: { color: '#e2e8f0' } },
+            series: [{ type: 'heatmap', data: heat, label: { show: false }, emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,.5)' } } }]
+          });
 
-  window.addEventListener('resize', () => { trendChart.resize(); heatChart.resize(); });
-},
+          window.addEventListener('resize', () => { trendChart.resize(); heatChart.resize(); });
+        },
         /* 随机 24 点走势数据 */
         generateTrend(ratio = 1) {
           return Array.from({ length: 24 }, () => Math.floor(Math.random() * 120 * ratio));
@@ -882,6 +882,17 @@
         filterModelAdType(value, row, column) {
           const property = column['property'];
           return row[property].adType.indexOf(value) > -1
+        },
+        handleTopTotalNum() {
+          setTimeout(() => {
+            let ele = document.getElementsByClassName('el-table__footer-wrapper')[0].getElementsByTagName('tr')[0].getElementsByTagName("td")
+            document.getElementById('total1').innerText =  ele[7].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total2').innerText =  ele[8].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total3').innerText =  ele[9].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total4').innerText =  ele[10].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total5').innerText =  ele[11].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total6').innerText =  ele[12].getElementsByClassName('cell')[0].innerText.split('个')[0]            
+          },500)
         },
         filterModel(value, row, column) {
           const property = column['property'];

@@ -315,7 +315,7 @@
     }
 
     .phone-card:hover {
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
       border-color: #475569;
     }
@@ -590,8 +590,11 @@
     /* ======= 合计行高亮 ======= */
     /* ===== 霓虹流光金属合计栏 ===== */
     .el-table__footer-wrapper {
-      position: sticky;
-      bottom: 0;
+      position:fiexd;
+      left:10000000px;
+      bottom:10000000px;
+      /* position: sticky;
+      bottom: 0; */
       z-index: 12;
       overflow: hidden;
       border-radius: 0 0 20px 20px;
@@ -653,7 +656,7 @@
       text-shadow: 0 0 1px #b3d8ff,
         0 0 3px rgba(0, 0, 0, .35);
     }
-
+  /* ======= 合计行高亮 ======= */
     /* 顶部合计栏 */
     /* 今日信息高亮 background:linear-gradient(135deg,#0ea5e9,#3b82f6);*/
     /* background: linear-gradient(135deg, #0c1445 0%, #020617 100%); */
