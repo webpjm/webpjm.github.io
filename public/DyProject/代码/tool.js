@@ -315,7 +315,7 @@ let autoUtils = {
         this.sleep(1, '开始精准查找（完全匹配）' + text)
 
         var ocrRes = screen.MLKitOcr('zh', findIndex);
-        let result = ocrRes.getJson()
+        let result = JSON.parse(ocrRes)
         var regex = /[\u4e00-\u9fff]+/g;
 
         for (var i = 0; i < result.length; i++) {
@@ -369,7 +369,7 @@ let autoUtils = {
         for (var i = 0; i < arrFind.length; i++) {
             autoUtils.logText(arrFind[i], 'scale')
             var ocrRes = screen.MLKitOcr('zh', arrFind[i]);
-            let result = ocrRes.getJson()
+            let result = JSON.parse(ocrRes)
             let data = this.handleOcrText(result, text, all)
             if (data) {
                 obj = this.handleScaleObj(data, arrFind[i])

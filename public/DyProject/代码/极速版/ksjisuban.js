@@ -155,7 +155,7 @@ var ksjisuban = {
     },
     getAllNumAd() {
         var ocrRes = screen.MLKitOcr('zh', 1);
-        let result = ocrRes.getJson()
+        let result = JSON.parse(ocrRes)
         let numStr = ''
         for (var i = 0; i < result.length; i++) {
             let str = String(result[i].text)

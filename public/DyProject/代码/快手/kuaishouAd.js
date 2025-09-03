@@ -231,7 +231,7 @@ let kaishouAd = {
         this.zhiboInfo.personNum = 0
         this.zhiboInfo.zhiBoisFocus = false
         var ocrResult = screen.MLKitOcr('zh', -2.5);
-        ocrResult = ocrResult.getJson()
+        ocrResult = JSON.parse(ocrResult)
         for (var i = 0; i < ocrResult.length; i++) {
             
             if ((ocrResult[i].rect.right + ocrResult[i].rect.left) < 200) {
@@ -276,7 +276,7 @@ let kaishouAd = {
     // 获取当前钻石余额
     getZuanShiNum() {
         var ocrResult = screen.MLKitOcr('zh', 1.5);
-        ocrResult = ocrResult.getJson()
+        ocrResult =JSON.parse(ocrResult)
         for (var i = 0; i < ocrResult.length; i++) {
             if (ocrResult[i].text.indexOf('余') > -1 && ocrResult[i].text.indexOf('快币') > -1) {
                 var num = ocrResult[i].text.split(":")[1].split('快')[0]
@@ -300,7 +300,7 @@ let kaishouAd = {
         opencv.adjustContrast(mat, 100)
         let img = new image().readMat(mat)
         var ocrRes = img.MLKitOcr('zh');
-        let result = ocrRes.getJson()
+        let result =JSON.parse(ocrRes)
 
         var weight = 3
         const numberRegex = /^\d+$/; // 只匹配正整数

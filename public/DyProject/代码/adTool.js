@@ -375,7 +375,7 @@ let adUtils = {
         autoUtils.setApiData(apiList)
     },
     getAdDetail(appName) {
-        let detail = {}
+        let detail = {customObj:{isChaPing:0}}
         let apiList = AutoGlobData.adListApiData
         for (let i = 0; i < apiList.length; i++) {
 

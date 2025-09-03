@@ -234,7 +234,7 @@ let douyinAd = {
         this.zhiboInfo.personNum = 0
         this.zhiboInfo.zhiBoisFocus = false
         var ocrResult = screen.MLKitOcr('zh', -2.5);
-        ocrResult = ocrResult.getJson()
+        ocrResult = JSON.parse(ocrResult)
         const numberRegex = /^\d+$/; // 只匹配正整数
         for (var i = 0; i < ocrResult.length; i++) {
             if ((ocrResult[i].rect.right + ocrResult[i].rect.left) < 300) {
@@ -266,7 +266,7 @@ let douyinAd = {
     // 获取当前钻石余额
     getZuanShiNum() {
         var ocrResult = screen.MLKitOcr('zh', 1.5);
-        ocrResult = ocrResult.getJson()
+        ocrResult = JSON.parse(ocrResult)
         for (var i = 0; i < ocrResult.length; i++) {
             if (ocrResult[i].text.indexOf('余') > -1 && ocrResult[i].text.indexOf('钻') > -1) {
                 var num = ocrResult[i].text.split(":")[1].split('钻')[0]
@@ -290,7 +290,7 @@ let douyinAd = {
         opencv.adjustContrast(mat, 100)
         let img = new image().readMat(mat)
         var ocrRes = img.MLKitOcr('zh');
-        let result = ocrRes.getJson()
+        let result = JSON.parse(ocrRes)
 
         var weight = 3
         const numberRegex = /^\d+$/; // 只匹配正整数
@@ -614,7 +614,7 @@ let douyinAd = {
         let type = typeObj[name]
 
         var ocrRes = screen.MLKitOcr('zh', 2.5);
-        let result = ocrRes.getJson()
+        let result = JSON.parse(ocrRes)
         let zhiboNum = 0
         for (var i = 0; i < result.length; i++) {
             let str = String(result[i].text)
