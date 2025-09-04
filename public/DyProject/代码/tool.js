@@ -550,12 +550,15 @@ let autoUtils = {
         }
         return arr1.concat(arr2)
     },
-    setApiData(data) {
+    setWebUi() {
         autoUtils.logText('使用线上的UI界面')
-        var win = window.loadUI("主界面.ui");
         var mainWeb = uiWeb.findByID(控件ID = "web");
         mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+    },
+    setApiData(data) {
+        var win = window.loadUI("主界面.ui");
         win.show()
+        this.setWebUi()
         this.sleep(3, '等待关闭设置接口弹窗')
         win.close()
         this.sleep(5, '开始设置广告值')
@@ -567,6 +570,7 @@ let autoUtils = {
     setApiDataKs(data) {
         var win = window.loadUI("主界面.ui");
         win.show()
+        this.setWebUi()
         this.sleep(3, '等待关闭设置接口弹窗')
         win.close()
         this.sleep(5, '开始设置广告值')
@@ -579,6 +583,7 @@ let autoUtils = {
         data = JSON.stringify(data)
         var win = window.loadUI("主界面.ui");
         win.show()
+        this.setWebUi()
         this.sleep(3, '等待关闭设置接口弹窗')
         win.close()
         this.sleep(5, '开始设置广告值')
@@ -595,6 +600,7 @@ let autoUtils = {
         }
         var win = window.loadUI("主界面.ui");
         win.show()
+        this.setWebUi()
         this.sleep(3, '等待关闭设置接口弹窗')
         win.close()
         this.sleep(5, '开始设置图片')
@@ -613,6 +619,7 @@ let autoUtils = {
         }
         var win = window.loadUI("主界面.ui");
         win.show()
+        this.setWebUi()
         this.sleep(3, '等待关闭设置接口弹窗')
         win.close()
         this.sleep(5, '开始设置图片')
