@@ -551,7 +551,10 @@ let autoUtils = {
         return arr1.concat(arr2)
     },
     setApiData(data) {
+        autoUtils.logText('使用线上的UI界面')
         var win = window.loadUI("主界面.ui");
+        var mainWeb = uiWeb.findByID(控件ID = "web");
+        mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
         win.show()
         this.sleep(3, '等待关闭设置接口弹窗')
         win.close()
