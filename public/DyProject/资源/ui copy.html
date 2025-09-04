@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <script src="../../js/axios.js"></script>
+    <link rel="stylesheet" href="../../js/element.css">
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/element.js"></script>
+    <style>
+        html body {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            color: #fff;
+            overflow-x: hidden;
+            background-color: #1a1a1a;
+        }
+
+        #app {
+            background: #2d2d2d;
+            width: 100vw;
+            min-height: 100vh;
+            overflow-y: auto;
+            padding: 16px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px 0 60px 0;
+        }
+
+        .card {
+            background: #3a3a3a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .itemwrap {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            padding: 0 0 15px;
+            box-sizing: border-box;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .itemwrap:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .itemwrap .title {
+            text-align: left;
+            white-space: nowrap;
+            width: 100%;
+            font-size: 18px;
+            margin: 0 0 12px 0;
+            color: #67C23A;
+            display: flex;
+            align-items: center;
+        }
+
+        .itemwrap .title i {
+            margin-right: 8px;
+            font-size: 19px;
+        }
+
+        .el-input__inner,
+        .el-select-dropdown__item {
+            font-size: 16px;
+        }
+
+        .el-input__inner {
+            background: #2d2d2d;
+            color: #fff;
+            border-color: #555;
+            border-radius: 6px;
+            height: 44px;
+            transition: border-color 0.3s ease;
+        }
+
+        .el-input__inner:focus {
+            border-color: #67C23A;
+            box-shadow: 0 0 0 2px rgba(103, 194, 58, 0.2);
+        }
+
+        .selectWrap .el-input__inner {
+            font-size: 14px;
+        }
+
+        .el-select-dropdown {
+            background: #3a3a3a !important;
+            border: 1px solid #555 !important;
+            border-radius: 6px;
+        }
+
+        .el-select-dropdown__item {
+            color: #ddd !important;
+            /* padding: 10px 15px; */
+        }
+
+        .el-select-dropdown__item.hover,
+        .el-select-dropdown__item:hover {
+            color: #67C23A !important;
+            background: #454545 !important;
+        }
+
+        .el-select-dropdown__item.selected {
+            color: #67C23A !important;
+            background: rgba(103, 194, 58, 0.1) !important;
+        }
+
+        .el-slider {
+            margin: 10px 0;
+        }
+
+        .el-slider__runway {
+            background-color: #454545;
+        }
+
+        .el-slider__bar {
+            background-color: #67C23A;
+        }
+
+        .el-slider__button {
+            border-color: #67C23A;
+            background-color: #67C23A;
+        }
+
+        .el-button {
+            transition: all 0.3s ease;
+        }
+
+        .el-button--primary {
+            background-color: #67C23A;
+            border-color: #67C23A;
+            color: #fff;
+        }
+
+        .el-button--primary:hover,
+        .el-button--primary:focus {
+            background-color: #52a62b;
+            border-color: #52a62b;
+        }
+
+        .control-panel {
+            padding: 20px;
+        }
+
+        .action-button {
+            margin-top: 10px;
+        }
+
+        .device-info {
+            color: #bbb;
+            padding: 0 16px;
+            font-size: 14px;
+            position: fixed;
+            bottom: 0px;
+            left: 0;
+            right: 0;
+            background: rgba(45, 45, 45, 0.9);
+            padding: 12px 16px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .device-info div {
+            margin-bottom: 5px;
+        }
+
+        .device-info div:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="card">
+                <div class="itemwrap">
+                    <div class="title"><i class="el-icon-setting"></i> 运行APP设置</div>
+                    <el-select @change='changeRunApp' style="width:100%;" v-model="globData.runApp" placeholder="请选择运行设置">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+
+                <div class="itemwrap">
+                    <div class="title"><i class="el-icon-mobile-phone"></i>养机设置</div>
+                    <el-select style="width:100%;" v-model="globData.runModel" @change="changeRun" placeholder="请选择养机模式">
+                        <el-option v-for="item in (globData.runApp == 5 || globData.runApp == 6) ? runOptionsKs : runOptions" 
+                                  :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+
+                <div class="itemwrap">
+                    <div class="title"><i class="el-icon-star-on"></i>小程序数量设置</div>
+                    <el-select style="width:100%;" v-model="globData.miniAppNum" @change="changeNum" placeholder="请选择小程序数量">
+                        <el-option v-for="item in optionsNum" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="itemwrap">
+                    <div class="title"><i class="el-icon-s-tools"></i>广告数量设置</div>
+                    <div style="display: flex;width:100%;justify-content: space-between;align-items: center;">
+                        <el-slider style="width:60%;margin-left:6px;" @change="changeRun" v-model="globData.lookRangeNum" 
+                                  range :marks="marks" :min="1" :max="4"></el-slider>
+                        <el-select class="selectWrap" style="width: 30%;" v-model="rangNum" @change="setRangeNum"
+                                  placeholder="快捷选择">
+                            <el-option v-for="item in [1,2,3,4]" :key="item" :label="item" :value="item"> </el-option>
+                        </el-select>
+                    </div>
+                </div>
+
+                <div class="itemwrap">
+                    <div class="title"><i class="el-icon-star-on"></i>插屏广告数量设置</div>
+                    <el-select style="width:100%;" v-model="globData.chaPingNum" @change="changeNum" placeholder="请选择插屏广告数量">
+                        <el-option v-for="item in chaPingOptionsNum" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+
+                <div class="itemwrap">
+                    <div class="title"><i class="el-icon-star-on"></i>插屏广告模式设置</div>
+                    <el-select style="width:100%;" v-model="globData.chaPingModel" @change="changeNum" placeholder="请选择插屏广告模式">
+                        <el-option v-for="item in chaPingModelOptions" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+            </div>
+
+            <div class="card control-panel">
+                <div class="itemwrap">
+                    <div class="title"><i class="el-icon-collection"></i>其他设置</div>
+                    <el-select multiple style="width:100%;" v-model="globData.otherValue" @change="changeRun" placeholder="请选择其他设置">
+                        <el-option v-for="item in otherOptionsNum" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+
+                <div class="action-button">
+                    <el-button :loading="loading" @click='startRun' icon="el-icon-check" 
+                              style="width:100%;height: 48px;font-size: 18px;"
+                              size="large" type="primary">开始运行</el-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="device-info">
+            <div id='phoneIp'>IP: --</div>
+            <div id='phoneId'>ID: -- 型号：--</div>
+        </div>
+    </div>
+
+    <script>
+        // 原有脚本逻辑保持不变
+        var vueData = new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    loading: false,
+                    rateValue: 5,
+                    rangNum: '',
+                    globData: {
+                        runModel:'1',
+                        runApp: "1",
+                        miniAppNum: "4",
+                        lookRangeNum: [1, 1],
+                        otherValue:'',
+                        chaPingNum:"0",
+                        chaPingModel:"1"
+                    },
+                    marks: {
+                        1: '1',
+                        2: '2',
+                        3: '3',
+                        4: '4',
+                    },
+                    runOptions: [
+                        { value: "1", label: "边养机边看广告" },
+                        { value: "2", label: "精养机+不看广告" },
+                        { value: "3", label: "初始看广告(抖音+火山)" },
+                        { value: "4", label: "抖音精养机后+只广告不养机" },
+                        { value: "5", label: "全程只看广告不养机" },
+                        { value: "6", label: "抖音养机后+去火山只看广告" },
+                        { value: "8", label: "只在推荐页刷视频" }
+                    ],
+                    runOptionsKs: [
+                        { value: "1", label: "边养机边看广告" },
+                        { value: "2", label: "精养机+不看广告" },
+                        { value: "3", label: "全程只看广告不养机" },
+                        { value: "8", label: "只在推荐页刷视频" }
+                    ],
+                    options: [
+                        { value: "1", label: "抖音" },
+                        { value: "2", label: "抖音火山版" },
+                        { value: "3", label: "抖音+抖音火山版" },
+                        { value: "4", label: "抖音极速版" },
+                        { value: "5", label: "快手小程序任务" },
+                        { value: "6", label: "早上抖音+晚上火山版" },
+                        { value: "7", label: "快手极速版小程序任务" },
+                        { value: "8", label: "西瓜+喜番+番茄小说+快手极速版" },
+                        { value: "9", label: "快手极速版金币任务" },
+                        { value: "10", label: "喜番短剧金币任务" },
+                    ],
+                    optionsNum: [
+                        { value: "1", label: "固定数量" },
+                        { value: "2", label: "随机5个" },
+                        { value: "3", label: "随机8个" },
+                        { value: "4", label: "随机全部" },
+                    ],
+                    chaPingOptionsNum: [
+                        { value: "0", label: "0个" },
+                        { value: "1", label: "1个" },
+                        ...Array.from({length:8}, (_,i) => ({value: (i+2).toString(), label: `${i+2}个`}))
+                    ],
+                    chaPingModelOptions: [
+                        { value: "1", label: "看完插屏后看视频广告" },
+                        { value: "2", label: "看完插屏后不看视频广告" }
+                    ],
+                    otherOptionsNum: [
+                        { value: "", label: "请选择" },
+                        { value: "1", label: "快速开始任务" },
+                        { value: "2", label: "测试搜索功能" },
+                        { value: "3", label: "清除任务队列+快速任务" },
+                        { value: "4", label: "重置当前的搜索和养机的队列" },
+                        { value: "5", label: "随机下载一个游戏" }
+                    ]
+                }
+            },
+            methods: {
+                changeRunApp(){
+                    if(this.globData.runApp == 5 || this.globData.runApp == 6){
+                        this.globData.lookRangeNum= [2, 3]
+                    }else{
+                        this.globData.lookRangeNum= [1, 1]
+                    }
+                    window.at.callFun('setPhoneGlobaData', JSON.stringify(this.globData))
+                },
+                changeRun(){
+                    window.at.callFun('setPhoneGlobaData', JSON.stringify(this.globData))
+                },
+                changeNum(val) {
+                    [1,2,3,4].forEach(num => {
+                        if (val == num) this.globData.lookRangeNum = [1, 1]
+                    })
+                    this.changeRun()
+                },
+                setRangeNum(val) {
+                    this.globData.lookRangeNum = [val, val]
+                    this.changeRun()
+                },
+                changeName(){
+                    this.changeRun()
+                },
+                startRun() {
+                    window.at.runJsFile('主脚本.js');
+                }
+            },
+            async mounted() {
+                this.changeRun()
+            }
+        })
+
+        // 以下函数保持不变
+        function setAdList(data) {
+            data = JSON.stringify(data)
+            //gitapi https://gitee.com/gitpjm/codes/o05zipax98tu3yge62rbc29
+            axios({
+                method: 'patch',
+                url: 'https://gitee.com/api/v5/gists/cw6jlqnhio24pdru0vk1390',
+                data: {
+                    "access_token": "725746d242425b8942088f56a3a8d836",
+                    "files": {
+                        "douyin": {
+                            "content": `${data}`
+                        }
+                    },
+                    "description": "douyin"
+                }
+            }).then(res => {
+                window.at.runJs(function (res) {
+                    //这里写js代码
+                    autoUtils.logText('广告添加成功')
+                   // print.log('广告设置完成');
+                }.toString());
+            })
+        }
+
+        function setAdNumList(data) {
+            data = JSON.stringify(data)
+            //gitapi https://gitee.com/gitpjm/codes/o05zipax98tu3yge62rbc29
+            axios({
+                method: 'patch',
+                url: 'https://gitee.com/api/v5/gists/cw6jlqnhio24pdru0vk1390',
+                data: {
+                    "access_token": "725746d242425b8942088f56a3a8d836",
+                    "files": {
+                        "douyinNum": {
+                            "content": `${data}`
+                        }
+                    },
+                    "description": "douyinNum"
+                }
+            }).then(res => {
+                window.at.runJs(function (res) {
+                    //这里写js代码
+                    // print.log(res);
+                    autoUtils.logText('设置广告数据成功')
+                    //print.log('设置广告数据完成');
+                }.toString());
+            })
+        }
+
+        function setSuccessPic(data) {
+            axios({
+                method: 'post',
+                url: `https://gitee.com/api/v5/repos/pjmgit/ad-pic/contents/picList/${data.model}-${data.phoneId}-${data.name}-${data.time}.jpg`,
+                data: {
+                    "access_token": "8749c603f643e587520a0d73d0b0a080",
+                    "owner": "pjmgit",
+                    "repo": "ad-pic",
+                    "path": "picList",
+                    "content": data.content,
+                    "message": `https://gitee.com/pjmgit/ad-pic/raw/master/picList/${data.model}-${data.phoneId}-${data.name}-${data.time}.jpg`,
+                }
+            }).then(res => {
+                window.at.runJs(function (res) {
+                    autoUtils.logText('图片添加成功')
+                }.toString());
+            })
+        }
+
+
+        function setAdListKs(data) {
+            data = JSON.stringify(data)
+            axios({
+                method: 'patch',
+                url: 'https://gitee.com/api/v5/gists/kxglmtzjyc07o82bf4p9n11',
+                data: {
+                    "access_token": '725746d242425b8942088f56a3a8d836',
+                    "files": {
+                        "ksAd": {
+                            "content": `${data}`
+                        }
+                    },
+                    "description": "ks"
+                }
+            }).then(res => {
+                window.at.runJs(function (res) {
+                    //这里写js代码
+                    autoUtils.logText('快手广告添加成功')
+                   // print.log('广告设置完成');
+                }.toString());
+            })
+        }
+
+        function setSuccessPicKs(data) {
+            axios({
+                method: 'post',
+                url: `https://gitee.com/api/v5/repos/pjmgit/ks-pic/contents/picList/${data.model}-${data.phoneId}-${data.name}-${data.time}.jpg`,
+                data: {
+                    "access_token": "8749c603f643e587520a0d73d0b0a080",
+                    "owner": "pjmgit",
+                    "repo": "ad-pic",
+                    "path": "picList",
+                    "content": data.content,
+                    "message": `https://gitee.com/pjmgit/ks-pic/raw/master/picList/${data.model}-${data.phoneId}-${data.name}-${data.time}.jpg`,
+                }
+            }).then(res => {
+                window.at.runJs(function (res) {
+                    autoUtils.logText('快手图片添加成功')
+                }.toString());
+            })
+        }
+
+        function setPhoneData(data,dataIP){
+        	document.getElementById ("phoneId").innerText = 'ID: '+data.phoneId + ' 型号:' + data.phoneModel
+        	document.getElementById ("phoneIp").innerText = dataIP.phoneIp
+        }
+    </script>
+</body>
+</html>
