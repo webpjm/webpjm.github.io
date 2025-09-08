@@ -322,7 +322,7 @@
                 inactive-color="#10b981" active-text="查看图片" inactive-text="查看数据">
               </el-switch>
             </div>
-            <div class="phone-content">
+            <div class="phone-content" style="height:calc(100% - 100px)">
               <!-- <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                 <span style="font-size: 12px; color: #94a3b8;">
                   <i class="fas fa-clock" style="margin-right: 4px;"></i>
@@ -338,7 +338,7 @@
                 </el-switch>
               </div> -->
 
-              <div v-if="!item.show" style="height: 450px;">
+              <div v-if="!item.show" style="height: 100%;">
                 <div class="viewport" :id="['scrollView'+index]">
                   <div class="itemValue" v-for="(value,index) in item.messageList" :key="index">
                     <i class="fas fa-circle" style="font-size: 6px; margin-right: 8px; color: #3b82f6;"></i>
@@ -347,8 +347,8 @@
                 </div>
               </div>
 
-              <div v-else style="position: relative;text-align: center;">
-                <div style="display: flex;justify-content: space-between;height:450px;">
+              <div v-else style="position: relative;text-align: center;height: 100%;" >
+                <div style="display: flex;justify-content: space-between;height: calc(100% - 60px);">
                   <img :src="item.img" @click="clickImg($event,item)"
                     style="width: 253px; object-fit: contain; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);"
                     v-loading="item.loading"

@@ -4,8 +4,13 @@ runTime.Import('initData.js')
 runTime.Import('douyinAd.js')
 runTime.Import('tool.js')
 runTime.Import('adTool.js')
-adUtils.init()
-adUtils.getRunAppListByTime()
+autoUtils.setSuccessPic('洛雪壁纸')
+
+
+new engine().runJsFile('1.js','')
+
+// adUtils.init()
+// adUtils.getRunAppListByTime()
 // douyinAd.getCurrentAppRunDetail('优创汇')
 // autoUtils.loginApp('抖音')
 // autoUtils.getText('抖音',true)
