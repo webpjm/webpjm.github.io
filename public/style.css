@@ -814,3 +814,6 @@
     .el-icon-arrow-right {
       color:#fff;
     }
+    .el-table__body-wrapper {
+      height: 100%!important;
+    }
