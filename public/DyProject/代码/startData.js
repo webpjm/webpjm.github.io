@@ -48,8 +48,9 @@ var mainWeb = uiWeb.findByID(控件ID = "web");
 
 if (!isLocal) {
     print.log('6-30号优化')
-    print.log('开始请求远程接口的数据UI https://webpjm.github.io/public')
-    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+    print.log('开始请求远程接口的数据UI https://webpjm.github.io/public') 
+    // mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+    mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/%E8%B5%84%E6%BA%90/uibaota.html?time='+time.nowStamp())
 }else{
     print.log('开始请求本地UI')
 }
