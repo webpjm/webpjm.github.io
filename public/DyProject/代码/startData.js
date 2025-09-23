@@ -69,8 +69,9 @@ function getUrlData(url) {
     return strArr
 }
 // 设置手机的IP数据
-let mainResData = JSON.parse(getUrlData('https://qifu-api.baidubce.com/ip/local/geo/v1/district'))
-var mainPhoneIp = mainResData.ip + '--' + mainResData.data.owner + '/' + mainResData.data.city
+let IPAddress = getUrlData('https://ipinfo.io/ip')
+let mainResData = JSON.parse(getUrlData(`https://api.xudu.org/ip?ip=${IPAddress}`))
+var mainPhoneIp = mainResData.ip + '--' + mainResData.city + '/' + mainResData.isp
 let mainIp = JSON.stringify({phoneIp:mainPhoneIp})
 // 设置手机的型号数据
 var mainPhoneData = JSON.stringify({ phoneId: device.getDeviceIntID(), phoneModel: device.getModel() })
