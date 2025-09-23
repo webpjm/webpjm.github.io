@@ -1258,7 +1258,7 @@ let douyinAd = {
                 this.isNotGoodTypeNum++
                 autoUtils.logText('劣质的广告视频')
                 autoUtils.logText('等待完播')
-                autoUtils.sleep(time, '等待后进行下一步')
+                autoUtils.sleep(time*2, '等待后进行下一步')
             } else {
                 autoUtils.logText('劣质视频')
                 // autoUtils.logText('不做停留，开始下一步')
@@ -2338,7 +2338,7 @@ let douyinAd = {
     // { type: 5, text: '只是停留不看广告' }
     lookModel1() {
         this.yangji('quick')
-        this.yangji('quick')
+        // this.yangji('quick')
         let task = AutoGlobData.taskdetail
         this.backHomeWaitAd(task)
         this.swipeIndexAppListForAd(task, 2)
@@ -2350,7 +2350,7 @@ let douyinAd = {
         let task = AutoGlobData.taskdetail
         this.swipeIndexAppListForAd(task, 2)
         this.yangji('quick')
-        this.yangji('quick')
+        // this.yangji('quick')
         this.backHomeWaitAd(task)
         this.swipeIndexAppListForAd(task, 2)
     },
@@ -2358,13 +2358,13 @@ let douyinAd = {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
         this.swipeIndexAppListForAd(task, 2)
-        this.yangji('quick')
+        // this.yangji('quick')
         this.swipeIndexAppListForAd(task, 2)
     },
     lookModel4() {
         let task = AutoGlobData.taskdetail
         this.yangji('quick')
-        this.yangji('quick')
+        // this.yangji('quick')
         this.swipeIndexAppListForAd(task, 2)
 
     },
