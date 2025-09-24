@@ -553,7 +553,8 @@ let autoUtils = {
     setWebUi() {
         autoUtils.logText('使用线上的UI界面')
         var mainWeb = uiWeb.findByID(控件ID = "web");
-        mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+        mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
+        // mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
     },
     setApiData(data) {
         var win = window.loadUI("主界面.ui");
