@@ -816,4 +816,5 @@
     }
     .el-table__body-wrapper {
       height: 100%!important;
+      overflow-y: auto!important;
     }
