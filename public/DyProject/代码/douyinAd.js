@@ -670,21 +670,26 @@ let douyinAd = {
         if (autoUtils.getText('常用小程序')) {
             autoUtils.clickGetText('全部>')
         } else {
-            if (autoUtils.getText('更多功能')) {
-                autoUtils.clickGetText('更多功能')
-                autoUtils.sleep(3, '点击更多功能后')
-            }
             if (autoUtils.getText('小程序')) {
                 autoUtils.clickGetText('小程序')
             } else {
-                this.performForwardSwipe()
+                if (autoUtils.getText('更多功能')) {
+                    autoUtils.clickGetText('更多功能')
+                    autoUtils.sleep(3, '点击更多功能后')
+                }
                 if (autoUtils.getText('小程序')) {
                     autoUtils.clickGetText('小程序')
-                } else {
-                    autoUtils.logText('检测到了异常，没有找到小程序按钮,重新登录后在找')
-                    autoUtils.loginApp(AutoGlobData.appPhoneName)
-                    this.goAppListPage()
+                }else{
+                    this.performForwardSwipe()
+                    if (autoUtils.getText('小程序')) {
+                        autoUtils.clickGetText('小程序')
+                    } else {
+                        autoUtils.logText('检测到了异常，没有找到小程序按钮,重新登录后在找')
+                        autoUtils.loginApp(AutoGlobData.appPhoneName)
+                        this.goAppListPage()
+                    }
                 }
+                
             }
         }
 
