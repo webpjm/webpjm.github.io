@@ -670,6 +670,10 @@ let douyinAd = {
         if (autoUtils.getText('常用小程序')) {
             autoUtils.clickGetText('全部>')
         } else {
+            if (autoUtils.getText('更多功能')) {
+                autoUtils.clickGetText('更多功能')
+                autoUtils.sleep(3, '点击更多功能后')
+            }
             if (autoUtils.getText('小程序')) {
                 autoUtils.clickGetText('小程序')
             } else {
