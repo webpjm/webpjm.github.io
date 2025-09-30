@@ -818,3 +818,21 @@
       height: 100%!important;
       overflow-y: auto!important;
     }
+
+
+.el-select-dropdown__item.hover {
+   background: none!important;
+  /* color: #fff; */
+}
+.el-select-dropdown__item:hover {
+  background: #475569!important;
+  color: #fff;
+}
+/* .el-select-dropdown__item.hover:hover {
+  background: none!important;
+  color: #fff;
+} */
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+  background: #007bff!important;
+  color: #fff!important;
+}

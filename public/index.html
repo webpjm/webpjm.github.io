@@ -92,6 +92,27 @@
           </el-select>
         </div>
 
+        <div class="control-group" v-show="activeName == 'second'">
+
+          <el-select filterable @change="changeTimePic" clearable size="medium" v-model="timeValuePic" placeholder="选择日期"
+            style="width: 150px;">
+            <el-option v-for="item in timeList" :key="item.value" :label="item.text" :value="item.value">
+            </el-option>
+          </el-select>
+
+          <el-select filterable @change="changeItemPhoneApp" multiple clearable size="medium" v-model="picAppName"
+            placeholder="选择小程序" style="width: 300px;">
+            <el-option v-for="(item,index) in appList" :key="index" :label="item.appName" :value="item.appName">
+            </el-option>
+          </el-select>
+
+          <el-select filterable @change="changeItemPhonePic" multiple clearable size="medium" v-model="picModel"
+            placeholder="选择设备" style="width: 300px;">
+            <el-option v-for="item in modelList" :key="item.value" :label="item.text" :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+
       </div>
     </div>
 
@@ -126,7 +147,8 @@
         </div>
 
         <el-table v-loading="loadingData" ref="el_Table" :data="tableData" :show-summary="true"
-          :summary-method="getSummaries" height="36vh" @expand-change="changeRow" @filter-change="handleTopTotalNum" style="width: 100%;">
+          :summary-method="getSummaries" height="36vh" @expand-change="changeRow" @filter-change="handleTopTotalNum"
+          style="width: 100%;">
 
           <el-table-column type="expand">
             <template slot-scope="props">
@@ -347,8 +369,9 @@
                 </div>
               </div>
 
-              <div v-else style="position: relative;text-align: center;height: 100%;" >
-                <div style="display: flex;justify-content: space-between;height: calc(100% - 60px);align-items: center;">
+              <div v-else style="position: relative;text-align: center;height: 100%;">
+                <div
+                  style="display: flex;justify-content: space-between;height: calc(100% - 60px);align-items: center;">
                   <img :src="item.img" @click="clickImg($event,item)"
                     style="width: 253px;max-height: 450px; object-fit: contain; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);"
                     v-loading="item.loading"
@@ -549,6 +572,9 @@
           modelList: [],
           activeName: 'first',
           imgList: [],
+          picModel: '',
+          timeValuePic: '',
+          picAppName: '',
           today: '100',
           tableDataClone: [],
           timeListValue: '',
@@ -580,7 +606,53 @@
           pageTotal: 0,
           current: 1,
           imgDataTotal: [],
-          topFlag: false
+          topFlag: false,
+          appList: [ // 所有要运行的小程序 固定的，用于初始化数据
+            {
+              appName: '洛雪壁纸',
+              main: '大明网络'
+            },
+            {
+              appName: '海豚壁纸库',
+              main: '大明网络'
+            },
+            {
+              appName: '云帆壁纸库',
+              main: '大明网络'
+            },
+            {
+              appName: '柠檬壁纸库',
+              main: '大明网络'
+            },
+            {
+              appName: '橙子壁纸库',
+              main: '大明网络'
+            },
+            {
+              appName: '番茄壁纸库',
+              main: '大明网络'
+            },
+            {
+              appName: '熊猫壁纸库',
+              main: '大明网络'
+            },
+            {
+              appName: '西瓜壁纸库',
+              main: '大明网络'
+            },
+            {
+              appName: '优创汇',
+              main: '大明网络'
+            },
+            {
+              appName: '数字大挑战',
+              main: '大明网络'
+            },
+            {
+              appName: '橘子壁纸库',
+              main: '大明网络'
+            },
+          ],
         }
       },
       mounted() {
@@ -752,6 +824,131 @@
 
 
         },
+        changeItemPhonePic() {
+          console.log(this.imgList, this.modelList, this.current ,'imgList')
+          let arr = []
+          let current = this.current
+          if (this.picModel.length == 0) {
+            this.imgDataTotal.map(item => {
+              arr.push(item)
+            })
+          } else {
+            this.imgDataTotal.map(item => {
+              this.picModel.map(value => {
+                if (item.model.indexOf(value) > -1) {
+                  arr.push(item)
+                }
+              })
+            })
+          }
+
+          if (this.picAppName.length > 0) {
+            let arr1 = []
+            arr.map(item => {
+              this.picAppName.map(value => {
+                if (value.indexOf(item.appName) > -1) {
+                  arr1.push(item)
+                }
+              })
+            })
+            arr1 = this.handleTimeArr(arr1)
+            this.pageTotal = arr1.length
+            this.imgList = arr1.slice((current - 1) * this.pageSize, this.pageSize * current)
+          } else {
+            arr = this.handleTimeArr(arr)
+            this.pageTotal = arr.length
+            this.imgList = arr.slice((current - 1) * this.pageSize, this.pageSize * current)
+          }
+          
+          
+
+        },
+        changeItemPhoneApp() {
+          console.log(this.imgList, this.modelList, this.current ,'imgList')
+          let arr = []
+          let current = this.current
+          if (this.picAppName.length == 0) {
+            this.imgDataTotal.map(item => {
+              arr.push(item)
+            })
+          } else {
+            this.imgDataTotal.map(item => {
+              this.picAppName.map(value => {
+                if (value.indexOf(item.appName) > -1) {
+                  arr.push(item)
+                }
+              })
+            })
+          }
+
+
+          if (this.picModel.length > 0) {
+            let arr1 = []
+            arr.map(item => {
+              this.picModel.map(value => {
+                if (item.model.indexOf(value) > -1) {
+                  arr1.push(item)
+                }
+              })
+            })
+            arr1 = this.handleTimeArr(arr1)
+            this.pageTotal = arr1.length
+            this.imgList = arr1.slice((current - 1) * this.pageSize, this.pageSize * current)
+          } else {
+            arr = this.handleTimeArr(arr)
+            this.pageTotal = arr.length
+            this.imgList = arr.slice((current - 1) * this.pageSize, this.pageSize * current)
+          }
+          
+          
+        },
+        handleTimeArr(arr) {
+          console.log(this.timeValuePic,'timeValuePic')
+          let newArr = []
+          if(!this.timeValuePic) {
+            newArr = arr
+          }else{
+            arr.map(value => {
+              console.log(value.time.indexOf(this.timeValuePic),'value.time.indexOf(this.timeValuePic)')
+              if(value.time.indexOf(this.timeValuePic) >-1) {
+                newArr.push(value)
+              }
+            })
+          }
+          console.log(newArr,'newArr')
+          return newArr
+          
+        },
+        changeTimePic(val) {
+          console.log(this.imgList,this.timeList,'aaa')
+          
+          // if(this.picModel.length>=0) {
+          //   this.changeItemPhonePic()
+          // }
+          // if(this.picAppName.lengh>=0) {
+          //     this.changeItemPhoneApp()
+          // }
+
+          // if(!val) {
+          //   return;
+          // }else{
+          //   let arr1 = []
+          //   if(this.picAppName.lengh>0) {
+          //     this.changeItemPhoneApp()
+          //   }
+          //   if(this.picModel.length>0) {
+          //     this.changeItemPhonePic()
+          //   }
+          //   this.imgList.map(item => {
+          //     let time = item.time.split(' ')[0]
+          //     if(time.indexOf(val) > -1) {
+          //       arr1.push(item)
+          //     }
+          //   })
+          //   this.pageTotal = arr1.length
+          //   this.imgList = arr1.slice((current - 1) * this.pageSize, this.pageSize * current)
+          // }
+        },
         expandStatusFun() {
           var that = this;
           that.expandStatus = !that.expandStatus;
@@ -886,13 +1083,13 @@
         handleTopTotalNum() {
           setTimeout(() => {
             let ele = document.getElementsByClassName('el-table__footer-wrapper')[0].getElementsByTagName('tr')[0].getElementsByTagName("td")
-            document.getElementById('total1').innerText =  ele[7].getElementsByClassName('cell')[0].innerText.split('个')[0]
-            document.getElementById('total2').innerText =  ele[8].getElementsByClassName('cell')[0].innerText.split('个')[0]
-            document.getElementById('total3').innerText =  ele[9].getElementsByClassName('cell')[0].innerText.split('个')[0]
-            document.getElementById('total4').innerText =  ele[10].getElementsByClassName('cell')[0].innerText.split('个')[0]
-            document.getElementById('total5').innerText =  ele[11].getElementsByClassName('cell')[0].innerText.split('个')[0]
-            document.getElementById('total6').innerText =  ele[12].getElementsByClassName('cell')[0].innerText.split('个')[0]            
-          },500)
+            document.getElementById('total1').innerText = ele[7].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total2').innerText = ele[8].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total3').innerText = ele[9].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total4').innerText = ele[10].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total5').innerText = ele[11].getElementsByClassName('cell')[0].innerText.split('个')[0]
+            document.getElementById('total6').innerText = ele[12].getElementsByClassName('cell')[0].innerText.split('个')[0]
+          }, 500)
         },
         filterModel(value, row, column) {
           const property = column['property'];
@@ -1165,7 +1362,18 @@
 
         handlePage(current) {
           let data = JSON.parse(JSON.stringify(this.imgDataTotal))
-          data = this.imgDataTotal.slice((current - 1) * this.pageSize, this.pageSize * current)
+          if (this.picAppName.length > 0 || this.picModel.length > 0) {
+
+            if (this.picAppName.length > 0) {
+              this.changeItemPhoneApp()
+            }
+            if (this.picModel.length > 0) {
+              this.changeItemPhonePic()
+            }
+          } else {
+            data = this.imgDataTotal.slice((current - 1) * this.pageSize, this.pageSize * current)
+            this.imgList = data
+          }
 
           // this.imgList = res.data
           // data= data.map(value => {
@@ -1185,7 +1393,7 @@
 
           // res.data = res.data.slice(0,this.imgNum)
 
-          this.imgList = data
+          
         },
         loadImg() {
           this.loadingData = true
