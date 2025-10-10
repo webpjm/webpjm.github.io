@@ -24,24 +24,25 @@
         抖音广告数据监控平台
       </h1> -->
       <el-radio-group v-model="activeName" size="medium">
+        
         <el-radio-button label="first">
           <i class="fas fa-chart-line"></i> 数据总览
-        </el-radio-button>
-        <el-radio-button label="three">
-          <i class="fas fa-desktop"></i> 实时监控
         </el-radio-button>
         <el-radio-button label="second">
           <i class="fas fa-images"></i> 图片管理
         </el-radio-button>
+        <el-radio-button label="three">
+          <i class="fas fa-desktop"></i> 实时监控
+        </el-radio-button>
         <el-radio-button label="echart">
-          <i class="fas fa-chart-area"></i> 统计
+          <i class="fas fa-chart-area"></i> 数据走势
         </el-radio-button>
 
       </el-radio-group>
 
       <h1 class="header-title neon-text">
         <!-- <img src="./js/抖音.png" alt="Logo"> -->
-        数据监控平台
+        <!-- 数据监控平台 -->
       </h1>
 
       <div class="controls-container" style="width:30%;display: flex;justify-content: flex-end;">
@@ -191,7 +192,8 @@
           <el-table-column prop="appName" align="center" label="小程序名称" width="150" :filters="appNameList"
             :filter-method="filterModelName">
             <template scope="scope">
-              <el-tag type="primary" effect="dark">{{ scope.row.appName }}</el-tag>
+              <!-- <el-tag type="primary" effect="dark">{{ scope.row.appName }}</el-tag> -->
+               {{ scope.row.appName }}
             </template>
           </el-table-column>
 
@@ -231,7 +233,7 @@
             <template scope="scope">
               <div style="display: flex; align-items: center; gap: 8px; color: #e2e8f0;">
                 <!-- <i class="fas fa-map-marker-alt" style="color: #3b82f6;"></i> -->
-                <span>{{ scope.row.ip ? scope.row.ip.split("--")[0] : "" }}</span>
+                <span>{{ scope.row.ip}}</span>
               </div>
             </template>
           </el-table-column>
@@ -258,12 +260,13 @@
             :filters="[{text:'激励视频',value:'rewardVideo'},{text:'插屏广告',value:'chaPing'}]"
             :filter-method="filterModelAdType">
             <template scope="scope">
-              <el-tag :type="scope.row.customObj && scope.row.customObj.adType === 'chaPing' ? 'info' : 'primary'"
+               {{ scope.row.customObj ? scope.row.customObj.adType == 'chaPing' ? '插屏广告' : '激励视频' : '' }}
+              <!-- <el-tag :type="scope.row.customObj && scope.row.customObj.adType === 'chaPing' ? 'info' : 'primary'"
                 size="medium" effect="dark">
                 <i :class="scope.row.customObj && scope.row.customObj.adType === 'chaPing' ? 'fas fa-window-maximize' : 'fas fa-play-circle'"
                   style="margin-right: 4px;"></i>
                 {{ scope.row.customObj ? scope.row.customObj.adType == 'chaPing' ? '插屏广告' : '激励视频' : '' }}
-              </el-tag>
+              </el-tag> -->
             </template>
           </el-table-column>
 
@@ -468,24 +471,24 @@
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <i class="fas fa-mobile-alt" style="color: #3b82f6; font-size: 20px;"></i>
                   <div>
-                    <div style="font-weight: 700; margin-bottom: 2px; color: #e2e8f0;">
+                    <div style="font-weight: 700; margin-bottom: 2px; color: #e2e8f0;white-space: nowrap;">
                       {{phoneIdToNameList[item.model.split('-')[item.model.split('-').length-1]] ?
                       phoneIdToNameList[item.model.split('-')[item.model.split('-').length-1]] : item.model}}
                     </div>
                     <!-- 94a3b8 -->
-                    <div style="font-size: 14px; color: #fff;">
+                    <!-- <div style="font-size: 14px; color: #fff;white-space: nowrap;">
                       {{item.time}}
 
-                    </div>
+                    </div> -->
                   </div>
                 </div>
-                <el-tag type="success" effect="dark" size="medium">
+                <el-tag type="danger" effect="dark" size="large">
                   <i class="fas fa-tag" style="margin-right: 4px;"></i>
                   {{item.appName}}
                 </el-tag>
               </div>
             </div>
-            <div class="image-content">
+            <div class="image-content" style="position:relative;">
               <img :src="item.download_url" alt="广告图片"
                 @error="item.download_url = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'350\' height=\'300\'%3E%3Crect width=\'350\' height=\'300\' fill=\'%23334155\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%2394a3b8\' font-family=\'Inter\' font-size=\'16\'%3E图片加载中...%3C/text%3E%3C/svg%3E'"
                 style="cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
@@ -493,8 +496,15 @@
                 <i class="far fa-clock" style="margin-right: 8px;"></i>
                 设备ID: {{item.model.split('-')[item.model.split('-').length-1]}}
               </div> -->
+              <div style="font-size: 18px;font-weight:bold;border-radius:8px; color: #fff;white-space: nowrap;position: absolute;top:50%;left:50%;background:#333;padding:10px 12px;transform: translate(-50%,-50%);">
+                      {{item.time}}
+
+                    </div>
             </div>
           </div>
+          <div class="image-card" style="height:0;box-shadow: none;border:0;"></div>
+          <div class="image-card" style="height:0;box-shadow: none;border:0;"></div>
+          <div class="image-card" style="height:0;box-shadow: none;border:0;"></div>
         </div>
 
         <div style="display: flex; justify-content: center; padding: 32px;">
@@ -592,13 +602,13 @@
           phoneIdToNameList: {
             "071882201": 'vivoX23-坏屏幕(淘汰机)',
             "371752232": 'vivoX23-好屏幕(淘汰机)',
-            "531011851": '荣耀30-测试机',
-            "131391382": '荣耀20-1号机',
-            "042301751": 'nove5Pro-2号机',
-            "599424877": 'Mate20-3号机',
-            "811147186": '荣耀V20-4号机',
-            "491061091": '新买mate20Pro-5号机',
-            "351912422": "Mate20Pro-6号机",
+            "531011851": '荣耀30',
+            "131391382": '荣耀20',
+            "042301751": 'nove5Pro',
+            "599424877": 'Mate20',
+            "811147186": '荣耀V20',
+            "491061091": '新买mate20Pro',
+            "351912422": "Mate20Pro",
             "692411262": 'Mate20',
           },
           staySocketNum: 1500,
@@ -716,10 +726,10 @@
           const trendChart = echarts.init(document.getElementById('trendChart'));
           trendChart.setOption({
             backgroundColor: 'transparent',
-            title: { text: '今日走势', textStyle: { color: '#e2e8f0', fontSize: 16 }, left: 'center' },
+            title: { text: '今日走势', textStyle: { color: '#e2e8f0', fontSize: 16 }, left: '60' },
             tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
             legend: { textStyle: { color: '#94a3b8' }, data: ['观看', '点击'] },
-            grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+            grid: { left: '6%', right: '4%', bottom: '3%', containLabel: true },
             xAxis: {
               type: 'category',
               data: Array.from({ length: 24 }, (_, i) => `${i}:00`),
@@ -741,9 +751,9 @@
           const heatChart = echarts.init(document.getElementById('heatChart'));
           heatChart.setOption({
             backgroundColor: 'transparent',
-            title: { text: '点击热力图', textStyle: { color: '#e2e8f0', fontSize: 16 }, left: 'center' },
+            title: { text: '点击热力图', textStyle: { color: '#e2e8f0', fontSize: 16 }, left: '60' },
             tooltip: { position: 'top' },
-            grid: { height: '70%', top: '10%' },
+            grid: { left: '4.5%', right: '4%', bottom: '3%', containLabel: true },
             xAxis: { type: 'category', data: Array.from({ length: 24 }, (_, i) => i), splitArea: { show: true }, axisLabel: { color: '#94a3b8' } },
             yAxis: { type: 'category', data: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'], splitArea: { show: true }, axisLabel: { color: '#94a3b8' } },
             visualMap: { min: 0, max: Math.max(...heat.map(p => p[2])), calculable: true, inRange: { color: ['#0f172a', '#0ea5e9', '#3b82f6', '#8b5cf6', '#f472b6'] }, textStyle: { color: '#e2e8f0' } },
@@ -921,7 +931,8 @@
         },
         changeTimePic(val) {
           console.log(this.imgList,this.timeList,'aaa')
-          
+          this.changeItemPhonePic()
+          this.changeItemPhoneApp()
           // if(this.picModel.length>=0) {
           //   this.changeItemPhonePic()
           // }

@@ -351,9 +351,10 @@
     }
 
     .image-card {
-      width: 335px;
+      width: 285px;
       background: #1e293b;
-      border: 1px solid #334155;
+      border: 1px solid #475569;
+      /* border: 1px solid #334155; */
       border-radius: 16px;
       /* overflow: hidden; */
       transition: all 0.3s ease;
@@ -362,7 +363,7 @@
     }
 
     .image-card:hover {
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
       border-color: #475569;
     }
@@ -379,19 +380,19 @@
     }
 
     .image-content {
-      padding: 24px;
+      padding: 12px;
       text-align: center;
     }
 
     .image-content img {
-      width: 250px;
+      width: 100%;
       object-fit: contain;
       border-radius: 12px;
       transition: transform 0.3s ease;
     }
 
     .image-content img:hover {
-      transform: scale(1.02);
+      /* transform: scale(1.2); */
     }
 
     /* 深色视窗 */
