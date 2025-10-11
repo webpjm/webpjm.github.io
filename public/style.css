@@ -746,7 +746,8 @@
     .stat-num {
       font-size: 26px;
       font-weight: 700;
-      color: #e2e8f0;
+      /* color: #e2e8f0; */
+      color:#10b981;
     }
 
     /* 今日高亮（冰蓝呼吸） */
@@ -770,7 +771,13 @@
     }
 
     .stat-item.today .stat-num {
-      color: #e0f2fe;
+      /* color: #e0f2fe; */
+     font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(180deg, #20e8fe 0%, #2e78f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     }
 
     /* ===== 过渡区 ===== */

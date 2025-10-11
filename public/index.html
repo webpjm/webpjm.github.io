@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="referrer" content="no-referrer">
-  <title>监控平台</title>
+  <title>数据监控平台</title>
   <script src="./js/axios.js"></script>
   <script src="https://cdn.staticfile.org/echarts/5.4.3/echarts.min.js"></script>
   <link rel="icon" type="image/png" href="./js/抖音.png">
@@ -113,6 +113,19 @@
             </el-option>
           </el-select>
         </div>
+
+        <div class="control-group" v-show="activeName == 'echart'">
+          
+
+          <el-select filterable @change="changeTimeChart" clearable size="medium" v-model="timeListValue" placeholder="选择日期"
+            style="width: 150px;">
+            <el-option v-for="item in timeList" :key="item.value" :label="item.text" :value="item.value">
+            </el-option>
+          </el-select>
+
+        </div>
+
+        
 
       </div>
     </div>
@@ -229,7 +242,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" prop="ip" width="150" label="IP地址">
+          <el-table-column align="center" prop="ip" width="260" label="IP地址">
             <template scope="scope">
               <div style="display: flex; align-items: center; gap: 8px; color: #e2e8f0;">
                 <!-- <i class="fas fa-map-marker-alt" style="color: #3b82f6;"></i> -->
@@ -281,7 +294,7 @@
 
           <el-table-column prop="todayClickNum" align="center" sortable label="今日点击">
             <template scope="scope">
-              <div style="color: #3b82f6; font-weight: 700; font-size: 16px;">
+              <div style="color: #10b981; font-weight: 700; font-size: 16px;">
                 <!-- <i class="fas fa-mouse-pointer" style="margin-right: 4px;"></i> -->
                 {{ scope.row.todayClickNum }}
               </div>
@@ -290,7 +303,7 @@
 
           <el-table-column prop="clickNumTotal" align="center" sortable label="总点击">
             <template scope="scope">
-              <div style="color: #8b5cf6; font-weight: 700; font-size: 16px;">
+              <div style="color: #10b981; font-weight: 700; font-size: 16px;">
                 <!-- <i class="fas fa-bullseye" style="margin-right: 4px;"></i> -->
                 {{ scope.row.clickNumTotal }}
               </div>
@@ -299,7 +312,7 @@
 
           <el-table-column prop="todayDownLoad" align="center" sortable label="今日下载">
             <template scope="scope">
-              <div style="color: #64748b; font-weight: 700; font-size: 16px;">
+              <div style="color: #10b981; font-weight: 700; font-size: 16px;">
                 <!-- <i class="fas fa-download" style="margin-right: 4px;"></i> -->
                 {{ scope.row.todayDownLoad }}
               </div>
@@ -308,7 +321,7 @@
 
           <el-table-column prop="downLoadTotal" align="center" sortable label="总下载">
             <template scope="scope">
-              <div style="color: #ef4444; font-weight: 700; font-size: 16px;">
+              <div style="color: #10b981; font-weight: 700; font-size: 16px;">
                 <!-- <i class="fas fa-download" style="margin-right: 4px;"></i> -->
                 {{ scope.row.downLoadTotal }}
               </div>
@@ -317,7 +330,7 @@
 
           <el-table-column prop="lookAdTotal" align="center" sortable label="总数量">
             <template scope="scope">
-              <div style="color: #f59e0b; font-weight: 700; font-size: 16px;">
+              <div style="color: #10b981; font-weight: 700; font-size: 16px;">
                 <!-- <i class="fas fa-chart-bar" style="margin-right: 4px;"></i> -->
                 {{ scope.row.lookAdTotal }}
               </div>
@@ -979,6 +992,10 @@
             });
           }
 
+        },
+        changeTimeChart(val) {
+          this.changeTime(val)
+          this.initEchartTab()
         },
         changeTime(val) {
           // console.log(this.tableDataClone,'this.tableDataClone')
