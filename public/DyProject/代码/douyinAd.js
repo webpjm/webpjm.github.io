@@ -389,7 +389,7 @@ let douyinAd = {
         // autoUtils.logText(allNum + '滑动次数上限')
         let huadongNum = rand.randNumber(2, 2)
         if (type == 'video') {
-            huadongNum = rand.randNumber(3, 8)
+            huadongNum = rand.randNumber(6, 9)
         }
         autoUtils.logText(huadongNum + '需要滑动的次数')
         // 如果时间小于随机时间，则循坏滑动视频或直播
