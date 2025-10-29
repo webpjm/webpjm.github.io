@@ -1978,8 +1978,11 @@ let douyinAd = {
         let appNumObj = {
             '1': 3,
             '2': 5,
-            '3': 8,
-            '4': AutoGlobData.appList.length
+            '3': 9,
+            '4': AutoGlobData.appList.length,
+            '5': 6,
+            '6': 7,
+            '7': 8,
         }
 
         let chaPingNum = AutoGlobData.chaPingNum
