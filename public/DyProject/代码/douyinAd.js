@@ -685,7 +685,7 @@ let douyinAd = {
                         autoUtils.clickGetText('小程序')
                     } else {
                         autoUtils.logText('检测到了异常，没有找到小程序按钮,重新登录后在找')
-                        autoUtils.loginApp(AutoGlobData.appPhoneName)
+                        // autoUtils.loginApp(AutoGlobData.appPhoneName)
                         this.goAppListPage()
                     }
                 }
