@@ -985,7 +985,7 @@ let douyinAd = {
     //返回首页 开始养机
     backToHome(num) {
         num = num ? num : 1
-        if (autoUtils.getText('以后再说')) {
+        if (autoUtils.getText('以后再说')&&autoUtils.getText('升级')) {
             autoUtils.clickGetText('以后再说')
             autoUtils.sleep(5, '等待')
         }
@@ -1015,7 +1015,7 @@ let douyinAd = {
             }
         } else {
             num = 1
-            if (autoUtils.getText('以后再说')) {
+            if (autoUtils.getText('以后再说')&&autoUtils.getText('升级')) {
                 autoUtils.clickGetText('以后再说')
                 autoUtils.sleep(5, '等待')
             } else {
