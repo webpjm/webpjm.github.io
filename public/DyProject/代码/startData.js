@@ -70,9 +70,9 @@ function getUrlData(url) {
 }
 // 设置手机的IP数据
 let IPAddress = getUrlData('https://ipinfo.io/ip')
-let mainResData = JSON.parse(getUrlData(`https://api.xudu.org/ip?ip=${IPAddress}`))
-var mainPhoneIp = mainResData.ip + '--' + mainResData.city + '/' + mainResData.isp
-let mainIp = JSON.stringify({phoneIp:mainPhoneIp})
+// let mainResData = JSON.parse(getUrlData(`https://api.xudu.org/ip?ip=${IPAddress}`))
+// var mainPhoneIp = mainResData.ip + '--' + mainResData.city + '/' + mainResData.isp
+let mainIp = JSON.stringify({phoneIp:IPAddress})
 // 设置手机的型号数据
 var mainPhoneData = JSON.stringify({ phoneId: device.getDeviceIntID(), phoneModel: device.getModel() })
 
