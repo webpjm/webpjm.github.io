@@ -17,6 +17,12 @@ if (!isLocal) {
     print.log('开始请求本地UI')
 }
 
+eval(getUrlData(`${configRootUrl}DyProject/代码/initData.js?time=${time.nowStamp()}`))
+eval(getUrlData(`${configRootUrl}DyProject/代码/tool.js?time=${time.nowStamp()}`))
+eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
+
+sleep.millisecond(毫秒 = 3000);
+
 // 定义全局对象接收UI参数
 let globData = {
     runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
@@ -43,9 +49,7 @@ function getUrlData(url) {
     return strArr
 }
 
-eval(getUrlData(`${configRootUrl}DyProject/代码/initData.js?time=${time.nowStamp()}`))
-eval(getUrlData(`${configRootUrl}DyProject/代码/tool.js?time=${time.nowStamp()}`))
-eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
+
 
 // 设置接收远程UI值的回调
 function setPhoneGlobaData(data) {
