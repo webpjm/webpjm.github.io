@@ -1,6 +1,4 @@
 /*手机app默认启动文件*/
-
-
 var win = window.loadUI("主界面.ui");
 win.show();
 logWindow.show();
@@ -8,38 +6,14 @@ logWindow.show();
 var mainWeb = uiWeb.findByID(控件ID = "web");
 //是否加载远程UI
 
-
-function getUrlData(url) {
-    let strArr = ''
-    var http = new okHttp()
-    var t = http.get(url)
-    if (t != 'OK') {
-        strArr = t
-    } else {
-        print.log(`接口加载失败,开始重新请求IP数据`)
-        sleep.millisecond(毫秒 = 10);
-        getUrlData(url)
-    }
-    return strArr
-}
-
 if (!isLocal) {
     print.log('6-30号优化')
     print.log('开始请求远程接口的数据UI 宝塔面板') 
-    eval(getUrlData(`${configRootUrl}DyProject/代码/initData.js?time=${time.nowStamp()}`))
-    eval(getUrlData(`${configRootUrl}DyProject/代码/tool.js?time=${time.nowStamp()}`))
-    eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
-
     mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
     // mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
 }else{
     print.log('开始请求本地UI')
 }
-
-
-
-
-sleep.millisecond(毫秒 = 3000);
 
 // 定义全局对象接收UI参数
 let globData = {
@@ -58,7 +32,6 @@ function setPhoneGlobaData(data) {
     globData = data
     printl(data, 'UI设置的值')
 }
-
 
 // 设置今日数据的UI
 function getTodayTime(currentTime) {
@@ -84,9 +57,21 @@ if (mainTodayDataInfo != '') {
 }
 
 
+function getUrlData(url) {
+    let strArr = ''
+    var http = new okHttp()
+    var t = http.get(url)
+    if (t != 'OK') {
+        strArr = t
+    } else {
+        print.log(`接口加载失败,开始重新请求IP数据`)
+        sleep.millisecond(毫秒 = 10);
+        getUrlData(url)
+    }
+    return strArr
+}
 // 设置手机的IP数据
 let IPAddress = getUrlData('https://ipinfo.io/ip')
-console.log(IPAddress+'IPAddress')
 // let mainResData = JSON.parse(getUrlData(`https://api.xudu.org/ip?ip=${IPAddress}`))
 // var mainPhoneIp = mainResData.ip + '--' + mainResData.city + '/' + mainResData.isp
 let mainIp = JSON.stringify({phoneIp:IPAddress})
@@ -100,12 +85,3 @@ sleep.millisecond(毫秒 = 1500);
 mainWeb.runWebJs(`setPhoneData(${mainPhoneData},${mainIp})`)
 
 logWindow.close()
-
-
-
-
-// eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
-
-
-
-
