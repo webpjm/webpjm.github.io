@@ -1,13 +1,33 @@
 
 // 调用 OCR 功能识别中文，并将结果输出
 runTime.Import('initData.js')
+runTime.Import('socket.js')
 runTime.Import('douyinAd.js')
 runTime.Import('tool.js')
 runTime.Import('adTool.js')
-autoUtils.setSuccessPic('洛雪壁纸')
 
+// autoUtils.setSuccessPic('洛雪壁纸')
 
-new engine().runJsFile('1.js','')
+// console.log(screen.getRotation())
+autoUtils.sleep(600000,'测试1线程')
+// let str = '0.86,0.65,0.07,0.66'
+
+// let deviceWidth = Number(screen.getScreenWidth())
+// let deviceHeight = Number(screen.getScreenHeight())
+// console.log(deviceWidth,deviceHeight)
+// let arr = str.split(',')
+
+// for(let i=0;i<arr.length;i++) {
+//     arr[i] = Number(arr[i])
+//     if(i%2==0) {
+//         arr[i] = deviceWidth*arr[i]
+//     }else{
+//         arr[i] = deviceHeight*arr[i]
+//     }
+// }
+// hid.swipMultiple(arr,998,1110,112)
+// console.log(arr)
+// new engine().runJsFile('1.js','')
 
 // adUtils.init()
 // adUtils.getRunAppListByTime()

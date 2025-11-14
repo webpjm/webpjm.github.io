@@ -367,13 +367,6 @@ mainThread.runJsCode(() => {
     autoTask.startTask() // 抖音任务
 }, "主任务线程");
 
-// socket线程任务
-var line = new thread();
-line.runJsCode(function fun() {
-    if (autoUtils.useSocket) {
-        startSocket()
-    }
-}, "监控线程")
 // 设置socket任务类型
 function setTaskRunBySocket(type) {
     // 只养机

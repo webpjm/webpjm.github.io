@@ -1,4 +1,5 @@
 //新建一个webSocket
+
 let socketPic = false
 
 var ws = new websocket();
@@ -24,6 +25,11 @@ function startSocket(num) {
                 // this.socket.readyState === this.socket.OPEN
                 isConect = true
                 listen = true
+                for(let i=0;i<999999999999999;i++){
+                   sleep.millisecond(毫秒 = 600000); 
+                   autoUtils.logText('socket保持连接')
+                }
+                
             },
             //收到消息
             function onTextMessage(msg) {
@@ -32,11 +38,7 @@ function startSocket(num) {
                 let message = str[1]
                 if (phoneId == device.getDeviceIntID() && message == '请求截图') {
                     // autoUtils.logText(msg,'收到消息了')
-                    if(interval) {
-                        clearInterval(interval);
-                    }
-                    
-                    
+                   
                     socketPic = true
                     sendMsg()
                 }
@@ -44,20 +46,46 @@ function startSocket(num) {
                 if (phoneId == device.getDeviceIntID() && message == '自动截图') {
                     // autoUtils.logText(msg,'收到消息了')
                     socketPic = false
-                    interval = setInterval(sendMsg,1000);
+                    interval = setInterval(sendMsg,100);
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '请求点击') {
                     // autoUtils.logText(msg,'收到消息了')
+                    
                     let x = str[2].split(',')[0]
                     let y = str[2].split(',')[1]
-                    autoUtils.logText('开始点击' + x, y)
+                    // autoUtils.logText('开始点击' + x, y)
                     hid.clickPercent(x, y)
                     sleep.millisecond(毫秒 = 100);
                     sendMsg()
+                    
 
                     // runTime.setInterval(sendMsg,1000)
                 }
+
+                if (phoneId == device.getDeviceIntID() && message == '请求滑动') {
+                    
+                    console.log(str[2]+'收到滑动消息了aaaaa')
+
+                    let deviceWidth = Number(screen.getScreenWidth())
+                    let deviceHeight = Number(screen.getScreenHeight())
+                    // console.log(deviceWidth,deviceHeight)
+                    let newStr = str[2].split('&')[0]
+                    let arr = newStr.split(',')
+                    for(let i=0;i<arr.length;i++) {
+                        arr[i] = Number(arr[i])
+                        if(i%2==0) {
+                            arr[i] = deviceWidth*arr[i]
+                        }else{
+                            arr[i] = deviceHeight*arr[i]
+                        }
+                    }
+                    let arr1 = str[2].split('&')[1]
+                    hid.swipMultiple(arr,arr1[0],arr[1],arr1[2])
+                   
+                    
+                }
+
                 if (phoneId == device.getDeviceIntID() && message == '停止截图') {
                     // autoUtils.logText(msg,'收到消息了')
                     socketPic = false
@@ -143,8 +171,14 @@ function startSocket(num) {
 
                 if (phoneId == device.getDeviceIntID() && message == '返回') {
                     // autoUtils.sleep(2, '返回')
-                    autoUtils.logText('回')
-                    autoUtils.autoBack()
+                    
+                    if (device.getModel() == 'V1809A') {
+                        hid.back()
+                        this.sleep(3, '关闭弹窗')
+                        hid.clickPercent(0.5, 0.3852)
+                    } else {
+                        hid.back()
+                    }
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '清除任务缓存') {
@@ -210,14 +244,24 @@ function startSocket(num) {
 
     function sendMsg() {
         let str = 'data:image/jpeg;base64,'
-        ws.send(device.getDeviceIntID() + '@这是图片@' + str + screen.screenShot(374, 666, 30).toJpgBase64(30))
+            if(screen.getRotation() == 1) {
+                ws.send(device.getDeviceIntID() + '@这是图片@' + str + screen.screenShot(parseInt(screen.getScreenWidth()/3), parseInt(screen.getScreenHeight()/3), 30).toJpgBase64(30)) + '@time=' + time.nowStamp()
+            }else{
+                ws.send(device.getDeviceIntID() + '@这是图片@' + str + screen.screenShot(374, 666, 30).toJpgBase64(30)) + '@time=' + time.nowStamp()
+            } 
     }
     //连接
     ws.connet("ws://140.143.153.128:30001");  
+    // ws.connet("ws://127.0.0.1:30001");  
     // jiaming1.serv00.net 对应socket IP地址： 128.204.223.95:30001
     // ws.connet("ws://128.204.223.95:30001/");  
     // ws.connet("ws://140.143.153.128:30001/");  
     // http://daming360.cloudns.ch:30001/ cloud cdn代理
     // http://daming360.duckdns.org:30001/
 }
-// startSocket()
+
+// socket线程任务
+var line = new thread();
+line.runJsCode(function fun() {
+   startSocket()
+}, "监控线程")

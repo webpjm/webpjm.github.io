@@ -1,7 +1,22 @@
 /*手机app默认启动文件*/
+
+
 var win = window.loadUI("主界面.ui");
 win.show();
 logWindow.show();
+
+var mainWeb = uiWeb.findByID(控件ID = "web");
+//是否加载远程UI
+
+if (!isLocal) {
+    print.log('6-30号优化')
+    print.log('开始请求远程接口的数据UI 宝塔面板') 
+    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+    // mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
+}else{
+    print.log('开始请求本地UI')
+}
+
 // 定义全局对象接收UI参数
 let globData = {
     runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
@@ -14,11 +29,49 @@ let globData = {
     chaPingModel:'1'
 }
 
+function getUrlData(url) {
+    let strArr = ''
+    var http = new okHttp()
+    var t = http.get(url)
+    if (t != 'OK') {
+        strArr = t
+    } else {
+        print.log(`接口加载失败,开始重新请求IP数据`)
+        sleep.millisecond(毫秒 = 10);
+        getUrlData(url)
+    }
+    return strArr
+}
+
+eval(getUrlData(`${configRootUrl}DyProject/代码/initData.js?time=${time.nowStamp()}`))
+eval(getUrlData(`${configRootUrl}DyProject/代码/tool.js?time=${time.nowStamp()}`))
+eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
+
 // 设置接收远程UI值的回调
 function setPhoneGlobaData(data) {
     globData = data
     printl(data, 'UI设置的值')
+    setGlobalData()
 }
+
+function setGlobalData() {
+    let data = JSON.parse(globData)
+    AutoGlobData.runApp = data.runApp
+    AutoGlobData.runModel = data.runModel
+    AutoGlobData.miniAppNum = data.miniAppNum
+    AutoGlobData.lookRangeNum = data.lookRangeNum
+    AutoGlobData.phoneIp = mainPhoneIp
+    AutoGlobData.otherValue = data.otherValue
+    AutoGlobData.adMaxNum = data.lookRangeNum[1]
+    AutoGlobData.adMiniNum = data.lookRangeNum[0]
+    AutoGlobData.chaPingNum = data.chaPingNum
+    AutoGlobData.chaPingModel = data.chaPingModel
+
+    if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
+        AutoGlobData.configUrl = AutoGlobData.configUrlKs
+    }
+}
+
 
 // 设置今日数据的UI
 function getTodayTime(currentTime) {
@@ -43,33 +96,10 @@ if (mainTodayDataInfo != '') {
     }
 }
 
-var mainWeb = uiWeb.findByID(控件ID = "web");
-//是否加载远程UI
 
-if (!isLocal) {
-    print.log('6-30号优化')
-    print.log('开始请求远程接口的数据UI 宝塔面板') 
-    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
-    // mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
-}else{
-    print.log('开始请求本地UI')
-}
-
-function getUrlData(url) {
-    let strArr = ''
-    var http = new okHttp()
-    var t = http.get(url)
-    if (t != 'OK') {
-        strArr = t
-    } else {
-        print.log(`接口加载失败,开始重新请求IP数据`)
-        sleep.millisecond(毫秒 = 10);
-        getUrlData(url)
-    }
-    return strArr
-}
 // 设置手机的IP数据
 let IPAddress = getUrlData('https://ipinfo.io/ip')
+console.log(IPAddress+'IPAddress')
 // let mainResData = JSON.parse(getUrlData(`https://api.xudu.org/ip?ip=${IPAddress}`))
 // var mainPhoneIp = mainResData.ip + '--' + mainResData.city + '/' + mainResData.isp
 let mainIp = JSON.stringify({phoneIp:IPAddress})
@@ -83,3 +113,12 @@ sleep.millisecond(毫秒 = 1500);
 mainWeb.runWebJs(`setPhoneData(${mainPhoneData},${mainIp})`)
 
 logWindow.close()
+
+
+
+
+// eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
+
+
+
+
