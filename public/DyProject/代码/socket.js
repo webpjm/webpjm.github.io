@@ -25,11 +25,6 @@ function startSocket(num) {
                 // this.socket.readyState === this.socket.OPEN
                 isConect = true
                 listen = true
-                for(let i=0;i<999999999999999;i++){
-                   sleep.millisecond(毫秒 = 600000); 
-                   print.log('socket保持连接')
-                //    autoUtils.logText('socket保持连接')
-                }
                 
             },
             //收到消息
