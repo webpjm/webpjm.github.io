@@ -8,14 +8,6 @@ logWindow.show();
 var mainWeb = uiWeb.findByID(控件ID = "web");
 //是否加载远程UI
 
-if (!isLocal) {
-    print.log('6-30号优化')
-    print.log('开始请求远程接口的数据UI 宝塔面板') 
-    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
-    // mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
-}else{
-    print.log('开始请求本地UI')
-}
 
 function getUrlData(url) {
     let strArr = ''
@@ -31,9 +23,21 @@ function getUrlData(url) {
     return strArr
 }
 
-eval(getUrlData(`${configRootUrl}DyProject/代码/initData.js?time=${time.nowStamp()}`))
-eval(getUrlData(`${configRootUrl}DyProject/代码/tool.js?time=${time.nowStamp()}`))
-eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
+if (!isLocal) {
+    print.log('6-30号优化')
+    print.log('开始请求远程接口的数据UI 宝塔面板') 
+    eval(getUrlData(`${configRootUrl}DyProject/代码/initData.js?time=${time.nowStamp()}`))
+    eval(getUrlData(`${configRootUrl}DyProject/代码/tool.js?time=${time.nowStamp()}`))
+    eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
+
+    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+    // mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
+}else{
+    print.log('开始请求本地UI')
+}
+
+
+
 
 sleep.millisecond(毫秒 = 3000);
 
