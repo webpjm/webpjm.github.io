@@ -260,9 +260,3 @@ function startSocket(num) {
     // http://daming360.cloudns.ch:30001/ cloud cdn代理
     // http://daming360.duckdns.org:30001/
 }
-
-// socket线程任务
-var line = new thread();
-line.runJsCode(function fun() {
-   startSocket()
-}, "监控线程")
