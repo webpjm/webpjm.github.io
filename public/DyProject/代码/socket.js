@@ -34,6 +34,7 @@ function startSocket(num) {
             },
             //收到消息
             function onTextMessage(msg) {
+                autoUtils.logText(msg,'收到消息了')
                 let str = msg.split('@')
                 let phoneId = str[0]
                 let message = str[1]
