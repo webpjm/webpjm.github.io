@@ -116,7 +116,7 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '返回主页') {
-                    autoUtils.sleep(1, '返回主页')
+                    // autoUtils.sleep(1, '返回主页')
                     autoUtils.autoHome()
                 }
 
