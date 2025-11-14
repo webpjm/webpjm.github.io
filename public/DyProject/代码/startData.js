@@ -55,25 +55,6 @@ function getUrlData(url) {
 function setPhoneGlobaData(data) {
     globData = data
     printl(data, 'UI设置的值')
-    setGlobalData()
-}
-
-function setGlobalData() {
-    let data = JSON.parse(globData)
-    AutoGlobData.runApp = data.runApp
-    AutoGlobData.runModel = data.runModel
-    AutoGlobData.miniAppNum = data.miniAppNum
-    AutoGlobData.lookRangeNum = data.lookRangeNum
-    AutoGlobData.phoneIp = mainPhoneIp
-    AutoGlobData.otherValue = data.otherValue
-    AutoGlobData.adMaxNum = data.lookRangeNum[1]
-    AutoGlobData.adMiniNum = data.lookRangeNum[0]
-    AutoGlobData.chaPingNum = data.chaPingNum
-    AutoGlobData.chaPingModel = data.chaPingModel
-
-    if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
-        AutoGlobData.configUrl = AutoGlobData.configUrlKs
-    }
 }
 
 
