@@ -17,6 +17,20 @@ if (!isLocal) {
     print.log('开始请求本地UI')
 }
 
+function getUrlData(url) {
+    let strArr = ''
+    var http = new okHttp()
+    var t = http.get(url)
+    if (t != 'OK') {
+        strArr = t
+    } else {
+        print.log(`接口加载失败,开始重新请求IP数据`)
+        sleep.millisecond(毫秒 = 10);
+        getUrlData(url)
+    }
+    return strArr
+}
+
 eval(getUrlData(`${configRootUrl}DyProject/代码/initData.js?time=${time.nowStamp()}`))
 eval(getUrlData(`${configRootUrl}DyProject/代码/tool.js?time=${time.nowStamp()}`))
 eval(getUrlData(`${configRootUrl}DyProject/代码/socket.js?time=${time.nowStamp()}`))
@@ -34,22 +48,6 @@ let globData = {
     chaPingNum:'0',
     chaPingModel:'1'
 }
-
-function getUrlData(url) {
-    let strArr = ''
-    var http = new okHttp()
-    var t = http.get(url)
-    if (t != 'OK') {
-        strArr = t
-    } else {
-        print.log(`接口加载失败,开始重新请求IP数据`)
-        sleep.millisecond(毫秒 = 10);
-        getUrlData(url)
-    }
-    return strArr
-}
-
-
 
 // 设置接收远程UI值的回调
 function setPhoneGlobaData(data) {
