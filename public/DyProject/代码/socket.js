@@ -21,13 +21,14 @@ function startSocket(num) {
         ws.event(
             //连接成功
             function onConnected() {
-                autoUtils.logText('连接成功')
+                // autoUtils.logText('连接成功')
                 // this.socket.readyState === this.socket.OPEN
                 isConect = true
                 listen = true
                 for(let i=0;i<999999999999999;i++){
                    sleep.millisecond(毫秒 = 600000); 
-                   autoUtils.logText('socket保持连接')
+                   print.log('socket保持连接')
+                //    autoUtils.logText('socket保持连接')
                 }
                 
             },

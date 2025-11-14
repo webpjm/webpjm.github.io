@@ -58,6 +58,7 @@ if (mainTodayDataInfo != '') {
 
 
 function getUrlData(url) {
+    print.log(`加载url${url}`)
     let strArr = ''
     var http = new okHttp()
     var t = http.get(url)
@@ -70,6 +71,9 @@ function getUrlData(url) {
     }
     return strArr
 }
+
+eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/socket.js?time='+time.nowStamp()))
+
 // 设置手机的IP数据
 let IPAddress = getUrlData('https://ipinfo.io/ip')
 // let mainResData = JSON.parse(getUrlData(`https://api.xudu.org/ip?ip=${IPAddress}`))
