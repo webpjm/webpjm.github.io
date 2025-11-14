@@ -21,7 +21,7 @@ function startSocket(num) {
         ws.event(
             //连接成功
             function onConnected() {
-                // autoUtils.logText('连接成功')
+                autoUtils.logText('连接成功')
                 // this.socket.readyState === this.socket.OPEN
                 isConect = true
                 listen = true
