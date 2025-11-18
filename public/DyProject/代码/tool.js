@@ -115,11 +115,7 @@ let autoUtils = {
 
             if (socketPic) {
                 let str1 = 'data:image/jpeg;base64,'
-                if(screen.getRotation() == 1) {
-                    ws.send(device.getDeviceIntID() + '@这是图片@' + str1 + screen.screenShot(parseInt(screen.getScreenWidth()/3), parseInt(screen.getScreenHeight()/3), 30).toJpgBase64(30)) + '@time=' + time.nowStamp()
-                }else{
-                    ws.send(device.getDeviceIntID() + '@这是图片@' + str1 + screen.screenShot(374, 666, 30).toJpgBase64(30)) + '@time=' + time.nowStamp()
-                } 
+                ws.send(device.getDeviceIntID() + '@这是图片@' + str1 + screen.screenShot(374, 666, 50).toJpgBase64(50))
             }
         }
         catch (err) { }
