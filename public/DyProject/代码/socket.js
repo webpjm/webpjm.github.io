@@ -248,11 +248,11 @@ if(!line) {
         if (autoUtils.useSocket) {
             startSocket()
         }
-    }, "监控线程")
-    function longConnect() {
-        autoUtils.logText('socket保持连接')
-        sleep.millisecond(毫秒 = 10000); 
+        function longConnect() {
+            autoUtils.logText('socket保持连接')
+            sleep.millisecond(毫秒 = 10000); 
+            longConnect()
+        }
         longConnect()
-    }
-    longConnect()
+    }, "监控线程")
 }
