@@ -3,11 +3,6 @@ var win = window.loadUI("主界面.ui");
 win.show();
 logWindow.show();
 
-var mainWeb = uiWeb.findByID(控件ID = "web");
-print.log('开始请求远程接口的数据UI') 
-mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
-// mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
-
 function getUrlData(url) {
     let strArr = ''
     var http = new okHttp()
@@ -44,6 +39,12 @@ function setPhoneGlobaData(data) {
     globData = data
     printl(data, 'UI设置的值')
 }
+
+
+var mainWeb = uiWeb.findByID(控件ID = "web");
+print.log('开始请求远程接口的数据UI') 
+mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+// mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
 
 // 设置今日数据的UI
 function getTodayTime(currentTime) {
