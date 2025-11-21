@@ -242,7 +242,12 @@ function startSocket(num) {
     // http://daming360.cloudns.ch:30001/ cloud cdn代理
     // http://daming360.duckdns.org:30001/
 }
-startSocket()
+var line = new thread();
+line.runJsCode(function fun() {
+    if (autoUtils.useSocket) {
+        startSocket()
+    }
+}, "监控线程")
 // socket线程任务
 function longConnect() {
     autoUtils.logText('socket保持连接')

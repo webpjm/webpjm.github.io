@@ -3,13 +3,19 @@ var win = window.loadUI("主界面.ui");
 win.show();
 logWindow.show();
 
+
+var mainWeb = uiWeb.findByID(控件ID = "web");
+print.log('开始请求远程接口的数据UI') 
+mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+// mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
+
 function getUrlData(url) {
     let strArr = ''
     var http = new okHttp()
     var t = http.get(url)
     if (t != 'OK') {
         print.log(url.split('/')[url.split('/').length-1]+'加载成功')
-        strArr = t
+        strArr = t + ''
     } else {
         print.log(`接口加载失败,开始重新请求URL数据`)
         sleep.millisecond(毫秒 = 10);
@@ -21,6 +27,7 @@ function getUrlData(url) {
 eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/initData.js?time='+time.nowStamp()))
 eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/tool.js?time='+time.nowStamp()))
 eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/socket.js?time='+time.nowStamp()))
+
 
 // 定义全局对象接收UI参数
 let globData = {
@@ -39,12 +46,6 @@ function setPhoneGlobaData(data) {
     globData = data
     printl(data, 'UI设置的值')
 }
-
-
-var mainWeb = uiWeb.findByID(控件ID = "web");
-print.log('开始请求远程接口的数据UI') 
-mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
-// mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
 
 // 设置今日数据的UI
 function getTodayTime(currentTime) {
