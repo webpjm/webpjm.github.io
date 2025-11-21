@@ -24,7 +24,7 @@
         抖音广告数据监控平台
       </h1> -->
       <el-radio-group v-model="activeName" size="medium">
-
+        
         <el-radio-button label="first">
           <i class="fas fa-chart-line"></i> 数据总览
         </el-radio-button>
@@ -95,8 +95,8 @@
 
         <div class="control-group" v-show="activeName == 'second'">
 
-          <el-select filterable @change="changeTimePic" clearable size="medium" v-model="timeValuePic"
-            placeholder="选择日期" style="width: 150px;">
+          <el-select filterable @change="changeTimePic" clearable size="medium" v-model="timeValuePic" placeholder="选择日期"
+            style="width: 150px;">
             <el-option v-for="item in timeList" :key="item.value" :label="item.text" :value="item.value">
             </el-option>
           </el-select>
@@ -115,17 +115,17 @@
         </div>
 
         <div class="control-group" v-show="activeName == 'echart'">
+          
 
-
-          <el-select filterable @change="changeTimeChart" clearable size="medium" v-model="timeListValue"
-            placeholder="选择日期" style="width: 150px;">
+          <el-select filterable @change="changeTimeChart" clearable size="medium" v-model="timeListValue" placeholder="选择日期"
+            style="width: 150px;">
             <el-option v-for="item in timeList" :key="item.value" :label="item.text" :value="item.value">
             </el-option>
           </el-select>
 
         </div>
 
-
+        
 
       </div>
     </div>
@@ -206,7 +206,7 @@
             :filter-method="filterModelName">
             <template scope="scope">
               <!-- <el-tag type="primary" effect="dark">{{ scope.row.appName }}</el-tag> -->
-              {{ scope.row.appName }}
+               {{ scope.row.appName }}
             </template>
           </el-table-column>
 
@@ -273,7 +273,7 @@
             :filters="[{text:'激励视频',value:'rewardVideo'},{text:'插屏广告',value:'chaPing'}]"
             :filter-method="filterModelAdType">
             <template scope="scope">
-              {{ scope.row.customObj ? scope.row.customObj.adType == 'chaPing' ? '插屏广告' : '激励视频' : '' }}
+               {{ scope.row.customObj ? scope.row.customObj.adType == 'chaPing' ? '插屏广告' : '激励视频' : '' }}
               <!-- <el-tag :type="scope.row.customObj && scope.row.customObj.adType === 'chaPing' ? 'info' : 'primary'"
                 size="medium" effect="dark">
                 <i :class="scope.row.customObj && scope.row.customObj.adType === 'chaPing' ? 'fas fa-window-maximize' : 'fas fa-play-circle'"
@@ -388,24 +388,12 @@
               <div v-else style="position: relative;text-align: center;height: 100%;">
                 <div
                   style="display: flex;justify-content: space-between;height: calc(100% - 60px);align-items: center;">
-                  
-                  <div style="display: flex;justify-content: flex-start;align-items: center;height:100%;">
-                    <img :style="{width: item.rotate ? 'calc(100% - 60px)' : '253px'} " @dragstart.prevent draggable="false"  @mousedown="swipeStart($event, item)" @mousemove="swipeMove($event)" @mouseup="swipeEnd($event, item)"
-                    @mouseleave="swipeEnd($event)" :src="item.img" 
-                    style="width: 253px;max-height: 450px; user-select:none;-webkit-user-drag:none; object-fit: contain;position:relative;z-index:1000; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);"
+                  <img :src="item.img" @click="clickImg($event,item)"
+                    style="width: 253px;max-height: 450px; object-fit: contain; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);"
                     v-loading="item.loading"
                     @error="item.img = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%25\' height=\'450\'%3E%3Crect width=\'100%25\' height=\'450\' fill=\'%23334155\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%2394a3b8\' font-family=\'Inter\' font-size=\'16\'%3E暂无截图%3C/text%3E%3C/svg%3E'">
-                  <div class="operation" style="display: flex;justify-content: space-between;align-items: center;height:100%;width:32px;flex-wrap:wrap;margin-right:20px;">
-                    <div style="cursor: pointer;">
-                      <div class="" @click="setImgRotate(item)" style="width:32px;margin-bottom:10px;"><i class="fas fa-expand" style=""></i></div>
-                      <div class="" @click="sendSocketMsg(item,'@返回')" style="width:32px;margin-bottom:10px;"><i class="fas fa-undo" style=""></i></div>
-                      <div class="index"  @click="sendSocketMsg(item,'@返回主页')" style="width:32px;margin-bottom:10px;"><i class="fas fa-home" style=""></i></div>
-                      <div class="mul"  @click="sendSocketMsg(item,'@多任务')" style="width:32px;"> <i class="fas fa-th-large" style=""></i></div>
-                    </div>
-                    
-                  </div>
-                  </div>
-                  <div style="width: calc(100% - 275px);height:100%;" v-show="!item.rotate">
+
+                  <div style="width: calc(100% - 275px);height:100%;">
 
                     <div class="viewport" style="width:100%;height:100%;flex-shrink: 0;" :id="['scrollView'+index]">
                       <div class="itemValue" v-for="(value,index) in item.messageList" :key="index">
@@ -521,11 +509,10 @@
                 <i class="far fa-clock" style="margin-right: 8px;"></i>
                 设备ID: {{item.model.split('-')[item.model.split('-').length-1]}}
               </div> -->
-              <div
-                style="font-size: 18px;font-weight:bold;border-radius:8px; color: #fff;white-space: nowrap;position: absolute;top:50%;left:50%;background:#333;padding:10px 12px;transform: translate(-50%,-50%);">
-                {{item.time}}
+              <div style="font-size: 18px;font-weight:bold;border-radius:8px; color: #fff;white-space: nowrap;position: absolute;top:50%;left:50%;background:#333;padding:10px 12px;transform: translate(-50%,-50%);">
+                      {{item.time}}
 
-              </div>
+                    </div>
             </div>
           </div>
           <div class="image-card" style="height:0;box-shadow: none;border:0;"></div>
@@ -598,12 +585,6 @@
       },
       data: function () {
         return {
-          mouseTimeStart: 0,
-          mouseTimeMiddle: 0,
-          mouseTimeEnd: 0,
-          swipeRecorder: [],   // 当前这一滑动的完整数据
-          isSwiping: false,      // 鼠标是否按下
-          currentPhoneId: '',
           isOnline: false,
           loadingData: false,
           tokenData: '',
@@ -721,88 +702,6 @@
 
       },
       methods: {
-        setImgRotate(item) {
-          if(!item.rotate) {
-            item.rotate = true
-          }else{
-            item.rotate = false
-          }
-        },
-        /* 滑动开始 */
-        swipeStart(e, item) {
-          this.mouseTimeStart = Date.now();
-          this.isSwiping = true;
-          this.currentPhoneId = item.phoneId;
-
-          const rect = event.target.getBoundingClientRect();
-          const x = event.clientX - rect.left; // 点击位置相对于图片的x坐标
-          const y = event.clientY - rect.top; // 点击位置相对于图片的y坐标
-          const scaleX = x / event.target.width; // 点击位置相对于图片宽度的百分比
-          const scaleY = y / event.target.height; // 点击位置相对于图片高度的百分比
-          const sendx =  scaleX.toFixed(2);
-          const sendy = scaleY.toFixed(2);
-          
-          this.swipeRecorder = [sendx,sendy];
-        },
-
-        /* 滑动中 */
-        swipeMove(e) {
-          this.mouseTimeMiddle = Date.now();
-          if (!this.isSwiping) return;
-
-          // const rect = event.target.getBoundingClientRect();
-          // const x = event.clientX - rect.left; // 点击位置相对于图片的x坐标
-          // const y = event.clientY - rect.top; // 点击位置相对于图片的y坐标
-          // const scaleX = x / event.target.width; // 点击位置相对于图片宽度的百分比
-          // const scaleY = y / event.target.height; // 点击位置相对于图片高度的百分比
-          // const sendx =  scaleX.toFixed(2);
-          // const sendy = scaleY.toFixed(2);
-
-          // this.swipeRecorder.push(sendx);
-          // this.swipeRecorder.push(sendy);
-        },
-
-        /* 滑动结束 */
-        swipeEnd(e,item) {
-          if (!this.isSwiping) return;
-          this.mouseTimeEnd = Date.now();
-          this.isSwiping = false;
-          if(this.mouseTimeEnd - this.mouseTimeStart<200) {
-            //这是点击事件
-            console.log(e,item,'点击事件')
-            this.clickImg(e,item)
-            return;
-          }else{
-            console.log(this.mouseTimeMiddle - this.mouseTimeStart,'按下延时')
-            console.log(this.mouseTimeEnd - this.mouseTimeMiddle,'抬起延时')
-            console.log(this.mouseTimeEnd - this.mouseTimeStart,'滑动时长')
-
-            let pressTime = this.mouseTimeMiddle - this.mouseTimeStart;
-            let upTime = this.mouseTimeEnd - this.mouseTimeMiddle;
-            let swipeTime = this.mouseTimeEnd - this.mouseTimeStart
-          
-            
-            
-            const rect = event.target.getBoundingClientRect();
-            const x = event.clientX - rect.left; // 点击位置相对于图片的x坐标
-            const y = event.clientY - rect.top; // 点击位置相对于图片的y坐标
-            const scaleX = x / event.target.width; // 点击位置相对于图片宽度的百分比
-            const scaleY = y / event.target.height; // 点击位置相对于图片高度的百分比
-            const sendx =  scaleX.toFixed(2);
-            const sendy = scaleY.toFixed(2);
-
-            this.swipeRecorder.push(sendx);
-            this.swipeRecorder.push(sendy);
-
-            let sendStr = `${this.swipeRecorder.join(',')}&${pressTime},${swipeTime},${upTime}`
-            console.log(sendStr)
-            this.swipeImg(item,sendStr)
-          }
-          
-        },
-        swipeImg(item, sendStr) {
-          this.sendSocketMsg(item, '@请求滑动@' + `${sendStr}`)
-        },
         getChartData() {
           // 1. 走势：按小时聚合
           const hourMap = Array(24).fill(0);           // 观看
@@ -949,7 +848,7 @@
 
         },
         changeItemPhonePic() {
-          console.log(this.imgList, this.modelList, this.current, 'imgList')
+          console.log(this.imgList, this.modelList, this.current ,'imgList')
           let arr = []
           let current = this.current
           if (this.picModel.length == 0) {
@@ -983,12 +882,12 @@
             this.pageTotal = arr.length
             this.imgList = arr.slice((current - 1) * this.pageSize, this.pageSize * current)
           }
-
-
+          
+          
 
         },
         changeItemPhoneApp() {
-          console.log(this.imgList, this.modelList, this.current, 'imgList')
+          console.log(this.imgList, this.modelList, this.current ,'imgList')
           let arr = []
           let current = this.current
           if (this.picAppName.length == 0) {
@@ -1023,28 +922,28 @@
             this.pageTotal = arr.length
             this.imgList = arr.slice((current - 1) * this.pageSize, this.pageSize * current)
           }
-
-
+          
+          
         },
         handleTimeArr(arr) {
-          console.log(this.timeValuePic, 'timeValuePic')
+          console.log(this.timeValuePic,'timeValuePic')
           let newArr = []
-          if (!this.timeValuePic) {
+          if(!this.timeValuePic) {
             newArr = arr
-          } else {
+          }else{
             arr.map(value => {
-              console.log(value.time.indexOf(this.timeValuePic), 'value.time.indexOf(this.timeValuePic)')
-              if (value.time.indexOf(this.timeValuePic) > -1) {
+              console.log(value.time.indexOf(this.timeValuePic),'value.time.indexOf(this.timeValuePic)')
+              if(value.time.indexOf(this.timeValuePic) >-1) {
                 newArr.push(value)
               }
             })
           }
-          console.log(newArr, 'newArr')
+          console.log(newArr,'newArr')
           return newArr
-
+          
         },
         changeTimePic(val) {
-          console.log(this.imgList, this.timeList, 'aaa')
+          console.log(this.imgList,this.timeList,'aaa')
           this.changeItemPhonePic()
           this.changeItemPhoneApp()
           // if(this.picModel.length>=0) {
@@ -1522,11 +1421,10 @@
 
           // res.data = res.data.slice(0,this.imgNum)
 
-
+          
         },
         loadImg() {
-          this.loadingData = false
-          this.loadData()
+          this.loadingData = true
           let token = this.GetQueryString('token') ? this.GetQueryString('token') : localStorage.getItem('tokenData')
           axios({
             url: `https://gitee.com/api/v5/repos/pjmgit/ad-pic/contents/picList`,
@@ -1558,9 +1456,7 @@
             this.handlePage(1)
             // this.checkCopyData()
             this.loadData()
-          }).catch(error => {
-            this.loadingData = false
-          })
+          }).catch(error => { })
         },
         timeToTimestamp(str) {
           var timeString = str; // 时分秒字符串
@@ -1702,7 +1598,7 @@
             if (value.phoneId == model) {
               value.isOnline = true
             }
-            if (value.phoneId == model && str != '这是图片' && str != '请求截图' && str != '停止截图' && str != '请求点击'&& str != '请求滑动'&& str.indexOf('保持连接')==-1) {
+            if (value.phoneId == model && str != '这是图片' && str != '请求截图' && str != '停止截图' && str != '请求点击') {
 
               if (str.indexOf('开始等待') > -1) {
                 value.messageList.shift()
@@ -1735,16 +1631,12 @@
           // setTimeout(() => {
           //   item.loading = false
           // }, 3500)
-          console.log('开始发送消息',str)
-          if(item) {
-             this.socket.send(item.phoneId + str);
-          }
-         
+          this.socket.send(item.phoneId + str);
         },
         sendMsgToPhone(item) {
           console.log("点击了")
           // item.show = !item.show
-          item.rotate = false
+
           if (item.show) {
             this.sendSocketMsg(item, '@请求截图')
             // item.loading = true

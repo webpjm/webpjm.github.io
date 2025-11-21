@@ -2,6 +2,32 @@
 var win = window.loadUI("主界面.ui");
 win.show();
 logWindow.show();
+
+var mainWeb = uiWeb.findByID(控件ID = "web");
+print.log('开始请求远程接口的数据UI') 
+mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+// mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
+
+function getUrlData(url) {
+    let strArr = ''
+    var http = new okHttp()
+    var t = http.get(url)
+    if (t != 'OK') {
+        print.log(url.split('/')[url.split('/').length-1]+'加载成功')
+        strArr = t
+    } else {
+        print.log(`接口加载失败,开始重新请求URL数据`)
+        sleep.millisecond(毫秒 = 10);
+        getUrlData(url)
+    }
+    return strArr
+}
+
+eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/initData.js?time='+time.nowStamp()))
+eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/tool.js?time='+time.nowStamp()))
+eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/socket.js?time='+time.nowStamp()))
+
+
 // 定义全局对象接收UI参数
 let globData = {
     runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
@@ -43,35 +69,8 @@ if (mainTodayDataInfo != '') {
     }
 }
 
-var mainWeb = uiWeb.findByID(控件ID = "web");
-//是否加载远程UI
-
-if (!isLocal) {
-    print.log('6-30号优化')
-    print.log('开始请求远程接口的数据UI 宝塔面板') 
-    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
-    // mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
-}else{
-    print.log('开始请求本地UI')
-}
-
-function getUrlData(url) {
-    let strArr = ''
-    var http = new okHttp()
-    var t = http.get(url)
-    if (t != 'OK') {
-        strArr = t
-    } else {
-        print.log(`接口加载失败,开始重新请求IP数据`)
-        sleep.millisecond(毫秒 = 10);
-        getUrlData(url)
-    }
-    return strArr
-}
 // 设置手机的IP数据
 let IPAddress = getUrlData('https://ipinfo.io/ip')
-// let mainResData = JSON.parse(getUrlData(`https://api.xudu.org/ip?ip=${IPAddress}`))
-// var mainPhoneIp = mainResData.ip + '--' + mainResData.city + '/' + mainResData.isp
 let mainPhoneIp = JSON.stringify({phoneIp:IPAddress})
 // 设置手机的型号数据
 var mainPhoneData = JSON.stringify({ phoneId: device.getDeviceIntID(), phoneModel: device.getModel() })

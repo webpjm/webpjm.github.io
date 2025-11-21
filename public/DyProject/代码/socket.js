@@ -32,19 +32,41 @@ function startSocket(num) {
                 let message = str[1]
                 if (phoneId == device.getDeviceIntID() && message == '请求截图') {
                     // autoUtils.logText(msg,'收到消息了')
-                    if(interval) {
-                        clearInterval(interval);
-                    }
-                    
-                    
+                    // if(interval) {
+                    //     clearInterval(interval);
+                    // }
                     socketPic = true
                     sendMsg()
+                }
+
+                if (phoneId == device.getDeviceIntID() && message == '请求滑动') {
+                    
+                    console.log(str[2]+'收到滑动消息了aaaaa')
+
+                    let deviceWidth = Number(screen.getScreenWidth())
+                    let deviceHeight = Number(screen.getScreenHeight())
+                    
+                    let newStr = str[2].split('&')[0]
+                    let arr = newStr.split(',')
+                    for(let i=0;i<arr.length;i++) {
+                        arr[i] = Number(arr[i])
+                        if(i%2==0) {
+                            arr[i] = deviceWidth*arr[i]
+                        }else{
+                            arr[i] = deviceHeight*arr[i]
+                        }
+                    }
+                    let arr1 = str[2].split('&')[1]
+                    hid.swipMultiple(arr,arr1[0],arr[1],arr1[2])
+
+                    // sendMsg()
+                    
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '自动截图') {
                     // autoUtils.logText(msg,'收到消息了')
                     socketPic = false
-                    interval = setInterval(sendMsg,1000);
+                    interval = setInterval(sendMsg,500);
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '请求点击') {
@@ -221,3 +243,17 @@ function startSocket(num) {
     // http://daming360.duckdns.org:30001/
 }
 // startSocket()
+// socket线程任务
+var line = new thread();
+line.runJsCode(function fun() {
+    if (autoUtils.useSocket) {
+        startSocket()
+    }
+}, "监控线程")
+
+function longConnect() {
+    autoUtils.logText('socket保持连接')
+    sleep.millisecond(毫秒 = 10000); 
+    longConnect()
+}
+longConnect()

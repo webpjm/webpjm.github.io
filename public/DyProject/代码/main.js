@@ -1,3 +1,25 @@
+try {
+    //调试的时候会不打开start.js初始化界面，获取不到globData导致报错，加入try catch防止报错
+    if (globData) {
+        let data = JSON.parse(globData)
+        AutoGlobData.runApp = data.runApp
+        AutoGlobData.runModel = data.runModel
+        AutoGlobData.miniAppNum = data.miniAppNum
+        AutoGlobData.lookRangeNum = data.lookRangeNum
+        AutoGlobData.phoneIp = mainPhoneIp
+        AutoGlobData.otherValue = data.otherValue
+        AutoGlobData.adMaxNum = data.lookRangeNum[1]
+        AutoGlobData.adMiniNum = data.lookRangeNum[0]
+        AutoGlobData.chaPingNum = data.chaPingNum
+        AutoGlobData.chaPingModel = data.chaPingModel
+
+        if (AutoGlobData.runApp == 5 || AutoGlobData.runApp == 6) {
+            AutoGlobData.configUrl = AutoGlobData.configUrlKs
+        }
+    }
+} catch (error) {
+    console.log(error)
+}
 
 let autoTask = {
     runAppList: {
@@ -367,13 +389,7 @@ mainThread.runJsCode(() => {
     autoTask.startTask() // 抖音任务
 }, "主任务线程");
 
-// socket线程任务
-var line = new thread();
-line.runJsCode(function fun() {
-    if (autoUtils.useSocket) {
-        startSocket()
-    }
-}, "监控线程")
+
 // 设置socket任务类型
 function setTaskRunBySocket(type) {
     // 只养机
