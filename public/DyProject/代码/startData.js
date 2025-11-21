@@ -27,11 +27,6 @@ eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/initData.js?ti
 eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/tool.js?time='+time.nowStamp()))
 eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/socket.js?time='+time.nowStamp()))
 
-var line = new thread();
-line.runJsCode(function fun() {
-    startSocket()
-}, "监控线程")
-
 // 定义全局对象接收UI参数
 let globData = {
     runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
