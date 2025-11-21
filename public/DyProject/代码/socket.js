@@ -75,7 +75,7 @@ function startSocket(num) {
                     let y = str[2].split(',')[1]
                     autoUtils.logText('开始点击' + x, y)
                     hid.clickPercent(x, y)
-                    sleep.millisecond(毫秒 = 100);
+                    sleep.millisecond(毫秒 = 300);
                     sendMsg()
 
                     // runTime.setInterval(sendMsg,1000)
@@ -260,7 +260,7 @@ if(!line) {
         }
         function longConnect() {
             autoUtils.logText('socket保持连接')
-            sleep.millisecond(毫秒 = 10000); 
+            sleep.millisecond(毫秒 = 60000); 
             longConnect()
         }
         longConnect()
