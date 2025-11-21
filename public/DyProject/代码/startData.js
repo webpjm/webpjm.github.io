@@ -27,6 +27,12 @@ eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/initData.js?ti
 eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/tool.js?time='+time.nowStamp()))
 eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/socket.js?time='+time.nowStamp()))
 
+var line = new thread();
+line.runJsCode(function fun() {
+    if (autoUtils.useSocket) {
+        startSocket()
+    }
+}, "监控线程")
 
 // 定义全局对象接收UI参数
 let globData = {
