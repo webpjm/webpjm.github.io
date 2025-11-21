@@ -12,5 +12,4 @@ let httpUrlList = [
     `${configRootUrl}DyProject/代码/极速版/ksjisuban.js`,
     `${configRootUrl}DyProject/代码/极速版/xifan.js`,
     `${configRootUrl}DyProject/代码/main.js`,
-    `${configRootUrl}DyProject/代码/socket.js`,
  ]
