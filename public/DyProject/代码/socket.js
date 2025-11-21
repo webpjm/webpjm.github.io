@@ -1,9 +1,7 @@
 //新建一个webSocket
 let socketPic = false
 
-if(!ws) {
-    ws = new websocket();
-}
+ws = new websocket();
 
 var interval = undefined
 
@@ -246,9 +244,7 @@ startSocket = function (num) {
         ws.send(device.getDeviceIntID() + '@这是图片@' + str + screen.screenShot(374, 666, 10).toJpgBase64(20))
     }
     //连接
-    if(!isConect) {
-        ws.connet("ws://140.143.153.128:30001"); 
-    }
+    ws.connet("ws://140.143.153.128:30001");
      
     // jiaming1.serv00.net 对应socket IP地址： 128.204.223.95:30001
     // ws.connet("ws://128.204.223.95:30001/");  
@@ -257,17 +253,15 @@ startSocket = function (num) {
     // http://daming360.duckdns.org:30001/
 }
 // socket线程任务
-if(!line) {
-    var line = new thread();
-    line.runJsCode(function fun() {
-        if (autoUtils.useSocket) {
-            startSocket()
-        }
-        function longConnect() {
-            sleep.millisecond(毫秒 = 60000); 
-            autoUtils.logText('socket保持连接')
-            longConnect()
-        }
+var line = new thread();
+line.runJsCode(function fun() {
+    if (autoUtils.useSocket) {
+        startSocket()
+    }
+    function longConnect() {
+        sleep.millisecond(毫秒 = 60000); 
+        autoUtils.logText('socket保持连接')
         longConnect()
-    }, "监控线程")
-}
+    }
+    longConnect()
+}, "监控线程")

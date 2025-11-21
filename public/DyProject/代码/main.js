@@ -422,3 +422,53 @@ function restartAppTask(type) {
 
     }, "socket重启线程");
 }
+
+ws.event(
+    function onTextMessage(msg) {
+        let str = msg.split('@')
+        let phoneId = str[0]
+        let message = str[1]
+
+        if (phoneId == device.getDeviceIntID() && message == '重启任务') {
+            autoUtils.sleep(1, '开始启用新线程重启任务')
+            restartAppTask()
+        }
+
+        if (phoneId == device.getDeviceIntID() && message == '养机') {
+            autoUtils.sleep(1, '开始启用新线程养机')
+            restartAppTask(1)
+        }
+
+
+        if (phoneId == device.getDeviceIntID() && message == '切换成火山版') {
+            autoUtils.sleep(1, '切换成火山版')
+            // 切换为抖音火山
+            AutoGlobData.runApp = 2
+            AutoGlobData.appPhoneName = '抖音火山版'
+            autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
+            restartAppTask(2)
+        }
+
+        if (phoneId == device.getDeviceIntID() && message == '切换成抖音') {
+            autoUtils.sleep(1, '切换成抖音')
+            // 切换为抖音火山
+            AutoGlobData.runApp = 1
+            AutoGlobData.appPhoneName = '抖音'
+            autoUtils.loginApp(AutoGlobData.appPhoneName)  // 执行APP登录操作
+            restartAppTask(2)
+        }
+
+        if (phoneId == device.getDeviceIntID() && message == '快速任务') {
+            autoUtils.sleep(1, '开始启用新线程快速任务')
+            restartAppTask(2)
+        }
+
+        if (phoneId == device.getDeviceIntID() && message == '停止任务') {
+            autoUtils.sleep(1, '开始启用新线程停止任务')
+            restartAppTask(3)
+        }
+
+
+        //   printl(msg,'收到消息了')
+    }
+)
