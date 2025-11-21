@@ -1,9 +1,11 @@
 
 // 调用 OCR 功能识别中文，并将结果输出
-// runTime.Import('initData.js')
+runTime.Import('initData.js')
+runTime.Import('tool.js')
+runTime.Import('socket.js')
 // runTime.Import('socket.js')
 // runTime.Import('douyinAd.js')
-// runTime.Import('tool.js')
+
 // runTime.Import('adTool.js')
 
 // autoUtils.setSuccessPic('洛雪壁纸')

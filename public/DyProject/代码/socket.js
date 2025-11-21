@@ -9,7 +9,9 @@ var listen = false
 
 let isConect = false
 
-function startSocket(num) {
+var startSocket = null
+
+startSocket = function (num) {
     if(!num) {
         num=0
     }else{
@@ -259,8 +261,8 @@ if(!line) {
             startSocket()
         }
         function longConnect() {
-            autoUtils.logText('socket保持连接')
             sleep.millisecond(毫秒 = 60000); 
+            autoUtils.logText('socket保持连接')
             longConnect()
         }
         longConnect()
