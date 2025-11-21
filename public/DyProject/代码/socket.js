@@ -66,7 +66,7 @@ function startSocket(num) {
                 if (phoneId == device.getDeviceIntID() && message == '自动截图') {
                     // autoUtils.logText(msg,'收到消息了')
                     socketPic = false
-                    interval = setInterval(sendMsg,500);
+                    interval = setInterval(sendMsg,200);
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '请求点击') {
@@ -231,7 +231,7 @@ function startSocket(num) {
 
     function sendMsg() {
         let str = 'data:image/jpeg;base64,'
-        ws.send(device.getDeviceIntID() + '@这是图片@' + str + screen.screenShot(374, 666, 30).toJpgBase64(30))
+        ws.send(device.getDeviceIntID() + '@这是图片@' + str + screen.screenShot(374, 666, 10).toJpgBase64(20))
     }
     //连接
     ws.connet("ws://140.143.153.128:30001");  
