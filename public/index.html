@@ -1526,7 +1526,6 @@
         },
         loadImg() {
           this.loadingData = false
-          this.loadData()
           let token = this.GetQueryString('token') ? this.GetQueryString('token') : localStorage.getItem('tokenData')
           axios({
             url: `https://gitee.com/api/v5/repos/pjmgit/ad-pic/contents/picList`,
