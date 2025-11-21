@@ -242,9 +242,17 @@ function startSocket(num) {
     // http://daming360.duckdns.org:30001/
 }
 // socket线程任务
-function longConnect() {
-    autoUtils.logText('socket保持连接')
-    sleep.millisecond(毫秒 = 10000); 
+if(!line) {
+    var line = new thread();
+    line.runJsCode(function fun() {
+        if (autoUtils.useSocket) {
+            startSocket()
+        }
+    }, "监控线程")
+    function longConnect() {
+        autoUtils.logText('socket保持连接')
+        sleep.millisecond(毫秒 = 10000); 
+        longConnect()
+    }
     longConnect()
 }
-longConnect()

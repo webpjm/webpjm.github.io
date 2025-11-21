@@ -3,12 +3,6 @@ var win = window.loadUI("主界面.ui");
 win.show();
 logWindow.show();
 
-
-var mainWeb = uiWeb.findByID(控件ID = "web");
-print.log('开始请求远程接口的数据UI') 
-mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
-// mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
-
 function getUrlData(url) {
     let strArr = ''
     var http = new okHttp()
@@ -23,18 +17,6 @@ function getUrlData(url) {
     }
     return strArr
 }
-
-eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/initData.js?time='+time.nowStamp()))
-eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/tool.js?time='+time.nowStamp()))
-eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/socket.js?time='+time.nowStamp()))
-
-var line = new thread();
-line.runJsCode(function fun() {
-    if (autoUtils.useSocket) {
-        startSocket()
-    }
-}, "监控线程")
-
 
 // 定义全局对象接收UI参数
 let globData = {
@@ -77,16 +59,33 @@ if (mainTodayDataInfo != '') {
     }
 }
 
+var mainWeb = uiWeb.findByID(控件ID = "web");
+print.log('开始请求远程接口的数据UI') 
+mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+// mainWeb.loadUrl('http://daming360.duckdns.org:30002/public/DyProject/资源/uibaota.html?time='+time.nowStamp())
+
 // 设置手机的IP数据
 let IPAddress = getUrlData('https://ipinfo.io/ip')
 let mainPhoneIp = JSON.stringify({phoneIp:IPAddress})
 // 设置手机的型号数据
 var mainPhoneData = JSON.stringify({ phoneId: device.getDeviceIntID(), phoneModel: device.getModel() })
-
-// 有时执行一次不出数据，可能是web还没加载完
+// console.log(mainPhoneData)
+// // 有时执行一次不出数据，可能是web还没加载完
 sleep.millisecond(毫秒 = 500);
 mainWeb.runWebJs(`setPhoneData(${mainPhoneData},${mainPhoneIp})`)
-sleep.millisecond(毫秒 = 1500);
-mainWeb.runWebJs(`setPhoneData(${mainPhoneData},${mainPhoneIp})`)
+// sleep.millisecond(毫秒 = 1500);
+// mainWeb.runWebJs(`setPhoneData(${mainPhoneData},${mainPhoneIp})`)
+
+
+if(isLocal) {
+    runTime.Import('initData.js')
+    runTime.Import('tool.js')
+    runTime.Import('socket.js')
+    runTime.Import('socket.js')
+}else{
+    eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/initData.js?time='+time.nowStamp()))
+    eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/tool.js?time='+time.nowStamp()))
+    eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/socket.js?time='+time.nowStamp()))
+}
 
 logWindow.close()
