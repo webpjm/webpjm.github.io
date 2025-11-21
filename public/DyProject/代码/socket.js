@@ -89,12 +89,12 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '重启任务') {
-                    autoUtils.sleep(2, '开始启用新线程重启任务')
+                    autoUtils.sleep(1, '开始启用新线程重启任务')
                     restartAppTask()
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '养机') {
-                    autoUtils.sleep(2, '开始启用新线程养机')
+                    autoUtils.sleep(1, '开始启用新线程养机')
                     restartAppTask(1)
                 }
 
@@ -113,8 +113,8 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '返回主页') {
-                    autoUtils.sleep(1, '返回主页')
                     autoUtils.autoHome()
+                    autoUtils.sleep(1, '返回主页')
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '屏幕上滑') {
@@ -137,36 +137,35 @@ function startSocket(num) {
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '屏幕下滑') {
-                     autoUtils.logText('往回滑动')
                      hid.swipM(screen.getScreenWidth() / 2, 500, screen.getScreenWidth() / 2, screen.getScreenHeight() - 300)
+                     autoUtils.logText('往回滑动')
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '屏幕左滑') {
                     //  autoUtils.sleep(3, '左滑动')
+                    hid.swipM(50,screen.getScreenHeight()/2,screen.getScreenWidth()-100,screen.getScreenHeight()/2)
                     autoUtils.logText('左滑动')
-                     hid.swipM(50,screen.getScreenHeight()/2,screen.getScreenWidth()-100,screen.getScreenHeight()/2)
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '屏幕右滑') {
-                     autoUtils.logText('屏幕右滑')
                      hid.swipM(screen.getScreenWidth()-100,screen.getScreenHeight()/2,50,screen.getScreenHeight()/2)
+                     autoUtils.logText('屏幕右滑')
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '多任务') {
-                     autoUtils.logText('多任务')
                      hid.recents()
+                     autoUtils.logText('多任务')
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '返回主页') {
-                    // autoUtils.sleep(2, '返回主页')
-                    autoUtils.logText('返回主页')
                     autoUtils.autoHome()
+                    autoUtils.logText('返回主页')
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '返回') {
                     // autoUtils.sleep(2, '返回')
-                    autoUtils.logText('回')
                     autoUtils.autoBack()
+                    autoUtils.logText('回')
                 }
 
                 if (phoneId == device.getDeviceIntID() && message == '清除任务缓存') {
@@ -242,12 +241,6 @@ function startSocket(num) {
     // http://daming360.cloudns.ch:30001/ cloud cdn代理
     // http://daming360.duckdns.org:30001/
 }
-var line = new thread();
-line.runJsCode(function fun() {
-    if (autoUtils.useSocket) {
-        startSocket()
-    }
-}, "监控线程")
 // socket线程任务
 function longConnect() {
     autoUtils.logText('socket保持连接')
