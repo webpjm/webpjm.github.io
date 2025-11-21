@@ -45,7 +45,7 @@ startSocket = function (num) {
 
                 if (phoneId == device.getDeviceIntID() && message == '请求滑动') {
                     
-                    console.log(str[2]+'收到滑动消息了aaaaa')
+                    // console.log(str[2]+'收到滑动消息了aaaaa')
 
                     let deviceWidth = Number(screen.getScreenWidth())
                     let deviceHeight = Number(screen.getScreenHeight())

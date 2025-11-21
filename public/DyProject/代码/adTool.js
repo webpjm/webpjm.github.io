@@ -359,7 +359,19 @@ let adUtils = {
 
         // autoUtils.logText(name, '今日已看：' + detail.todayClickNum, '广告数据更新成功')
     },
+    getUrlData(url) {
+        let strArr = ''
+        var http = new okHttp()
+        var t = http.get(url)
+        if (t != 'OK') {
+            print.log(url.split('/')[url.split('/').length-1]+'加载成功')
+            strArr = t + ''
+        } 
+        return strArr
+    },
     upDateAdTime(detail) {
+        let IPAddress = this.getUrlData('https://ipinfo.io/ip') || detail.ip
+        detail.ip = IPAddress
         this.loadAdList()
         let apiList = AutoGlobData.adListApiData
         for (let i = 0; i < apiList.length; i++) {

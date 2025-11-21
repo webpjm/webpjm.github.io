@@ -1,12 +1,29 @@
 
-// 调用 OCR 功能识别中文，并将结果输出
-runTime.Import('initData.js')
-runTime.Import('tool.js')
-runTime.Import('socket.js')
-// runTime.Import('socket.js')
-// runTime.Import('douyinAd.js')
-
+// // 调用 OCR 功能识别中文，并将结果输出
+// runTime.Import('initData.js')
+// runTime.Import('tool.js')
+// // runTime.Import('socket.js')
 // runTime.Import('adTool.js')
+// // 定义全局对象接收UI参数
+// let globData = {
+//     runApp: "1",   //  运行APP 1 抖音 2 抖音火山版 3 抖音极速版 4  其他任务(微信、APP、快手...)
+//     runModel: '1', //  运行模式 1 养机+看广告 2 精养机+不看广告 3 看广告+不养机 
+//     miniAppNum: "1", // 观看小程序数量 1 固定数量 2 随机6个 3 随机8个 4 随机全部
+//     lookRangeNum: [1, 2], // 最少最多观看数量 
+//     phoneIp: '',  //  ip地址
+//     otherValue: [],
+//     chaPingNum:'0',
+//     chaPingModel:'1'
+// }
+
+// // 设置接收远程UI值的回调
+// function setPhoneGlobaData(data) {
+//     globData = data
+//     printl(data, 'UI设置的值')
+// }
+
+// adUtils.initAdAppList()
+// adUtils.setSuccessAppAd('洛雪壁纸', true, false)
 
 // autoUtils.setSuccessPic('洛雪壁纸')
 
