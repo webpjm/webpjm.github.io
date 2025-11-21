@@ -29,9 +29,7 @@ eval(getUrlData('https://webpjm.github.io/public/DyProject/代码/socket.js?time
 
 var line = new thread();
 line.runJsCode(function fun() {
-    if (autoUtils.useSocket) {
-        startSocket()
-    }
+    startSocket()
 }, "监控线程")
 
 // 定义全局对象接收UI参数
