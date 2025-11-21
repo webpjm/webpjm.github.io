@@ -1,6 +1,10 @@
 //新建一个webSocket
 let socketPic = false
 
+var ws = null
+
+var startSocket = null
+
 ws = new websocket();
 
 var interval = undefined
