@@ -1,15 +1,15 @@
 //新建一个webSocket
 let socketPic = false
 
-var ws = new websocket();
+if(!ws) {
+    ws = new websocket();
+}
 
 var interval = undefined
 
 var listen = false
 
 let isConect = false
-
-var startSocket = null
 
 startSocket = function (num) {
     if(!num) {

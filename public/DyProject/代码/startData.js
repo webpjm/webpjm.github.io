@@ -30,6 +30,9 @@ let globData = {
     chaPingModel:'1'
 }
 
+var ws = null
+var startSocket = null
+
 // 设置接收远程UI值的回调
 function setPhoneGlobaData(data) {
     globData = data
