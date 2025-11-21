@@ -397,6 +397,7 @@
                     @error="item.img = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%25\' height=\'450\'%3E%3Crect width=\'100%25\' height=\'450\' fill=\'%23334155\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%2394a3b8\' font-family=\'Inter\' font-size=\'16\'%3E暂无截图%3C/text%3E%3C/svg%3E'">
                   <div class="operation" style="display: flex;justify-content: space-between;align-items: center;height:100%;width:32px;flex-wrap:wrap;margin-right:20px;">
                     <div style="cursor: pointer;">
+                      <div class="" @click="sendSocketMsg(item,'@启动界面')" style="width:32px;margin-bottom:10px;">UI</div>
                       <div class="" @click="setImgRotate(item)" style="width:32px;margin-bottom:10px;"><i class="fas fa-expand" style=""></i></div>
                       <div class="" @click="sendSocketMsg(item,'@返回')" style="width:32px;margin-bottom:10px;"><i class="fas fa-undo" style=""></i></div>
                       <div class="index"  @click="sendSocketMsg(item,'@返回主页')" style="width:32px;margin-bottom:10px;"><i class="fas fa-home" style=""></i></div>

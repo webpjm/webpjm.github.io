@@ -157,6 +157,16 @@ function startSocket(num) {
                      autoUtils.logText('多任务')
                 }
 
+                if (phoneId == device.getDeviceIntID() && message == '启动界面') {
+                    var win = window.loadUI("主界面.ui");
+                    win.show();
+                    logWindow.show();
+                    var mainWeb = uiWeb.findByID(控件ID = "web");
+                    print.log('开始请求远程接口的数据UI') 
+                    mainWeb.loadUrl('https://webpjm.github.io/public/DyProject/资源/ui.html?time='+time.nowStamp())
+                    logWindow.close()
+                }
+
                 if (phoneId == device.getDeviceIntID() && message == '返回主页') {
                     autoUtils.autoHome()
                     autoUtils.logText('返回主页')

@@ -1,15 +1,15 @@
 
 // 调用 OCR 功能识别中文，并将结果输出
-runTime.Import('initData.js')
-runTime.Import('socket.js')
-runTime.Import('douyinAd.js')
-runTime.Import('tool.js')
-runTime.Import('adTool.js')
+// runTime.Import('initData.js')
+// runTime.Import('socket.js')
+// runTime.Import('douyinAd.js')
+// runTime.Import('tool.js')
+// runTime.Import('adTool.js')
 
 // autoUtils.setSuccessPic('洛雪壁纸')
 
 // console.log(screen.getRotation())
-autoUtils.sleep(600000,'测试1线程')
+// autoUtils.sleep(600000,'测试1线程')
 // let str = '0.86,0.65,0.07,0.66'
 
 // let deviceWidth = Number(screen.getScreenWidth())
