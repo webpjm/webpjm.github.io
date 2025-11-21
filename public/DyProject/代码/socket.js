@@ -246,7 +246,7 @@ startSocket = function (num) {
         ws.send(device.getDeviceIntID() + '@这是图片@' + str + screen.screenShot(374, 666, 10).toJpgBase64(20))
     }
     //连接
-    if(!ws) {
+    if(!isConect) {
         ws.connet("ws://140.143.153.128:30001"); 
     }
      
