@@ -89,10 +89,10 @@ let autoUtils = {
                 ws.send(device.getDeviceIntID() + '@' + text + '--' + str)
             }
 
-            if (socketPic) {
-                let str1 = 'data:image/jpeg;base64,'
-                ws.send(device.getDeviceIntID() + '@这是图片@' + str1 + screen.screenShot(374, 666, 50).toJpgBase64(50))
-            }
+            // if (socketPic) {
+            //     let str1 = 'data:image/jpeg;base64,'
+            //     ws.send(device.getDeviceIntID() + '@这是图片@' + str1 + screen.screenShot(374, 666, 50).toJpgBase64(50))
+            // }
         }
         catch (err) { }
     },
