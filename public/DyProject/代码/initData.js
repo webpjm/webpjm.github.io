@@ -115,7 +115,7 @@ var AutoGlobData = {
     phoneId: device.getDeviceIntID(),
     adListApiData: [], // 接口获取的小程序列表
     adBiaoZhun1: 2 * 60 * 60 * 1000, // 同手机同小程序观看时间要大于2小时+一个随机数（小于10分钟的）
-    adBiaoZhun2: 45 * 60 * 1000, // 同手机不同小程序观看时间要大于40分钟+一个随机数（小于10分钟的）
+    adBiaoZhun2: 30 * 60 * 1000, // 同手机不同小程序观看时间要大于40分钟+一个随机数（小于10分钟的）
     adBiaoZhun3: 10 * 60 * 1000, // 不同手机同小程序观看时间要大于10分钟+一个随机数（小于5分钟的）
     adBiaoZhun4: 5 * 60 * 1000, // 不同手机不同小程序观看时间要大于5分钟+一个随机数（小于1分钟的）
     todayTaskAllList: [], // 随机今天广告观看次数数组
@@ -125,7 +125,8 @@ var AutoGlobData = {
     },
     todayTimeInterval: {
         time: time.nowStamp(),
-        dataArr: [10,45,15,30,5,60,0,25,5,40,15]
+        // dataArr: [10,45,15,30,5,60,0,25,5,40,15]
+        dataArr: [10,5,15,30,5,20,0,25,5,40,15]
     },
     appPhoneName: '抖音',
     adMaxNum: 2,
