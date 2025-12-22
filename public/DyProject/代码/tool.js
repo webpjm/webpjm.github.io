@@ -16,7 +16,7 @@ let autoUtils = {
     stopRunByTime() {
         let date = new Date() // 时间戳为秒：10位数
         let hour = Number(date.getHours())
-        if ((hour >= 0 && hour <= 6 || hour>=22&&hour<=24) && AutoGlobData.appPhoneName.indexOf('抖') > -1) {
+        if ((hour >= 0 && hour <= 6 || hour >= 22 && hour <= 24) && AutoGlobData.appPhoneName.indexOf('抖') > -1) {
             this.logText('当前0点到6点之间-时间条件不通过')
             this.qiutApp()
 
@@ -107,57 +107,22 @@ let autoUtils = {
         timeFlag = timeFlag + this.shuffle(arr)[0]
         if (timeFlag > 60) {
             
-            //定义t2线程
-            var t2 = null;
-            let flag = false
-            if (timeFlag > 20 * 60) {
-                flag = true
-                t2 = new thread()
-                t2.runJsCode(() => {
-                    this.autoHome()
-                    autoTaskKs.initApp('fast','快手')
-                }, "监控线程")
-            }else if (timeFlag > 10 * 60) {
-                this.showLog()
-                if(timeFlag>15*60) {
-                  this.autoHome()
-                  this.showLog()
-                  for (let i = 0; i < timeFlag; i++) {
-                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
-                        sleep.millisecond(毫秒 = 1000);
-                  }
-                  autoUtils.loginApp(AutoGlobData.appPhoneName)
-                }
-            }else  {
-                this.showLog()
+            this.showLog()
+            if(timeFlag>15*60) {
+                this.autoHome()
             }
-            
-             // 如果大于了20分钟
-            if (flag) {
-                for (let i = 0; i < timeFlag; i++) {
-                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
-                    sleep.millisecond(毫秒 = 1000);
-                }
-                t2.stop()
-                // 重新登录原APP
-                AutoGlobData.appPhoneName = appPhoneName
-                autoUtils.loginApp(AutoGlobData.appPhoneName)
-            }else{
-                 // 早上抖音晚上火上版时候，随机时间返回主页等待
-                let randNum = rand.randNumber(60, 100)
-                for (let i = 0; i < timeFlag; i++) {
-                    this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
-                    sleep.millisecond(毫秒 = 1000);
-                    if (text.indexOf('运行火山版') > -1) {
-                        if (i == randNum) {
-                            this.autoHome()
-                        }
+             // 早上抖音晚上火上版时候，随机时间返回主页等待
+            let randNum = rand.randNumber(60, 100)
+            for (let i = 0; i < timeFlag; i++) {
+                this.logText('开始等待---' + (timeFlag - i > 0 ? timeFlag - i : 0) + '秒' + text)
+                sleep.millisecond(毫秒 = 1000);
+                if (text.indexOf('运行火山版') > -1) {
+                    if (i == randNum) {
+                        this.autoHome()
                     }
                 }
-
-                
             }
-            
+
             this.hideLog()
 
             if(timeFlag>15*60) {
