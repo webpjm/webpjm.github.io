@@ -16,7 +16,7 @@ let autoUtils = {
     stopRunByTime() {
         let date = new Date() // 时间戳为秒：10位数
         let hour = Number(date.getHours())
-        if ((hour >= 0 && hour <= 6 || hour >= 22 && hour <= 24) && AutoGlobData.appPhoneName.indexOf('抖') > -1) {
+        if (hour >= 22 && hour <= 23 && AutoGlobData.appPhoneName.indexOf('抖') > -1) {
             this.logText('当前0点到6点之间-时间条件不通过')
             this.qiutApp()
 
