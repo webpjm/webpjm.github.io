@@ -79,21 +79,21 @@ var resourceFiles = [
 ]
 print.log("开始下载资源")
 for(var i=0;i<resourceFiles.length;i++){
-    new okHttp().downloadFile(BASE_URL + '/' + resourceFiles[i], `${ResourcesPath}/${resourceFiles[i]}`)
+    new okHttp().downloadFile('http://daming360.duckdns.org:8889/资源/' + resourceFiles[i], `${ResourcesPath}/${resourceFiles[i]}`)
     print.log(`${resourceFiles[i]}下载成功`+i)
 }
 print.log("资源下载成功")
 
 // ========== 下载插件 ==========
 print.log("开始下载插件")
-new okHttp().downloadFile(BASE_URL + '/插件/webrtc.apk', `${PluginsPath}/webrtc.apk`)
+new okHttp().downloadFile("http://daming360.duckdns.org:8889/webrtc.apk", `${PluginsPath}/webrtc.apk`)
 sleep.millisecond(3000)
 print.log("插件下载成功")
 
 
 // ========== 下载代码 ==========
 print.log("开始下载代码")
-new okHttp().downloadFile(BASE_URL + '/initRemote.js', `${CodePath}/start.js`)
+new okHttp().downloadFile('http://daming360.duckdns.org:8889/initRemote.js', `${CodePath}/start.js`)
 sleep.millisecond(2000)
 print.log("start.js加载成功,重启应用既可以使用最新代码")
 
