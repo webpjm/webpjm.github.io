@@ -1,17 +1,21 @@
+logWindow.show()
+
 print.log(project.getPluginsPath())
 print.log(project.getResourcesPath())
 print.log(project.getCodePath())
 var PluginsPath = project.getPluginsPath()
 var CodePath = project.getCodePath()
 
-new okHttp().downloadFile('http://daming360.duckdns.org:8889/initRemoteBase64.js', `${CodePath}/start.js`)
-sleep.millisecond(5000)
-
 new okHttp().downloadFile('http://daming360.duckdns.org:8889/webrtc.apk', `${PluginsPath}/webrtc.apk`)
 sleep.millisecond(5000)
-print.log("加载成功,重启应用既可以使用最新代码")
+print.log("插件下载成功")
 
-logWindow.show()
+new okHttp().downloadFile('http://daming360.duckdns.org:8889/initRemoteBase64.js', `${CodePath}/start.js`)
+sleep.millisecond(5000)
+print.log("start.js加载成功,重启应用既可以使用最新代码")
+
+
+
 
 // try {
 //    rhino.loadDex('webrtc.apk');
