@@ -93,6 +93,12 @@ print.log("插件下载成功")
 
 // ========== 下载代码 ==========
 print.log("开始下载代码")
+new okHttp().downloadFile('http://daming360.duckdns.org:8889/restartLoadCode.js', `${CodePath}/restartLoadCode.js`)
+sleep.millisecond(2000)
+
+new okHttp().downloadFile('http://daming360.duckdns.org:8889/reloadPlugin.js', `${CodePath}/reloadPlugin.js`)
+sleep.millisecond(2000)
+
 new okHttp().downloadFile('http://daming360.duckdns.org:8889/initRemote.js', `${CodePath}/start.js`)
 sleep.millisecond(2000)
 print.log("start.js加载成功,重启应用既可以使用最新代码")
