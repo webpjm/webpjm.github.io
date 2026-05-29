@@ -75,7 +75,8 @@ var resourceFiles = [
     "微信首页搜索.cv",
     "数字大挑战领取成功.cv",
     "柱灯图标.cv",
-    "浏览器首页.cv"
+    "浏览器首页.cv",
+    "寻找抖音首页的左上角更多图标.cv"
 ]
 print.log("开始下载资源")
 for(var i=0;i<resourceFiles.length;i++){
