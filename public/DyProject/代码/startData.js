@@ -76,7 +76,9 @@ var resourceFiles = [
     "数字大挑战领取成功.cv",
     "柱灯图标.cv",
     "浏览器首页.cv",
-    "寻找抖音首页的左上角更多图标.cv"
+    "寻找抖音首页的左上角更多图标.cv",
+    "寻找快手我的页面三条杠.cv",
+    "柠檬壁纸的下载按钮.cv"
 ]
 print.log("开始下载资源")
 for(var i=0;i<resourceFiles.length;i++){
