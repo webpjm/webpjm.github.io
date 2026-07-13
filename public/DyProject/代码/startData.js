@@ -12,7 +12,7 @@ var CodePath = project.getCodePath()
 var ResourcesPath = project.getResourcesPath()
 
 // 基础URL配置
-var BASE_URL = 'http://daming360.duckdns.org:8889'
+var BASE_URL = 'http://6117iwoo8483.vicp.fun:8889'
 
 // 资源文件列表（当前项目中资源文件夹下的所有文件）
 var resourceFiles = [
@@ -79,27 +79,27 @@ var resourceFiles = [
 ]
 print.log("开始下载资源")
 for(var i=0;i<resourceFiles.length;i++){
-    new okHttp().downloadFile('http://daming360.duckdns.org:8889/资源/' + resourceFiles[i], `${ResourcesPath}/${resourceFiles[i]}`)
+    new okHttp().downloadFile('http://6117iwoo8483.vicp.fun:8889/资源/' + resourceFiles[i], `${ResourcesPath}/${resourceFiles[i]}`)
     print.log(`${resourceFiles[i]}下载成功`+i)
 }
 print.log("资源下载成功")
 
 // ========== 下载插件 ==========
 print.log("开始下载插件")
-new okHttp().downloadFile("http://daming360.duckdns.org:8889/webrtc.apk", `${PluginsPath}/webrtc.apk`)
+new okHttp().downloadFile("http://6117iwoo8483.vicp.fun:8889/webrtc.apk", `${PluginsPath}/webrtc.apk`)
 sleep.millisecond(3000)
 print.log("插件下载成功")
 
 
 // ========== 下载代码 ==========
 print.log("开始下载代码")
-new okHttp().downloadFile('http://daming360.duckdns.org:8889/restartLoadCode.js', `${CodePath}/restartLoadCode.js`)
+new okHttp().downloadFile('http://6117iwoo8483.vicp.fun:8889/restartLoadCode.js', `${CodePath}/restartLoadCode.js`)
 sleep.millisecond(2000)
 
-new okHttp().downloadFile('http://daming360.duckdns.org:8889/reloadPlugin.js', `${CodePath}/reloadPlugin.js`)
+new okHttp().downloadFile('http://6117iwoo8483.vicp.fun:8889/reloadPlugin.js', `${CodePath}/reloadPlugin.js`)
 sleep.millisecond(2000)
 
-new okHttp().downloadFile('http://daming360.duckdns.org:8889/initRemote.js', `${CodePath}/start.js`)
+new okHttp().downloadFile('http://6117iwoo8483.vicp.fun:8889/initRemote.js', `${CodePath}/start.js`)
 sleep.millisecond(2000)
 print.log("start.js加载成功,重启应用既可以使用最新代码")
 
